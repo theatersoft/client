@@ -14,28 +14,27 @@ const
     replace = require('rollup-plugin-replace'),
     sourcemaps = require('rollup-plugin-sourcemaps')
 
-module.exports =
-{
-    res (build) {
-        console.log('target client-res')
-        exec('mkdir -p build/client/res')
-        exec('cp client/res/*.ttf build/client/res')
+const targets = {
+    res () {
+        console.log('target res')
+        exec('mkdir -p dist/res')
+        exec('cp res/*.ttf dist/res')
     },
 
-    css (build) {
-        console.log('target client-css')
+    css () {
+        console.log('target css')
         require('stylus')(fs.readFileSync(`${__dirname}/styl/ts.styl`, 'utf8'))
             .set('compress', false)
             .set('paths', [`${__dirname}/styl`])
             .include(require('nib').path)
             .render((err, css) => {
                 if (err) throw err
-                fs.writeFileSync('build/client/theatersoft.css', css)
+                fs.writeFileSync('dist/theatersoft.css', css)
             })
     },
 
-    svg (build) {
-        console.log('target client-svg')
+    svg () {
+        console.log('target svg')
         const svg = require('svgstore')({
             cleanDefs: true,
             cleanObjects: ['fill', 'style'],
@@ -56,22 +55,22 @@ module.exports =
         exec(`sed -i 's|<svg|<svg display="none"|g' ${__dirname}/res/icons.svg`)
     },
 
-    html (build) {
-        console.log('target client-html')
-        exec('mkdir -p build/client/dev')
+    html () {
+        console.log('target html')
+        exec('mkdir -p dist/dev')
         var
-            model = {svg: fs.readFileSync('client/res/icons.svg', 'utf8'), js: 'theatersoft-client-preact.min.js'},
-            template = fs.readFileSync('client/index.template.html', 'utf8')
-        fs.writeFileSync('build/client/theatersoft-client-preact.html', mustache.render(template, model))
-        model.js = 'theatersoft-client-preact.js'
-        fs.writeFileSync('build/client/dev/theatersoft-client-preact.html', mustache.render(template, model))
-        exec('cd build/client; ln -snf theatersoft-client-preact.html index.html')
-        exec('cd build/client/dev; ln -snf theatersoft-client-preact.html index.html')
+            model = {svg: fs.readFileSync('res/icons.svg', 'utf8'), js: 'theatersoft-client.min.js'},
+            template = fs.readFileSync('index.template.html', 'utf8')
+        fs.writeFileSync('dist/theatersoft-client.html', mustache.render(template, model))
+        model.js = 'theatersoft-client.js'
+        fs.writeFileSync('dist/dev/theatersoft-client.html', mustache.render(template, model))
+        exec('cd dist; ln -snf theatersoft-client.html index.html')
+        exec('cd dist/dev; ln -snf theatersoft-client.html index.html')
     },
 
-    bundle (build) {
+    bundle () {
         console.log('target bundle')
-        exec('rm -f build/client/dev/*.js build/client/*.js')
+        exec('rm -f dist/dev/*.js dist/*.js')
         return rollup({
             entry: `${__dirname}/src/app.js`,
             plugins: [
@@ -113,13 +112,13 @@ module.exports =
         })
             .then(bundle =>
                 bundle.write({
-                    dest: 'build/client/dev/theatersoft-client-preact.js',
+                    dest: 'dist/dev/theatersoft-client.js',
                     format: 'iife',
                     moduleName: 'client',
                     sourceMap: 'inline'
                 }))
             .then(() => {
-                fs.writeFileSync('build/client/theatersoft-client-preact.min.js', babelCore.transformFileSync('build/client/dev/theatersoft-client-preact.js', {
+                fs.writeFileSync('dist/theatersoft-client.min.js', babelCore.transformFileSync('dist/dev/theatersoft-client.js', {
                     babelrc: false,
                     //exclude: 'node_modules/**',
                     comments: false,
@@ -146,28 +145,30 @@ module.exports =
             })
     },
 
-    watch (build) {
+    watch () {
         require('chokidar').watch(`${__dirname}/src`)
             .on('change', path => {
                 console.log(path)
-                module.exports.bundle(build)
+                module.exports.bundle()
             })
     },
 
-    'watch-css' (build) {
+    'watch-css' () {
         require('chokidar').watch(`${__dirname}/styl`)
             .on('change', path => {
                 console.log(path)
-                module.exports.css(build)
+                module.exports.css()
             })
     },
 
-    all (build) {
-        console.log('target client-preact-all')
-        this.res(build)
-        this.svg(build)
-        this.css(build)
-        this.html(build)
-        return this.bundle(build)
+    all () {
+        console.log('target preact-all')
+        targets.res()
+        targets.svg()
+        targets.css()
+        targets.html()
+        return targets.bundle()
     }
 }
+
+Object.assign(target, targets)

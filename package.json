@@ -8,16 +8,16 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "build-client-all": "node build.js client-all",
-    "build-client-bundle": "time -p node build.js client-bundle",
-    "build-client-css": "node build.js client-css",
-    "build-client-html": "node build.js client-html",
-    "build-client-svg": "node build.js client-svg",
-    "build-client-test-all": "node build.js client-test-all",
-    "build-client-test-css": "node build.js client-test-css",
-    "build-client-test-watch-reload": "node build.js client-test-all && node build.js client-test-watch & node build.js client-test-reload & wait",
-    "build-client-watch": "node build.js client-watch",
-    "build-client-watch-css": "node build.js client-watch-css"
+    "build-all": "node build.js all",
+    "build-bundle": "time -p node build.js bundle",
+    "build-css": "node build.js css",
+    "build-html": "node build.js html",
+    "build-svg": "node build.js svg",
+    "build-test-all": "node build.js test-all",
+    "build-test-css": "node build.js test-css",
+    "build-test-watch-reload": "node build.js test-all && node build.js test-watch & node build.js test-reload & wait",
+    "build-watch": "node build.js watch",
+    "build-watch-css": "node build.js watch-css"
   },
   "dependencies": {
     "@theatersoft/bus": "~1",
@@ -28,8 +28,24 @@
     "redux": "^3.6.0"
   },
   "devDependencies": {
+    "mustache": "^2.1.3",
     "nib": "~1.0.3",
     "stylus": "^0.54.5",
-    "svgstore": "^1.1.0"
+    "svgstore": "^1.1.0",
+    "babel-core": "^6.18.0",
+    "babel-plugin-external-helpers": "^6.18.0",
+    "babel-plugin-transform-class-properties": "^6.19.0",
+    "babel-plugin-transform-object-rest-spread": "^6.22.0",
+    "babel-plugin-transform-react-jsx": "^6.8.0",
+    "babel-plugin-transform-react-remove-prop-types": "^0.2.11",
+    "babel-preset-babili": "0.0.8",
+    "rollup": "^0.36.4",
+    "rollup-plugin-alias": "^1.2.0",
+    "rollup-plugin-babel": "^2.6.1",
+    "rollup-plugin-commonjs": "^5.0.5",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "rollup-plugin-replace": "^1.1.1",
+    "rollup-plugin-sourcemaps": "^0.4.1",
+    "shelljs": "^0.7.0"
   }
 }
