@@ -8,6 +8,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
+    "postinstall": "npm link @theatersoft/bus",
     "build-all": "node build.js all",
     "build-bundle": "time -p node build.js bundle",
     "build-css": "node build.js css",
@@ -32,6 +33,9 @@
     "nib": "~1.0.3",
     "stylus": "^0.54.5",
     "svgstore": "^1.1.0",
+    "chokidar": "^1.6.1",
+    "livereload": "^0.6.0",
+
     "babel-core": "^6.18.0",
     "babel-plugin-external-helpers": "^6.18.0",
     "babel-plugin-transform-class-properties": "^6.19.0",

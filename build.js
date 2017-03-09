@@ -149,7 +149,7 @@ const targets = {
         require('chokidar').watch(`${__dirname}/src`)
             .on('change', path => {
                 console.log(path)
-                module.exports.bundle()
+                targets.bundle()
             })
     },
 
@@ -157,7 +157,7 @@ const targets = {
         require('chokidar').watch(`${__dirname}/styl`)
             .on('change', path => {
                 console.log(path)
-                module.exports.css()
+                targets.css()
             })
     },
 
