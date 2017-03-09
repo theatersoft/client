@@ -46,7 +46,7 @@ import focus from './focus'
 import api from 'preact-redux'
 const {connect} = api
 
-const mapStateToProps = ({devices: {Hvac: {value}}, Time}) => ({value, Time})
+const mapStateToProps = ({devices: {Hvac: {value} = {}}, Time}) => ({value, Time})
 
 export default connect(mapStateToProps)(class StatContainer extends Component {
     render (props) {
