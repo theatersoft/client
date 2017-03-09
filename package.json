@@ -1,0 +1,35 @@
+{
+  "name": "@theatersoft/client",
+  "version": "1.0.0",
+  "description": "Theatersoft Client",
+  "author": "Rob Huehn <rob@theatersoft.com>",
+  "license": "AGPL-3.0",
+  "keywords": ["home", "automation", "control", "monitor", "security", "surveillance"],
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "build-client-all": "node build.js client-all",
+    "build-client-bundle": "time -p node build.js client-bundle",
+    "build-client-css": "node build.js client-css",
+    "build-client-html": "node build.js client-html",
+    "build-client-svg": "node build.js client-svg",
+    "build-client-test-all": "node build.js client-test-all",
+    "build-client-test-css": "node build.js client-test-css",
+    "build-client-test-watch-reload": "node build.js client-test-all && node build.js client-test-watch & node build.js client-test-reload & wait",
+    "build-client-watch": "node build.js client-watch",
+    "build-client-watch-css": "node build.js client-watch-css"
+  },
+  "dependencies": {
+    "@theatersoft/bus": "~1",
+    "hammerjs": "~1.0.11",
+    "preact": "^6.4.0",
+    "preact-redux": "^1.2.0",
+    "react-redux": "^4.4.6",
+    "redux": "^3.6.0"
+  },
+  "devDependencies": {
+    "nib": "~1.0.3",
+    "stylus": "^0.54.5",
+    "svgstore": "^1.1.0"
+  }
+}
