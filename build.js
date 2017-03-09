@@ -2,6 +2,8 @@
 require('shelljs/make')
 
 const
+    pkg = require('./package.json'),
+    DIST = process.env.DIST === 'true',
     fs = require('fs'),
     mustache = require('mustache'),
     babelCore = require('babel-core'),
@@ -145,6 +147,20 @@ const targets = {
             })
     },
 
+    package () {
+        console.log('target package')
+        const p = Object.entries(pkg).reduce((o, [k, v]) => {
+            if (!['private', 'devDependencies', 'scripts'].includes(k)) {
+                if ('distScripts' === k) k = 'scripts'
+                o[k] = v
+            }
+            return o
+        }, {})
+        fs.writeFileSync('dist/package.json', JSON.stringify(p, null, '  '), 'utf-8')
+        //exec('sed -i "s|dist/||g" dist/package.json ')
+        exec('cp LICENSE README.md dist')
+    },
+
     watch () {
         require('chokidar').watch(`${__dirname}/src`)
             .on('change', path => {
@@ -161,13 +177,14 @@ const targets = {
             })
     },
 
-    all () {
-        console.log('target preact-all')
+    async all () {
+        console.log('target all')
         targets.res()
         targets.svg()
         targets.css()
         targets.html()
-        return targets.bundle()
+        await targets.bundle()
+        targets.package()
     }
 }
 
