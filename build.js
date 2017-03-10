@@ -13,7 +13,7 @@ const
     commonjs = require('rollup-plugin-commonjs'),
     nodeResolve = require('rollup-plugin-node-resolve'),
     babel = require('rollup-plugin-babel'),
-    //buble = require('rollup-plugin-buble'),
+//buble = require('rollup-plugin-buble'),
     replace = require('rollup-plugin-replace'),
     sourcemaps = require('rollup-plugin-sourcemaps')
 
@@ -157,10 +157,12 @@ const targets = {
             scripts: pkg.distScripts
         })
         fs.writeFileSync('dist/package.json', JSON.stringify(p, null, '  '), 'utf-8')
-        //exec('sed -i "s|dist/||g" dist/package.json ')
         exec('cp LICENSE README.md dist')
-        const tname = `${name}-${pkg.version}.tar`
-        exec(`cd dist; tar vchf ${tname} . --exclude='${name}-*' --exclude='node_modules'; gzip -f ${tname}`)
+        const
+            tar = `${name}-${pkg.version}.tar`,
+            excludes = [`${name}-*`, 'node_modules'].concat(DIST ? 'dev' : []).map(s => `--exclude='${s}'`).join(' ')
+        console.log(excludes)
+        exec(`cd dist; tar vchf ${tar} . ${excludes}; gzip -f ${tar}`)
     },
 
     watch () {
