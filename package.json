@@ -12,11 +12,11 @@
     "security",
     "surveillance"
   ],
-  "main": "index.js",
   "private": true,
   "scripts": {
     "preinstall": "npm link @theatersoft/bus",
-    "build-all": "node build.js all",
+    "build": "time -p node build.js && ls -l dist",
+    "build:dist": "DIST=true npm run build",
     "build-bundle": "time -p node build.js bundle",
     "build-css": "node build.js css",
     "build-html": "node build.js html",

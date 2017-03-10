@@ -3,6 +3,7 @@ require('shelljs/make')
 
 const
     pkg = require('./package.json'),
+    name = pkg.name.startsWith('@theatersoft') && pkg.name.slice(13),
     DIST = process.env.DIST === 'true',
     fs = require('fs'),
     mustache = require('mustache'),
@@ -158,6 +159,8 @@ const targets = {
         fs.writeFileSync('dist/package.json', JSON.stringify(p, null, '  '), 'utf-8')
         //exec('sed -i "s|dist/||g" dist/package.json ')
         exec('cp LICENSE README.md dist')
+        const tname = `${name}-${pkg.version}.tar`
+        exec(`cd dist; tar vchf ${tname} . --exclude='${name}-*' --exclude='node_modules'; gzip -f ${tname}`)
     },
 
     watch () {
