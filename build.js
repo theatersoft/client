@@ -71,10 +71,10 @@ const targets = {
         exec('cd dist/dev; ln -snf theatersoft-client.html index.html')
     },
 
-    bundle () {
+    async bundle () {
         console.log('target bundle')
         exec('rm -f dist/dev/*.js dist/*.js')
-        return rollup({
+        const bundle = await rollup({
             entry: `${__dirname}/src/app.js`,
             plugins: [
                 alias({
@@ -113,39 +113,37 @@ const targets = {
                 })
             ]
         })
-            .then(bundle =>
-                bundle.write({
-                    dest: 'dist/dev/theatersoft-client.js',
-                    format: 'iife',
-                    moduleName: 'client',
-                    sourceMap: 'inline'
-                }))
-            .then(() => {
-                fs.writeFileSync('dist/theatersoft-client.min.js', babelCore.transformFileSync('dist/dev/theatersoft-client.js', {
-                    babelrc: false,
-                    //exclude: 'node_modules/**',
-                    comments: false,
-                    minified: true,
-                    plugins: [
-                        require("babel-plugin-minify-constant-folding"),
-                        require("babel-plugin-minify-dead-code-elimination"),
-                        require("babel-plugin-minify-flip-comparisons"),
-                        //FAIL require("babel-plugin-minify-guarded-expressions"), // breaks client pinpad
-                        require("babel-plugin-minify-infinity"),
-                        require("babel-plugin-minify-mangle-names"),
-                        require("babel-plugin-minify-replace"),
-                        //FAIL require("babel-plugin-minify-simplify"),
-                        require("babel-plugin-minify-type-constructors"),
-                        require("babel-plugin-transform-member-expression-literals"),
-                        require("babel-plugin-transform-merge-sibling-variables"),
-                        require("babel-plugin-transform-minify-booleans"),
-                        require("babel-plugin-transform-property-literals"),
-                        require("babel-plugin-transform-simplify-comparison-operators"),
-                        require("babel-plugin-transform-undefined-to-void")
-                    ]
-                }).code)
-                console.log('... target bundle')
-            })
+        await bundle.write({
+            dest: 'dist/dev/theatersoft-client.js',
+            format: 'iife',
+            moduleName: 'client',
+            sourceMap: 'inline'
+        })
+        fs.writeFileSync('dist/theatersoft-client.min.js', babelCore.transformFileSync('dist/dev/theatersoft-client.js', {
+            babelrc: false,
+            //exclude: 'node_modules/**',
+            comments: false,
+            minified: true,
+            plugins: [
+                require("babel-plugin-minify-constant-folding"),
+                require("babel-plugin-minify-dead-code-elimination"),
+                require("babel-plugin-minify-flip-comparisons"),
+                //FAIL require("babel-plugin-minify-guarded-expressions"), // breaks client pinpad
+                require("babel-plugin-minify-infinity"),
+                require("babel-plugin-minify-mangle-names"),
+                require("babel-plugin-minify-replace"),
+                //FAIL require("babel-plugin-minify-simplify"),
+                require("babel-plugin-minify-type-constructors"),
+                require("babel-plugin-transform-member-expression-literals"),
+                require("babel-plugin-transform-merge-sibling-variables"),
+                require("babel-plugin-transform-minify-booleans"),
+                require("babel-plugin-transform-property-literals"),
+                require("babel-plugin-transform-simplify-comparison-operators"),
+                require("babel-plugin-transform-undefined-to-void")
+            ]
+        }).code)
+        if (DIST) exec('rm -r dist/dev')
+        console.log('... target bundle')
     },
 
     package () {
@@ -160,7 +158,7 @@ const targets = {
         exec('cp LICENSE README.md dist')
         const
             tar = `${name}-${pkg.version}.tar`,
-            excludes = [`${name}-*`, 'node_modules'].concat(DIST ? 'dev' : []).map(s => `--exclude='${s}'`).join(' ')
+            excludes = [`${name}-*`, 'node_modules'].map(s => `--exclude='${s}'`).join(' ')
         console.log(excludes)
         exec(`cd dist; tar vchf ${tar} . ${excludes}; gzip -f ${tar}`)
     },
