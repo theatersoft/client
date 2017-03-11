@@ -64,11 +64,9 @@ const targets = {
         var
             model = {svg: fs.readFileSync('res/icons.svg', 'utf8'), js: 'theatersoft-client.min.js'},
             template = fs.readFileSync('index.template.html', 'utf8')
-        fs.writeFileSync('dist/theatersoft-client.html', mustache.render(template, model))
+        fs.writeFileSync('dist/index.html', mustache.render(template, model))
         model.js = 'theatersoft-client.js'
-        fs.writeFileSync('dist/dev/theatersoft-client.html', mustache.render(template, model))
-        exec('cd dist; ln -snf theatersoft-client.html index.html')
-        exec('cd dist/dev; ln -snf theatersoft-client.html index.html')
+        fs.writeFileSync('dist/dev/index.html', mustache.render(template, model))
     },
 
     async bundle () {
@@ -156,11 +154,7 @@ const targets = {
         })
         fs.writeFileSync('dist/package.json', JSON.stringify(p, null, '  '), 'utf-8')
         exec('cp LICENSE README.md dist')
-        const
-            tar = `${name}-${pkg.version}.tar`,
-            excludes = [`${name}-*`, 'node_modules'].map(s => `--exclude='${s}'`).join(' ')
-        console.log(excludes)
-        exec(`cd dist; tar vchf ${tar} . ${excludes}; gzip -f ${tar}`)
+        exec('cd dist; npm pack')
     },
 
     watch () {
