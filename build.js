@@ -153,8 +153,7 @@ const targets = {
             scripts: pkg.distScripts
         })
         fs.writeFileSync('dist/package.json', JSON.stringify(p, null, '  '), 'utf-8')
-        exec('cp LICENSE README.md dist')
-        exec('cd dist; npm pack')
+        exec('cp LICENSE README.md .npmignore dist')
     },
 
     watch () {
