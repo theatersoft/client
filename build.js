@@ -147,13 +147,19 @@ const targets = {
     package () {
         console.log('target package')
         const p = Object.assign({}, pkg, {
+            main: 'main.js',
             private: !DIST,
             devDependencies: undefined,
             distScripts: undefined,
             scripts: pkg.distScripts
         })
         fs.writeFileSync('dist/package.json', JSON.stringify(p, null, '  '), 'utf-8')
-        exec('cp LICENSE README.md .npmignore dist')
+        exec('cp LICENSE README.md .npmignore main.js dist')
+    },
+
+    publish () {
+        console.log('target publish')
+        exec('npm publish --access=public dist')
     },
 
     watch () {

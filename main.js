@@ -1,0 +1,1 @@
+// dummy file for node require.resolve()

@@ -1,6 +1,6 @@
 {
   "name": "@theatersoft/client",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Theatersoft Client",
   "author": "Rob Huehn <rob@theatersoft.com>",
   "license": "AGPL-3.0",
@@ -25,7 +25,8 @@
     "build-test-css": "node build.js test-css",
     "build-test-watch-reload": "node build.js test-all && node build.js test-watch & node build.js test-reload & wait",
     "build-watch": "node build.js watch",
-    "build-watch-css": "node build.js watch-css"
+    "build-watch-css": "node build.js watch-css",
+    "publish": "node build.js publish"
   },
   "distScripts": {
     "link": "npm link"
