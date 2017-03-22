@@ -107,6 +107,7 @@ const targets = {
                         [require("babel-plugin-transform-react-jsx"), {pragma: 'h'}],
                         //require("babel-plugin-transform-decorators-legacy"),
                         // babel-plugin-transform-decorators-legacy provided an invalid property of "default"
+                        require("babel-plugin-external-helpers"),
                     ]
                 })
             ]
