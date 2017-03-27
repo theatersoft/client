@@ -191,3 +191,4 @@ const targets = {
 }
 
 Object.assign(target, targets)
+Object.entries(require('./test/build-test.js')).forEach(([k, v]) => {target[`test-${k}`] = v})

@@ -42,44 +42,44 @@ const
                 ]
             })
         ],
-        dest: 'build/client/test/theatersoft-client-test.js',
+        dest: 'dist/test/theatersoft-test.js',
         format: 'iife',
         moduleName: 'boot',
         sourceMap: 'inline'
     }
 
-module.exports =
+const targets =
 {
-    html (build) {
-        console.log('target client-test-html')
-        exec('mkdir -p build/client/test')
+    html () {
+        console.log('target test-html')
+        exec('mkdir -p dist/test')
         var
-            model = {svg: fs.readFileSync('client/res/icons.svg', 'utf8'), js: 'theatersoft-client-test.js'},
-            template = fs.readFileSync('client/test/test.template.html', 'utf8')
-        fs.writeFileSync('build/client/test/index.html', mustache.render(template, model))
+            model = {svg: fs.readFileSync('res/icons.svg', 'utf8'), js: 'theatersoft-test.js'},
+            template = fs.readFileSync('test/test.template.html', 'utf8')
+        fs.writeFileSync('dist/test/index.html', mustache.render(template, model))
     },
 
-    css (build) {
-        console.log('target client-test-css')
+    css () {
+        console.log('target test-css')
         require('stylus')(fs.readFileSync(`${__dirname}/styl/ts.styl`, 'utf8'))
             .set('compress', false)
             .set('paths', [`${__dirname}/../styl`, `${__dirname}/styl`])
             .include(require('nib').path)
             .render((err, css) => {
                 if (err) throw err
-                fs.writeFileSync('build/client/test/theatersoft.css', css)
+                fs.writeFileSync('dist/test/theatersoft.css', css)
             })
     },
 
-    bundle (build) {
+    bundle () {
         console.log('target bundle')
         rollup(options)
             .then(bundle =>
                 bundle.write(options))
     },
 
-    watch (build) {
-        console.log('target client-test-watch')
+    watch () {
+        console.log('target test-watch')
         const
             watch = require('rollup-watch'),
             watcher = watch({rollup}, options)
@@ -90,25 +90,27 @@ module.exports =
         require('chokidar').watch([`${__dirname}/../styl`, `${__dirname}/styl`])
             .on('change', path => {
                 console.log(path)
-                module.exports.css(build)
+                targets.css()
             })
     },
 
-    reload (build) {
-        console.log('target client-test-reload')
+    reload () {
+        console.log('target test-reload')
         const
             livereload = require('livereload'),
             read = n => {try {return fs.readFileSync(`${process.env.HOME}/.config/theatersoft/${n}`, 'utf8').trim()} catch (e) {}},
             server = livereload.createServer({
                 https: {key: read('server.key'), cert: read('server.cer')}
             })
-        server.watch('build/client/test')
+        server.watch('dist/test')
     },
 
-    all (build) {
-        console.log('target client-test-all')
-        this.html(build)
-        this.css(build)
-        this.bundle(build)
+    all () {
+        console.log('target test-all')
+        targets.html()
+        targets.css()
+        targets.bundle()
     }
 }
+
+module.exports = targets

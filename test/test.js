@@ -9,7 +9,7 @@ import {
     Switch
 } from '../src/ui'
 import '../src/resize'
-import '../../build/client/test/theatersoft.css'
+import '../dist/test/theatersoft.css'
 
 const tests = {}, test = (n, v) => tests[n] = v
 
