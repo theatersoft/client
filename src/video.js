@@ -1,4 +1,5 @@
 import focus from './focus'
+import {log} from '@theatersoft/bus'
 
 let
     currIndex = 0, prevIndex, nextIndex,
@@ -32,27 +33,21 @@ const
         sources[prevIndex].host($left).play(0)
         sources[currIndex].host($middle).play(1)
         sources[nextIndex].host($right).play(0)
-        //console.log(sources.map(s => s.playing))
+        //log(sources.map(s => s.playing))
     },
     rotate = dir => setOffset(-dir * paneWidth, () => {
-        console.log('transitionend rotate')
+        log('transitionend rotate')
         setOffset(0);
         changeSource(dir)
     }),
     setSources = names => {
         //TODO sources change
-        if (sources.length) {
-            console.log('duplicate setSources');
-            return
-        }
-
-        for (var i = 0; i < names.length; i++)
-            sources.push(new Source(names[i]))
-
+        sources.concat(names.map(n => new Source(n)))
+        if (!sources.length) return
         changeSource(Number(localStorage.sourceIndex) || 0)
     },
     imageError = () => {
-        console.log ("image error")
+        log("image error")
     },
     play = b => {
         sources.length && sources[currIndex].play(b)
@@ -137,8 +132,8 @@ const video = new class {
         this.name = 'video'
     }
 
-    init (cameraOrder) {
-        console.log('video.init')
+    init (cameras = []) {
+        log('video.init')
         $host = document.getElementById('video')
         $host.innerHTML = `<ul><li class="video-left"></li><li class="video-middle"></li><li class="video-right"></li></ul>`
         $container = $host.children[0]
@@ -150,7 +145,7 @@ const video = new class {
         window.onresize = setDimensions
         setDimensions()
         focus.push(video)
-        setSources(cameraOrder);
+        setSources(cameras)
         play(true)
     }
 }
@@ -166,7 +161,7 @@ export class Video extends mixinFocusable(Component) {
     }
 
     onGesture (ev) {
-        //console.log(ev.type, ev)
+        //log(ev.type, ev)
         ev.gesture.preventDefault()
         switch (ev.type) {
         case 'dragright':
@@ -204,7 +199,7 @@ export class Video extends mixinFocusable(Component) {
     }
 
     onKeydown (ev) {
-        console.log(ev.keyCode)
+        log(ev.keyCode)
         switch (ev.keyCode) {
         case 37: // Left
             rotate(-1)
