@@ -37,7 +37,7 @@ timeout(bus.started(), 2000)
             .then(config => {
                 console.log('Config get', config)
                 store.dispatch(setConfig(config))
-                video.init(config.cameraOrder)
+                video.init(config.cameras)
                 proxy('Device').getState().then(dispatchSetDevices)
                 render(<App/>)
             }))
