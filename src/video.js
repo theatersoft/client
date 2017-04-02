@@ -40,11 +40,10 @@ const
         setOffset(0);
         changeSource(dir)
     }),
-    setSources = names => {
+    setSources = (names = []) => {
         //TODO sources change
-        sources.concat(names.map(n => new Source(n)))
-        if (!sources.length) return
-        changeSource(Number(localStorage.sourceIndex) || 0)
+        if (sources.push(...names.map(n => new Source(n))))
+            changeSource(Number(localStorage.sourceIndex) || 0)
     },
     imageError = () => {
         log("image error")
@@ -132,7 +131,7 @@ const video = new class {
         this.name = 'video'
     }
 
-    init (cameras = []) {
+    init (cameras) {
         log('video.init')
         $host = document.getElementById('video')
         $host.innerHTML = `<ul><li class="video-left"></li><li class="video-middle"></li><li class="video-right"></li></ul>`
