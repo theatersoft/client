@@ -49,7 +49,7 @@ const focus = new (mixinEventEmitter(class {
 
 export default focus
 
-import {h, Component} from './ui'
+import {h, Component} from '@theatersoft/components'
 
 export function mixinFocusable (Base) {
     return class extends Base {

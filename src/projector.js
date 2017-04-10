@@ -1,4 +1,4 @@
-import {h, Component, Icon, Text, Switch} from './ui'
+import {h, Component, Icon, Text, Switch} from '@theatersoft/components'
 import focus from './focus'
 
 export const Projector = ({dispatchDeviceAction, value, id, onClose}) =>

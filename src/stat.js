@@ -1,4 +1,4 @@
-import {h, Component, grid, Icon, Text, Row, Col, row, rows, cols} from './ui'
+import {h, Component, grid, Icon, Text, Row, Col, row, rows, cols} from '@theatersoft/components'
 
 export const Stat = ({value = {}, Time, onClose}) => {
     const

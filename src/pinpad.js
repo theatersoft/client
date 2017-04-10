@@ -1,4 +1,4 @@
-import {h, Component, grid, Icon, Text} from './ui'
+import {h, Component, grid, Icon, Text} from '@theatersoft/components'
 import focus, {mixinFocusable} from './focus'
 import rpc from './rpc'
 import {refresh} from './auth'

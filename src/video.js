@@ -151,7 +151,7 @@ const video = new class {
 
 export default video
 
-import {h, Component} from './ui'
+import {h, Component} from '@theatersoft/components'
 import {mixinFocusable} from './focus'
 
 export class Video extends mixinFocusable(Component) {

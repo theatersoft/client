@@ -1,4 +1,4 @@
-import {h, Component, Icon} from './ui'
+import {h, Component, Icon} from '@theatersoft/components'
 import {mixinFocusable} from './focus'
 
 export default class Bar extends mixinFocusable(Component) {

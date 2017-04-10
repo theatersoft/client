@@ -6,7 +6,7 @@ import video from './video'
 import focus from './focus'
 import './resize'
 
-import {h, render, Component} from './ui'
+import {h, render, Component} from '@theatersoft/components'
 import {Focuser} from './focus'
 import {Video} from './video'
 import Bar from './bar'

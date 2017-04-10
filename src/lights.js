@@ -1,4 +1,4 @@
-import {h, Component, RowCols, Icon, Text, Switch} from './ui'
+import {h, Component, RowCols, Icon, Text, Switch} from '@theatersoft/components'
 
 export const Lights = ({dispatchDeviceAction, devices = [], onClose, values}, {}) => {
     return (
