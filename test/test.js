@@ -7,9 +7,9 @@ import {
     col, cols, row,
     Button,
     Switch
-} from '../src/ui'
+} from '@theatersoft/components'
 import '../src/resize'
-import '../dist/test/theatersoft.css'
+import '@theatersoft/components/components.css'
 
 const tests = {}, test = (n, v) => tests[n] = v
 
