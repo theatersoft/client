@@ -1,24 +1,18 @@
 import bus, {proxy, mixinEventEmitter, EventEmitter} from '@theatersoft/bus'
 import {auth} from './auth'
-bus.start({parent: {auth}})
-
-import video from './video'
 import './resize'
-
 import {h, render, Component, focus, Focuser} from '@theatersoft/components'
-import {Video} from './video'
+import {default as video, Video} from './components/video'
 import Bar from './components/bar'
 import Pinpad from './components/pinpad'
 import Stat from './components/stat'
 import Projector from './components/projector'
 import Lights from './components/lights'
-
 import {Provider} from './redux'
-
 import store from './store'
-console.log(store.getState())
-
 import {setConfig, setDevices} from './actions'
+
+bus.start({parent: {auth}})
 
 const dispatchSetDevices = state => {
     store.dispatch(setDevices(state))
