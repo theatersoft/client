@@ -1,7 +1,6 @@
-import {h, Component, grid, Icon, Text} from '@theatersoft/components'
-import focus, {mixinFocusable} from './focus'
-import rpc from './rpc'
-import {refresh} from './auth'
+import {h, Component, grid, Icon, Text, focus, mixinFocusable} from '@theatersoft/components'
+import rpc from '../../rpc'
+import {refresh} from '../../auth'
 
 export default class Pinpad extends mixinFocusable(Component) {
     constructor (props) {

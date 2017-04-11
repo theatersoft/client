@@ -1,4 +1,4 @@
-import focus from './focus'
+import {h, Component, focus, mixinFocusable} from '@theatersoft/components'
 import {log} from '@theatersoft/bus'
 
 let
@@ -150,9 +150,6 @@ const video = new class {
 }
 
 export default video
-
-import {h, Component} from '@theatersoft/components'
-import {mixinFocusable} from './focus'
 
 export class Video extends mixinFocusable(Component) {
     render () {

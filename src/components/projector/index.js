@@ -1,5 +1,4 @@
-import {h, Component, Icon, Text, Switch} from '@theatersoft/components'
-import focus from './focus'
+import {h, Component, Icon, Text, Switch, focus} from '@theatersoft/components'
 
 export const Projector = ({dispatchDeviceAction, value, id, onClose}) =>
     <div class="inset container">
@@ -13,9 +12,8 @@ export const Projector = ({dispatchDeviceAction, value, id, onClose}) =>
         <Icon icon="cross" cb={onClose}/>
     </div>
 
-import api from 'preact-redux'
-const {connect} = api
-import {deviceAction, switchAction} from './actions'
+import {connect} from '../../redux'
+import {deviceAction, switchAction} from '../../actions'
 
 const mapStateToProps = state => state.devices.Projector
 const mapDispatchToProps = dispatch => ({dispatchDeviceAction: action => dispatch(deviceAction(action))})

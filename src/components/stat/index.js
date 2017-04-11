@@ -1,4 +1,4 @@
-import {h, Component, grid, Icon, Text, Row, Col, row, rows, cols} from '@theatersoft/components'
+import {h, Component, grid, Icon, Text, Row, Col, row, rows, cols, focus} from '@theatersoft/components'
 
 export const Stat = ({value = {}, Time, onClose}) => {
     const
@@ -42,9 +42,7 @@ export const Stat = ({value = {}, Time, onClose}) => {
     )
 }
 
-import focus from './focus'
-import api from 'preact-redux'
-const {connect} = api
+import {connect} from '../../redux'
 
 const mapStateToProps = ({devices: {Hvac: {value} = {}}, Time}) => ({value, Time})
 

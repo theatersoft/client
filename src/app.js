@@ -3,21 +3,18 @@ import {auth} from './auth'
 bus.start({parent: {auth}})
 
 import video from './video'
-import focus from './focus'
 import './resize'
 
-import {h, render, Component} from '@theatersoft/components'
-import {Focuser} from './focus'
+import {h, render, Component, focus, Focuser} from '@theatersoft/components'
 import {Video} from './video'
-import Bar from './bar'
-import Pinpad from './pinpad'
-import Stat from './stat'
-import Projector from './projector'
-import Lights from './lights'
+import Bar from './components/bar'
+import Pinpad from './components/pinpad'
+import Stat from './components/stat'
+import Projector from './components/projector'
+import Lights from './components/lights'
 
-//import {Provider} from 'preact-redux'
-import api from 'preact-redux'
-const {Provider} = api
+import {Provider} from './redux'
+
 import store from './store'
 console.log(store.getState())
 

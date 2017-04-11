@@ -1,4 +1,4 @@
-import {h, Component, RowCols, Icon, Text, Switch} from '@theatersoft/components'
+import {h, Component, RowCols, Icon, Text, Switch, focus} from '@theatersoft/components'
 
 export const Lights = ({dispatchDeviceAction, devices = [], onClose, values}, {}) => {
     return (
@@ -16,11 +16,9 @@ export const Lights = ({dispatchDeviceAction, devices = [], onClose, values}, {}
     )
 }
 
-import focus from './focus'
-import api from 'preact-redux'
-const {connect} = api
-import {bindActionCreators} from 'redux' // TODO
-import {deviceAction, switchAction} from './actions'
+import {connect} from '../../redux'
+
+import {deviceAction, switchAction} from '../../actions'
 
 const
     mapStateToProps = ({devices = {}}) => ({
