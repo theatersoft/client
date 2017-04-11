@@ -13,7 +13,6 @@ const
     commonjs = require('rollup-plugin-commonjs'),
     nodeResolve = require('rollup-plugin-node-resolve'),
     babel = require('rollup-plugin-babel'),
-//buble = require('rollup-plugin-buble'),
     replace = require('rollup-plugin-replace'),
     sourcemaps = require('rollup-plugin-sourcemaps')
 
@@ -75,32 +74,26 @@ const targets = {
         const bundle = await rollup({
             entry: `${__dirname}/src/app.js`,
             plugins: [
-                alias({
-                    //'preact-redux': `${__dirname}/../../preact-redux/dist/preact-redux.esm.js`
-                    'preact-redux': `./preact-redux.esm.js`
-                }),
+                //alias({
+                //}),
                 nodeResolve({
                     jsnext: true,
-                    //module: true,
+                    module: true,
                     //browser: true, // https://github.com/rollup/rollup-plugin-node-resolve/issues/55
                     main: true,
                 }),
-                commonjs({
-                    include: [
-                        `${__dirname}/node_modules/**`,
-                        `${__dirname}/src/**`
-                    ]
-                }),
+                //commonjs({
+                //    include: [
+                //        `${__dirname}/node_modules/**`,
+                //        `${__dirname}/src/**`
+                //    ]
+                //}),
                 replace({
                     'process.env.NODE_ENV': JSON.stringify('production')
                 }),
-                sourcemaps(),
-                typeof buble !== 'undefined' && buble({
-                    target: {chrome: 52},
-                    transforms: {modules: false},
-                    jsx: 'h'
-                }),
-                typeof babel !== 'undefined' && babel({
+                //sourcemaps(),
+                babel({
+                    exclude: 'node_modules/**',
                     plugins: [
                         [require("babel-plugin-transform-object-rest-spread"), {useBuiltIns: true}],
                         require("babel-plugin-transform-class-properties"),
