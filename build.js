@@ -24,7 +24,7 @@ const targets = {
     res () {
         console.log('target res')
         exec('mkdir -p dist/res')
-        exec('cp res/*.ttf dist/res')
+        exec(`cp ${components}/res/* dist/res`)
     },
 
     svg () {
@@ -43,17 +43,17 @@ const targets = {
                     fs.readFileSync(`svg/${name}`)
                 )
             })
-        fs.writeFileSync('res/icons.svg', svg.toString({
+        fs.writeFileSync('_icons.svg', svg.toString({
             inline: true
         }))
-        exec(`sed -i 's|<svg|<svg display="none"|g' res/icons.svg`)
+        exec(`sed -i 's|<svg|<svg display="none"|g' _icons.svg`)
     },
 
     html () {
         console.log('target html')
         exec('mkdir -p dist/dev')
         var
-            model = {svg: fs.readFileSync('res/icons.svg', 'utf8'), js: 'theatersoft-client.min.js'},
+            model = {svg: fs.readFileSync('_icons.svg', 'utf8'), js: 'theatersoft-client.min.js'},
             template = fs.readFileSync('index.template.html', 'utf8')
         fs.writeFileSync('dist/index.html', mustache.render(template, model))
         model.js = 'theatersoft-client.js'
@@ -80,8 +80,7 @@ const targets = {
                     }),
                     extensions: ['.styl'],
                     //sourceMap: true, // true, "inline" or false
-                    //extract: 'dist/styles.css'
-                    extract: true
+                    extract: 'dist/theatersoft.css'
                 }),
                 nodeResolve({
                     jsnext: true,
