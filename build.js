@@ -25,18 +25,6 @@ const targets = {
         exec('cp res/*.ttf dist/res')
     },
 
-    //css () {
-    //    console.log('target css')
-    //    require('stylus')(fs.readFileSync(`${__dirname}/styl/ts.styl`, 'utf8'))
-    //        .set('compress', false)
-    //        .set('paths', [`${__dirname}/styl`])
-    //        .include(require('nib').path)
-    //        .render((err, css) => {
-    //            if (err) throw err
-    //            fs.writeFileSync('dist/theatersoft.css', css)
-    //        })
-    //},
-
     svg () {
         console.log('target svg')
         const svg = require('svgstore')({
@@ -74,7 +62,7 @@ const targets = {
         console.log('target bundle')
         exec('rm -f dist/dev/*.js dist/*.js')
         const bundle = await rollup({
-            entry: `${__dirname}/src/app.js`,
+            entry: 'src/index.js',
             plugins: [
                 //alias({
                 //}),
