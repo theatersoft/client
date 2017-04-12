@@ -78,7 +78,7 @@ const targets = {
                             err ? reject(err) : resolve({code, map: renderer.sourcemap})
                         )
                     }),
-                    extensions: ['.styl'],
+                    extensions: ['.css', '.styl'],
                     //sourceMap: true, // true, "inline" or false
                     extract: 'dist/theatersoft.css'
                 }),
