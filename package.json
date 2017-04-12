@@ -25,7 +25,6 @@
     "build-test-css": "node build.js test-css",
     "build-test-watch-reload": "node build.js test-all && node build.js test-watch & node build.js test-reload & wait",
     "build-watch": "node build.js watch",
-    "build-watch-css": "node build.js watch-css",
     "publish": "node build.js publish"
   },
   "distScripts": {

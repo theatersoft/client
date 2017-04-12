@@ -21,6 +21,12 @@ const
     stylus = require('stylus')
 
 const targets = {
+    clean () {
+        console.log('target clean')
+        exec('mkdir -p dist')
+        exec('rm -rf dist/*')
+    },
+
     res () {
         console.log('target res')
         exec('mkdir -p dist/res')
@@ -62,7 +68,6 @@ const targets = {
 
     async bundle () {
         console.log('target bundle')
-        exec('rm -f dist/dev/*.js dist/*.js')
         const bundle = await rollup({
             entry: 'src/index.js',
             plugins: [
@@ -156,24 +161,18 @@ const targets = {
         exec('npm publish --access=public dist')
     },
 
-    watch () {
-        require('chokidar').watch('src')
+    async watch () {
+        await targets.all()
+        require('chokidar').watch(['src', `${components}/components.css`])
             .on('change', path => {
-                console.log(path)
+                console.log(new Date().toLocaleTimeString(), path)
                 targets.bundle()
-            })
-    },
-
-    'watch-css' () {
-        require('chokidar').watch('styl')
-            .on('change', path => {
-                console.log(path)
-                targets.css()
             })
     },
 
     async all () {
         console.log('target all')
+        targets.clean()
         targets.res()
         targets.svg()
         //targets.css()
