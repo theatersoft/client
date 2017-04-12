@@ -14,7 +14,9 @@ const
     nodeResolve = require('rollup-plugin-node-resolve'),
     babel = require('rollup-plugin-babel'),
     replace = require('rollup-plugin-replace'),
-    sourcemaps = require('rollup-plugin-sourcemaps')
+    sourcemaps = require('rollup-plugin-sourcemaps'),
+    postcss = require('rollup-plugin-postcss'),
+    stylus = require('stylus')
 
 const targets = {
     res () {
@@ -23,17 +25,17 @@ const targets = {
         exec('cp res/*.ttf dist/res')
     },
 
-    css () {
-        console.log('target css')
-        require('stylus')(fs.readFileSync(`${__dirname}/styl/ts.styl`, 'utf8'))
-            .set('compress', false)
-            .set('paths', [`${__dirname}/styl`])
-            .include(require('nib').path)
-            .render((err, css) => {
-                if (err) throw err
-                fs.writeFileSync('dist/theatersoft.css', css)
-            })
-    },
+    //css () {
+    //    console.log('target css')
+    //    require('stylus')(fs.readFileSync(`${__dirname}/styl/ts.styl`, 'utf8'))
+    //        .set('compress', false)
+    //        .set('paths', [`${__dirname}/styl`])
+    //        .include(require('nib').path)
+    //        .render((err, css) => {
+    //            if (err) throw err
+    //            fs.writeFileSync('dist/theatersoft.css', css)
+    //        })
+    //},
 
     svg () {
         console.log('target svg')
@@ -42,19 +44,19 @@ const targets = {
             cleanObjects: ['fill', 'style'],
             customSVGAttrs: {display: "none"} // TODO https://github.com/svgstore/svgstore/pull/15
         })
-        fs.readdirSync(`${__dirname}/svg`)
+        fs.readdirSync('svg')
             .filter(name => name.slice(-4) === '.svg')
             .forEach(name => {
                 console.log(name)
                 svg.add(
                     `svg-${name.slice(0, -4)}`,
-                    fs.readFileSync(`${__dirname}/svg/${name}`)
+                    fs.readFileSync(`svg/${name}`)
                 )
             })
-        fs.writeFileSync(`${__dirname}/res/icons.svg`, svg.toString({
+        fs.writeFileSync('res/icons.svg', svg.toString({
             inline: true
         }))
-        exec(`sed -i 's|<svg|<svg display="none"|g' ${__dirname}/res/icons.svg`)
+        exec(`sed -i 's|<svg|<svg display="none"|g' res/icons.svg`)
     },
 
     html () {
@@ -76,18 +78,28 @@ const targets = {
             plugins: [
                 //alias({
                 //}),
+                postcss({
+                    preprocessor: (content, id) => new Promise((resolve, reject) => {
+                        const renderer = stylus(content, {
+                            filename: id,
+                            sourcemap: {inline: true},
+                            compress: false,
+                            paths: ['styl']
+                        })
+                        renderer.render((err, code) =>
+                            err ? reject(err) : resolve({code, map: renderer.sourcemap})
+                        )
+                    }),
+                    extensions: ['.styl'],
+                    //sourceMap: true, // true, "inline" or false
+                    extract: 'dist/styles.css'
+                }),
                 nodeResolve({
                     jsnext: true,
                     module: true,
                     //browser: true, // https://github.com/rollup/rollup-plugin-node-resolve/issues/55
                     main: true,
                 }),
-                //commonjs({
-                //    include: [
-                //        `${__dirname}/node_modules/**`,
-                //        `${__dirname}/src/**`
-                //    ]
-                //}),
                 replace({
                     'process.env.NODE_ENV': JSON.stringify('production')
                 }),
@@ -157,7 +169,7 @@ const targets = {
     },
 
     watch () {
-        require('chokidar').watch(`${__dirname}/src`)
+        require('chokidar').watch('src')
             .on('change', path => {
                 console.log(path)
                 targets.bundle()
@@ -165,7 +177,7 @@ const targets = {
     },
 
     'watch-css' () {
-        require('chokidar').watch(`${__dirname}/styl`)
+        require('chokidar').watch('styl')
             .on('change', path => {
                 console.log(path)
                 targets.css()
@@ -176,7 +188,7 @@ const targets = {
         console.log('target all')
         targets.res()
         targets.svg()
-        targets.css()
+        //targets.css()
         targets.html()
         await targets.bundle()
         targets.package()
