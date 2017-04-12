@@ -176,7 +176,6 @@ const targets = {
         targets.clean()
         targets.res()
         targets.svg()
-        //targets.css()
         targets.html()
         await targets.bundle()
         targets.package()
@@ -184,4 +183,3 @@ const targets = {
 }
 
 Object.assign(target, targets)
-Object.entries(require('./test/build-test.js')).forEach(([k, v]) => {target[`test-${k}`] = v})
