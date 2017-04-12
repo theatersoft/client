@@ -11,7 +11,6 @@ const
     mustache = require('mustache'),
     babelCore = require('babel-core'),
     {rollup} = require('rollup'),
-    alias = require('rollup-plugin-alias'),
     commonjs = require('rollup-plugin-commonjs'),
     nodeResolve = require('rollup-plugin-node-resolve'),
     babel = require('rollup-plugin-babel'),
@@ -66,8 +65,6 @@ const targets = {
         const bundle = await rollup({
             entry: 'src/index.js',
             plugins: [
-                //alias({
-                //}),
                 postcss({
                     preprocessor: (content, id) => new Promise((resolve, reject) => {
                         const renderer = stylus(content, {
