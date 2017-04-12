@@ -6,6 +6,8 @@ const
     name = pkg.name.startsWith('@theatersoft') && pkg.name.slice(13),
     DIST = process.env.DIST === 'true',
     fs = require('fs'),
+    path = require('path'),
+    components = path.dirname(require.resolve('@theatersoft/components')),
     mustache = require('mustache'),
     babelCore = require('babel-core'),
     {rollup} = require('rollup'),
@@ -14,7 +16,7 @@ const
     nodeResolve = require('rollup-plugin-node-resolve'),
     babel = require('rollup-plugin-babel'),
     replace = require('rollup-plugin-replace'),
-    sourcemaps = require('rollup-plugin-sourcemaps'),
+    //sourcemaps = require('rollup-plugin-sourcemaps'),
     postcss = require('rollup-plugin-postcss'),
     stylus = require('stylus')
 
@@ -72,7 +74,7 @@ const targets = {
                             filename: id,
                             sourcemap: {inline: true},
                             compress: false,
-                            paths: ['styl']
+                            paths: ['styl', components]
                         })
                         renderer.render((err, code) =>
                             err ? reject(err) : resolve({code, map: renderer.sourcemap})
@@ -80,7 +82,8 @@ const targets = {
                     }),
                     extensions: ['.styl'],
                     //sourceMap: true, // true, "inline" or false
-                    extract: 'dist/styles.css'
+                    //extract: 'dist/styles.css'
+                    extract: true
                 }),
                 nodeResolve({
                     jsnext: true,

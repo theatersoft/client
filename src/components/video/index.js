@@ -1,5 +1,6 @@
 import {h, Component, focus, mixinFocusable} from '@theatersoft/components'
 import {log} from '@theatersoft/bus'
+import './index.styl'
 
 let
     currIndex = 0, prevIndex, nextIndex,
