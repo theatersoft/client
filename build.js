@@ -77,7 +77,7 @@ const targets = {
                             filename: id,
                             sourcemap: {inline: true},
                             compress: false,
-                            paths: ['styl', components]
+                            paths: ['styl', 'node_modules']
                         })
                         renderer.render((err, code) =>
                             err ? reject(err) : resolve({code, map: renderer.sourcemap})
