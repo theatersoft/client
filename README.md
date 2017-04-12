@@ -1,2 +1,2 @@
-# server
-Theatersoft Server
+# client
+Theatersoft Client

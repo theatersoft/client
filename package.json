@@ -12,6 +12,7 @@
     "security",
     "surveillance"
   ],
+  "repository": "theatersoft/client",
   "private": true,
   "scripts": {
     "link": "npm link @theatersoft/bus @theatersoft/components",
