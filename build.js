@@ -164,7 +164,7 @@ const targets = {
 
     async watch () {
         await targets.all()
-        require('chokidar').watch(['src', `${components}/components.css`])
+        require('chokidar').watch(['src', components])
             .on('change', path => {
                 console.log(new Date().toLocaleTimeString(), path)
                 targets.bundle()
