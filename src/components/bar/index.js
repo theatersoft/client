@@ -1,4 +1,5 @@
-import {h, Component, Icon, mixinFocusable} from '@theatersoft/components'
+import {h, Component} from 'preact'
+import {Icon, mixinFocusable} from '@theatersoft/components'
 import './index.styl'
 
 export default class Bar extends mixinFocusable(Component) {

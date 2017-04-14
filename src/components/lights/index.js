@@ -1,4 +1,5 @@
-import {h, Component, RowCols, Icon, Text, Switch, focus} from '@theatersoft/components'
+import {h, Component} from 'preact'
+import {RowCols, Icon, Text, Switch, focus} from '@theatersoft/components'
 
 export const Lights = ({dispatchDeviceAction, devices = [], onClose, values}, {}) => {
     return (

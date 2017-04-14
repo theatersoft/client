@@ -1,4 +1,5 @@
-import {h, Component, Icon, Text, Switch, focus} from '@theatersoft/components'
+import {h, Component} from 'preact'
+import {Icon, Text, Switch, focus} from '@theatersoft/components'
 
 export const Projector = ({dispatchDeviceAction, value, id, onClose}) =>
     <div class="inset container">

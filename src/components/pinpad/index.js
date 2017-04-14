@@ -1,4 +1,5 @@
-import {h, Component, grid, Icon, Text, focus, mixinFocusable} from '@theatersoft/components'
+import {h, Component} from 'preact'
+import {grid, Icon, Text, focus, mixinFocusable} from '@theatersoft/components'
 import rpc from '../../rpc'
 import {refresh} from '../../auth'
 import './index.styl'

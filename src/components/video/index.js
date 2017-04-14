@@ -1,4 +1,5 @@
-import {h, Component, focus, mixinFocusable} from '@theatersoft/components'
+import {h, Component} from 'preact'
+import {focus, mixinFocusable} from '@theatersoft/components'
 import {log} from '@theatersoft/bus'
 import './index.styl'
 

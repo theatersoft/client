@@ -1,4 +1,5 @@
-import {h, Component, grid, Icon, Text, Row, Col, row, rows, cols, focus} from '@theatersoft/components'
+import {h, Component} from 'preact'
+import {grid, Icon, Text, Row, Col, row, rows, cols, focus} from '@theatersoft/components'
 import './index.styl'
 
 export const Stat = ({value = {}, Time, onClose}) => {
