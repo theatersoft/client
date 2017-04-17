@@ -1,8 +1,8 @@
 import bus, {proxy, mixinEventEmitter, EventEmitter} from '@theatersoft/bus'
 import {auth} from './auth'
 import './resize'
-import {h} from 'preact'
-import {render, focus, Focuser} from '@theatersoft/components'
+import {h, render} from 'preact'
+import {focus, Focuser} from '@theatersoft/components'
 import {default as video, Video} from './components/video'
 import Bar from './components/bar'
 import Pinpad from './components/pinpad'
@@ -33,7 +33,7 @@ timeout(bus.started(), 2000)
                 store.dispatch(setConfig(config))
                 video.init(config.cameras)
                 proxy('Device').getState().then(dispatchSetDevices)
-                render(<App/>)
+                render(<App/>, document.getElementById('ui'))
             }))
     .catch(() => {
         focus.push('pinpad')
