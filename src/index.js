@@ -15,15 +15,32 @@ import {setConfig, setDevices} from './actions'
 import '@theatersoft/components/components.css'
 import './index.styl'
 
+const
+    timeout = (p, ms) => Promise.race([p, new Promise((_, j) => setTimeout(j, ms))]),
+    dispatchSetDevices = state => store.dispatch(setDevices(state)),
+    App = () => {
+        const items = [
+            <Video name="video"/>,
+            <Bar name="bar" items={{
+                logo: () => focus.push('lights'),
+                spinner: () => window.location.reload(),
+                cross: () => focus.pop(),
+                thermometer: () => focus.push('stat'),
+                list: () => focus.push('projector')
+            }}/>,
+            <Projector name="projector"/>,
+            <Stat name="stat"/>,
+            <Lights name="lights"/>
+        ]
+        return (
+            <Provider store={store}>
+                <Focuser focused="video" items={items}/>
+            </Provider>
+        )
+    }
+
 bus.start({parent: {auth}})
-
-const dispatchSetDevices = state => {
-    store.dispatch(setDevices(state))
-}
 bus.registerListener('Device.state', dispatchSetDevices)
-
-const timeout = (p, ms) => Promise.race([p, new Promise((_, j) => setTimeout(j, ms))])
-
 focus.init()
 timeout(bus.started(), 2000)
     .then(() =>
@@ -37,26 +54,5 @@ timeout(bus.started(), 2000)
             }))
     .catch(() => {
         focus.push('pinpad')
-        render(<Pinpad/>)
+        render(<Pinpad/>, document.getElementById('ui'))
     })
-
-const App = () => {
-    const items = [
-        <Video name="video"/>,
-        <Bar name="bar" items={{
-                logo: () => focus.push('lights'),
-                spinner: () => window.location.reload(),
-                cross: () => focus.pop(),
-                thermometer: () => focus.push('stat'),
-                list: () => focus.push('projector')
-            }}/>,
-        <Projector name="projector"/>,
-        <Stat name="stat"/>,
-        <Lights name="lights"/>
-    ]
-    return (
-        <Provider store={store}>
-            <Focuser focused="video" items={items}/>
-        </Provider>
-    )
-}
