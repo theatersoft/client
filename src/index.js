@@ -41,7 +41,6 @@ const
 
 bus.start({parent: {auth}})
 bus.registerListener('Device.state', dispatchSetDevices)
-focus.init()
 timeout(bus.started(), 2000)
     .then(() =>
         proxy('Config').get()
