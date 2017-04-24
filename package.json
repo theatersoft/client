@@ -16,10 +16,9 @@
   "private": true,
   "scripts": {
     "link": "npm link @theatersoft/bus @theatersoft/components",
-    "build": "time -p node build.js && ls -l dist",
+    "build": "node build.js && ls -l dist",
     "build:dist": "DIST=true npm run build",
-    "build-bundle": "time -p node build.js bundle",
-    "build-css": "node build.js css",
+    "build-bundle": "node build.js bundle",
     "build-html": "node build.js html",
     "build-svg": "node build.js svg",
     "build-watch": "node build.js watch",
