@@ -1,6 +1,6 @@
 import {h, Component} from 'preact'
 import {grid, Icon, Text, Row, Col, row, rows, cols, focus} from '@theatersoft/components'
-import './index.styl'
+import style from './index.styl'
 
 export const Stat = ({value = {}, Time, onClose}) => {
     const
@@ -8,10 +8,10 @@ export const Stat = ({value = {}, Time, onClose}) => {
         _time = new Date(Time),
         date = _time.toLocaleDateString('en-US', {weekday: "short", month: "short", day: "numeric"}),
         time = _time.toLocaleTimeString('en-US', {hour: "numeric", minute: "numeric"}).toLowerCase(),
-        T = (t, a) => <Text text={t} id={a}/>
+        T = (t, a) => <Text text={t} id={style[a]}/>
     return (
-        <div class="container" id="stat">
-            <Col>
+        <div class="container" id={style.stat}>
+            <Col class="col">
                 {T(date)}
                 {T(time, 'time')}
                 {T('OUTDOOR')}
@@ -24,18 +24,18 @@ export const Stat = ({value = {}, Time, onClose}) => {
                 {T(Z1RT + '°', 'rt')}
                 {T(`${Z1RH}% Humidity ${HUMID}`, 'hum')}
                 <Row>
-                    <div class="col-1-2">
+                    <div class={style['col-1-2']}>
                         {T(Z1HTSP, 'htsp')}
                         <Row>
-                            <div class="col-1-4"><Icon icon="arrow-down"/></div>
-                            <div class="col-1-4"><Icon icon="arrow-up"/></div>
+                            <div class={style['col-1-4']}><Icon icon="arrow-down"/></div>
+                            <div class={style['col-1-4']}><Icon icon="arrow-up"/></div>
                         </Row>
                     </div>
-                    <div class="col-1-2">
+                    <div class={style['col-1-2']}>
                         {T(Z1CLSP, 'clsp')}
                         <Row>
-                            <div class="col-1-4"><Icon icon="arrow-down"/></div>
-                            <div class="col-1-4"><Icon icon="arrow-up"/></div>
+                            <div class={style['col-1-4']}><Icon icon="arrow-down"/></div>
+                            <div class={style['col-1-4']}><Icon icon="arrow-up"/></div>
                         </Row>
                     </div>
                 </Row>
