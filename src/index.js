@@ -12,7 +12,6 @@ import Lights from './components/lights'
 import {Provider} from './redux'
 import store from './store'
 import {setConfig, setDevices} from './actions'
-import '@theatersoft/components/components.css'
 import './index.styl'
 
 const

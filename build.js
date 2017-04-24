@@ -18,7 +18,10 @@ const
     replace = require('rollup-plugin-replace'),
     //sourcemaps = require('rollup-plugin-sourcemaps'),
     postcss = require('rollup-plugin-postcss'),
-    stylus = require('stylus')
+    stylus = require('stylus'),
+    postcssModules = require('postcss-modules'),
+    cssExportMap = {},
+    postcssImport = require("postcss-import")
 
 const targets = {
     clean () {
@@ -85,7 +88,15 @@ const targets = {
                     }),
                     extensions: ['.css', '.styl'],
                     //sourceMap: true, // true, "inline" or false
-                    extract: 'dist/theatersoft.css'
+                    extract: 'dist/theatersoft.css',
+                    plugins: [
+                        postcssModules({
+                            getJSON(id, exportTokens) {cssExportMap[id] = exportTokens},
+                            globalModulePaths: ['@theatersoft/components/components.css']
+                        }),
+                        postcssImport()
+                    ],
+                    getExport: id => cssExportMap[id]
                 }),
                 nodeResolve({
                     jsnext: true,
