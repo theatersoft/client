@@ -4,21 +4,36 @@
     top h(8)
     padding-left h(19)
     text-align center
-    .text
+    :global .text
         height h(22)
         width h(71)
         font-size h(16)
         color color-accent
-    .key, .iconpad
+    :global .iconpad
         height h(18)
         width h(21)
-    .text, .key, .iconpad
+    .key
+        height h(18)
+        width h(21)
+    :global .text
+        border-radius h(2)
+        border h(1) solid color
+        background-color color-back
+    :global .iconpad
+        border-radius h(2)
+        border h(1) solid color
+        background-color color-back
+    .key
         border-radius h(2)
         border h(1) solid color
         background-color color-back
     .key
         border h(1) solid color-accent
-    .key:hover,.key:focus,.iconpad:hover,.iconpad:focus
+    :global .iconpad:hover, :global .iconpad:focus
+        border h(1) solid color-focus
+        color color-focus
+        background-color color-focus-back
+    .key:hover,.key:focus
         border h(1) solid color-focus
         color color-focus
         background-color color-focus-back

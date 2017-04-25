@@ -2,7 +2,7 @@ import {h, Component} from 'preact'
 import {grid, Icon, Text, focus, mixinFocusable} from '@theatersoft/components'
 import rpc from '../../rpc'
 import {refresh} from '../../auth'
-import './index.styl'
+import style from './index.styl'
 
 export default class Pinpad extends mixinFocusable(Component) {
     constructor (props) {
@@ -30,8 +30,8 @@ export default class Pinpad extends mixinFocusable(Component) {
 
     render ({}, {pin}) {
         const key = n =>
-            <div class="key" onClick={() => this.onkey(n)}>{n}</div>
-        return <div class="container" id="pinpad">
+            <div class={style.key} onClick={() => this.onkey(n)}>{n}</div>
+        return <div class="container" id={style.pinpad}>
             {grid([
                 [<Text text={pin}/>],
                 [key(1), key(2), key(3), <Icon icon="cross" cb={() => focus.pop()}/>],
