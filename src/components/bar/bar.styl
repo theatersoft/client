@@ -10,16 +10,16 @@
     [class^="col-"]
         float left
         padding h(2)
-    :global .iconpad
+    :global .icon
         color theme-text
         background-color theme-background-transparent
         border h(1) solid transparent
         border-radius h(2)
         padding h(2)
-        .icon
+        svg
             height h(16)
             width h(16)
-    .iconpad:hover,:focus
+    :global(.icon:hover),:focus
         border h(1) solid color-accent
         color color-accent
         box-sizing border-box
