@@ -9,31 +9,19 @@
         width h(71)
         font-size h(16)
         color color-accent
-    :global .iconpad
+    .key, :global(.icon)
         height h(18)
         width h(21)
-    .key
-        height h(18)
-        width h(21)
-    :global .text
-        border-radius h(2)
-        border h(1) solid color
-        background-color color-back
-    :global .iconpad
-        border-radius h(2)
-        border h(1) solid color
-        background-color color-back
-    .key
+        svg
+            height h(10)
+            width h(10)
+    .key, :global(.text), :global(.icon)
         border-radius h(2)
         border h(1) solid color
         background-color color-back
     .key
         border h(1) solid color-accent
-    :global .iconpad:hover, :global .iconpad:focus
-        border h(1) solid color-focus
-        color color-focus
-        background-color color-focus-back
-    .key:hover,.key:focus
+    .key:hover, .key:focus, :global(.icon:hover), :global(.icon:focus)
         border h(1) solid color-focus
         color color-focus
         background-color color-focus-back
