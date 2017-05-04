@@ -76,6 +76,7 @@ const targets = {
             plugins: [
                 postcss({
                     preprocessor: (content, id) => new Promise((resolve, reject) => {
+                        console.log('preprocess', id)
                         const renderer = stylus(content, {
                             filename: id,
                             sourcemap: {inline: true},
