@@ -45,7 +45,7 @@
     "nib": "~1.0.3",
     "postcss-import": "^9.1.0",
     "postcss-modules": "^0.6.4",
-    "preact": "^6.4.0",
+    "preact": "^8.1.0",
     "preact-redux": "^2.0.1",
     "react-redux": "^5.0.0",
     "redux": "^3.6.0",
