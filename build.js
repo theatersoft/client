@@ -16,7 +16,7 @@ const
     nodeResolve = require('rollup-plugin-node-resolve'),
     babel = require('rollup-plugin-babel'),
     replace = require('rollup-plugin-replace'),
-    //sourcemaps = require('rollup-plugin-sourcemaps'),
+//sourcemaps = require('rollup-plugin-sourcemaps'),
     postcss = require('rollup-plugin-postcss'),
     stylus = require('stylus'),
     postcssModules = require('postcss-modules'),
@@ -176,11 +176,12 @@ const targets = {
 
     async watch () {
         await targets.all()
-        require('chokidar').watch(['src', components])
+        require('chokidar').watch(['src', `${components}/*.js`])
             .on('change', path => {
                 console.log(new Date().toLocaleTimeString(), path)
                 targets.bundle()
             })
+            .on('error', e => console.log(e))
     },
 
     async all () {
