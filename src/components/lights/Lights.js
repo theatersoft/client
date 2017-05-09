@@ -1,18 +1,17 @@
 import {h, Component} from 'preact'
-import {RowCols, Icon, Text, Switch, focus} from '@theatersoft/components'
+import {Icon, List, ListItem, Switch, focus} from '@theatersoft/components'
 
 export const Lights = ({dispatchDeviceAction, devices = [], onClose, values}, {}) => {
     return (
         <div class="inset container">
-            <Icon icon="cross" cb={onClose}/> {
-            devices.map(({name, id, value}) =>
-                <RowCols>
-                    <Text text={name}/>
-                    <Switch
-                        checked={value}
-                        onChange={() => dispatchDeviceAction(switchAction(value, id))}
-                    />
-                </RowCols>)}
+            <Icon icon="cross" cb={onClose}/>
+            <List>
+                {devices.map(({name, id, value}) =>
+                    <ListItem label={name}>
+                        <Switch checked={value} onChange={() => dispatchDeviceAction(switchAction(value, id))}/>
+                    </ListItem>
+                )}
+            </List>
         </div>
     )
 }
