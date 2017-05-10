@@ -1,17 +1,17 @@
 import {h, Component} from 'preact'
 import {Icon, ListItem, Switch, focus} from '@theatersoft/components'
 
-export const Projector = ({dispatchDeviceAction, value, id, onClose}) =>
-    <div class="inset container">
-        <Icon icon="cross" cb={onClose}/>
-        <ListItem label="Projector">
-            <Switch
-                checked={value}
-                onChange={() => dispatchDeviceAction(switchAction(value, id))}
-            />
-        </ListItem>
-    </div>
-
+export const Projector = ({dispatchDeviceAction, value, id, onClose}) => {
+    const click = () => dispatchDeviceAction(switchAction(value, id))
+    return (
+        <div class="inset container">
+            <Icon icon="cross" cb={onClose}/>
+            <ListItem label="Projector" onClick={click}>
+                <Switch checked={value} onChange={click}/>
+            </ListItem>
+        </div>
+    )
+}
 import {connect} from '../../redux'
 import {deviceAction, switchAction} from '../../actions'
 

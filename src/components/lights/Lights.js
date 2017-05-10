@@ -6,11 +6,14 @@ export const Lights = ({dispatchDeviceAction, devices = [], onClose, values}, {}
         <div class="inset container">
             <Icon icon="cross" cb={onClose}/>
             <List>
-                {devices.map(({name, id, value}) =>
-                    <ListItem label={name}>
-                        <Switch checked={value} onChange={() => dispatchDeviceAction(switchAction(value, id))}/>
-                    </ListItem>
-                )}
+                {devices.map(({name, id, value}) => {
+                    const click = () => dispatchDeviceAction(switchAction(value, id))
+                    return (
+                        <ListItem label={name} onClick={click}>
+                            <Switch checked={value} onChange={click}/>
+                        </ListItem>
+                    )
+                })}
             </List>
         </div>
     )
