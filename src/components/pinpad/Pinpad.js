@@ -1,5 +1,6 @@
 import {h, Component} from 'preact'
-import {grid, Icon, Text, focus, mixinFocusable} from '@theatersoft/components'
+import {grid, Icon, Text} from '@theatersoft/components'
+import {focus, mixinFocusable} from '@theatersoft/focus'
 import rpc from '../../rpc'
 import {refresh} from '../../auth'
 import style from './pinpad.styl'

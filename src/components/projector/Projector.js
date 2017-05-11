@@ -1,5 +1,6 @@
 import {h, Component} from 'preact'
-import {Icon, ListItem, Switch, focus} from '@theatersoft/components'
+import {Icon, ListItem, Switch} from '@theatersoft/components'
+import {focus} from '@theatersoft/focus'
 
 export const Projector = ({dispatchDeviceAction, value, id, onClose}) => {
     const click = () => dispatchDeviceAction(switchAction(value, id))

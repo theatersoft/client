@@ -1,5 +1,6 @@
 import {h, Component} from 'preact'
-import {focus, mixinFocusable} from '@theatersoft/components'
+import {Ripple} from '@theatersoft/components'
+import {focus, mixinFocusable} from '@theatersoft/focus'
 import {log} from '@theatersoft/bus'
 import './video.styl'
 
@@ -153,14 +154,14 @@ const video = new class {
 
 export default video
 
-export class Video extends mixinFocusable(Component) {
-    render () {
-        return <div></div>
+export const Video = Ripple({centered: false})(class extends mixinFocusable(Component) {
+    render ({children}) {
+        return <div>{children}</div>
     }
 
     onGesture (ev) {
         //log(ev.type, ev)
-        ev.gesture.preventDefault()
+        //ev.gesture.preventDefault()
         switch (ev.type) {
         case 'dragright':
         case 'dragleft':
@@ -211,4 +212,4 @@ export class Video extends mixinFocusable(Component) {
             break
         }
     }
-}
+})

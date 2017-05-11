@@ -15,7 +15,7 @@
   "repository": "theatersoft/client",
   "private": true,
   "scripts": {
-    "link": "npm link @theatersoft/bus @theatersoft/components",
+    "link": "npm link @theatersoft/bus @theatersoft/components @theatersoft/focus",
     "build": "node build.js && ls -l dist",
     "build:dist": "DIST=true npm run build",
     "build-bundle": "node build.js bundle",

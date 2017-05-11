@@ -1,5 +1,6 @@
 import {h, Component} from 'preact'
-import {grid, Icon, Text, Row, Col, row, rows, cols, focus} from '@theatersoft/components'
+import {grid, Icon, Text, Row, Col, row, rows, cols} from '@theatersoft/components'
+import {focus} from '@theatersoft/focus'
 import style from './stat.styl'
 
 export const Stat = ({value = {}, Time, onClose}) => {
