@@ -1,1 +1,1 @@
-export {default} from './Pinpad'
+export {default as Pinpad} from './Pinpad'

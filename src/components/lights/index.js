@@ -1,1 +1,1 @@
-export {default, Lights} from './Lights'
+export {default as Lights} from './Lights'

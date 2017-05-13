@@ -1,1 +1,1 @@
-export {default, Projector} from './Projector'
+export {default as Projector} from './Projector'
