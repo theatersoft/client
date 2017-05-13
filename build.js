@@ -166,6 +166,7 @@ const targets = {
         })
         fs.writeFileSync('dist/package.json', JSON.stringify(p, null, '  '), 'utf-8')
         exec('cp LICENSE COPYRIGHT README.md .npmignore dist')
+        exec('cp manifest.json icon-*.png dist')
         exec('touch dist/main.js')
     },
 
