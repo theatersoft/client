@@ -3,11 +3,13 @@
   "name": "Theatersoft Home",
   "icons": [
     {
-      "src": "icon-48.png",
+      "src": "theatersoft-logo-round-accent.png",
       "type": "image/png",
-      "sizes": "48x48"
+      "sizes": "192x192"
     }
   ],
   "start_url": "index.html",
-  "display": "standalone"
+  "display": "standalone",
+  "theme_color": "black",
+  "background_color": "black"
 }
