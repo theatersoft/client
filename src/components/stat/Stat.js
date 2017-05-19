@@ -1,5 +1,5 @@
 import {h, Component} from 'preact'
-import {grid, Icon, Text, Row, Col, row, rows, cols} from '@theatersoft/components'
+import {grid, Icon, Row, Col, row, rows, cols} from '@theatersoft/components'
 import {focus} from '@theatersoft/focus'
 import style from './stat.styl'
 
@@ -9,7 +9,7 @@ export const Stat = ({value = {}, Time, onClose}) => {
         _time = new Date(Time),
         date = _time.toLocaleDateString('en-US', {weekday: "short", month: "short", day: "numeric"}),
         time = _time.toLocaleTimeString('en-US', {hour: "numeric", minute: "numeric"}).toLowerCase(),
-        T = (t, a) => <Text text={t} id={style[a]}/>
+        T = (t, a) => <div id={style[a]}>{t}</div>
     return (
         <div class="container" id={style.stat}>
             <Col class="col">
