@@ -9,6 +9,7 @@ import {Pinpad} from './components/pinpad'
 import {Stat} from './components/stat'
 import {Projector} from './components/projector'
 import {Lights} from './components/lights'
+import {Snackbar} from './components/snackbar'
 import {Provider} from './redux'
 import store from './store'
 import {setConfig, setDevices} from './actions'
@@ -33,7 +34,10 @@ const
         ]
         return (
             <Provider store={store}>
-                <Focuser focused="video" items={items}/>
+                <div>
+                    <Focuser focused="video" items={items}/>
+                    <Snackbar/>
+                </div>
             </Provider>
         )
     }

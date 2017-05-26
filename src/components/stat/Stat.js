@@ -1,5 +1,5 @@
 import {h, Component} from 'preact'
-import {grid, Icon, Row, Col, row, rows, cols} from '@theatersoft/components'
+import {Icon, Row, Col, row, rows, cols} from '@theatersoft/components'
 import {focus} from '@theatersoft/focus'
 import style from './stat.styl'
 
