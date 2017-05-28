@@ -6,10 +6,12 @@ const mapStateToProps = ({devices}) => {
     const
         feed = devices && devices['Automation.feed'],
         value = feed && feed.value
-    return {
-        active: value && value.active,
-        label: value && value.message
-    }
+    return value ? {
+        active: value.active,
+        label: value.name,
+        action: value.status,
+        type: value.severity === 0 ? 'error' : value.severity === 1 ? 'warning' : 'normal'
+    } : {active: false}
 }
 
 export default connect(mapStateToProps)(props => <Snackbar {...props}/>)
