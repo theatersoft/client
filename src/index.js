@@ -24,6 +24,7 @@ timeout(bus.started(), 2000)
                 store.dispatch(setConfig(config))
                 video.init(config.cameras)
                 proxy('Device').getState().then(dispatchSetDevices)
+                focus.push('menu')
                 render(<Provider store={store}><App/></Provider>, document.getElementById('ui'))
             }))
     .catch(() => {

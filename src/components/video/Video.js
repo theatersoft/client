@@ -146,7 +146,6 @@ const video = new class {
 
         window.onresize = setDimensions
         setDimensions()
-        focus.push(video)
         setSources(cameras)
         play(true)
     }
@@ -154,11 +153,7 @@ const video = new class {
 
 export default video
 
-export const Video = Ripple({centered: false})(class extends mixinFocusable(Component) {
-    render ({children}) {
-        return <div>{children}</div>
-    }
-
+export const Video = {
     onGesture (ev) {
         //log(ev.type, ev)
         //ev.gesture.preventDefault()
@@ -189,13 +184,11 @@ export const Video = Ripple({centered: false})(class extends mixinFocusable(Comp
                 rotate(-1)
             else if (pos > 0.66 && pos <= 1.0)
                 rotate(1)
-            else
-                focus.push('bar')
             break
         case 'hold':
             break
         }
-    }
+    },
 
     onKeydown (ev) {
         log(ev.keyCode)
@@ -206,10 +199,6 @@ export const Video = Ripple({centered: false})(class extends mixinFocusable(Comp
         case 39: // Right
             rotate(1)
             break
-        case 38: // Up
-        case 40: // Down
-            focus.push('bar')
-            break
         }
     }
-})
+}
