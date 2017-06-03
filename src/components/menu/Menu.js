@@ -10,12 +10,11 @@ export default class Menu extends mixinFocusable(Component) {
     render ({items, ...props}) {
         log('Menu')
         return (
-            <div class={style.menu}>
-                <TapMenu
-                    actions={Object.entries(items).map(([icon, onClick]) => ({icon, onClick}))}
-                    {...props}
-                />
-            </div>
+            <TapMenu
+                class={style.menu}
+                actions={Object.entries(items).map(([icon, onClick]) => ({icon, onClick}))}
+                {...props}
+            />
         )
     }
 
