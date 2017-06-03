@@ -25,7 +25,7 @@ timeout(bus.started(), 2000)
                 video.init(config.cameras)
                 proxy('Device').getState().then(dispatchSetDevices)
                 focus.push('menu')
-                render(<Provider store={store}><App/></Provider>, document.getElementById('ui'))
+                render(<Provider store={store}><App/></Provider>, document.body, document.getElementById('ui'))
             }))
     .catch(() => {
         focus.push('pinpad')

@@ -21,7 +21,7 @@ const items = [
 
 export const App = () => {
     return (
-        <div>
+        <div id="ui">
             <Focuser focused="menu" items={items}/>
             <Snackbar/>
         </div>
