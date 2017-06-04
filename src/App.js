@@ -1,11 +1,6 @@
 import {h, render} from 'preact'
 import {focus, Focuser} from '@theatersoft/focus'
-import {Menu} from './components/menu'
-import {Pinpad} from './components/pinpad'
-import {Stat} from './components/stat'
-import {Projector} from './components/projector'
-import {Lights} from './components/lights'
-import {Snackbar} from './components/snackbar'
+import {Menu, Pinpad, Stat, Projector, Lights, Snackbar} from './components'
 
 const items = [
     <Menu name="menu" items={{
