@@ -3,7 +3,6 @@ import {Button, TapMenu, mousePosition, touchPosition} from '@theatersoft/compon
 import {Video} from '../video'
 import {mixinFocusable} from '@theatersoft/focus'
 import style from './menu.styl'
-import {log} from '@theatersoft/bus'
 import {focus} from '@theatersoft/focus'
 
 export default class Menu extends mixinFocusable(Component) {
@@ -21,15 +20,20 @@ export default class Menu extends mixinFocusable(Component) {
         if (!this.state.active) Video.onKeydown(e)
     }
 
+    onMousedownCapture = e => {
+        if (Video.testEvent(e)) e.preventDefault()
+    }
+
     render ({items, ...props}) {
         return (
-            <TapMenu
-                class={style.menu}
-                actions={Object.entries(items).map(([icon, onClick]) => ({icon, onClick}))}
-                ref={this.ref}
-                onActive={this.onActive}
-                {...props}
-            />
+            <div onMousedownCapture={this.onMousedownCapture}>
+                <TapMenu
+                    actions={Object.entries(items).map(([icon, onClick]) => ({icon, onClick}))}
+                    ref={this.ref}
+                    onActive={this.onActive}
+                    {...props}
+                />
+            </div>
         )
     }
 }
