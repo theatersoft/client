@@ -1,6 +1,6 @@
 import {h, Component} from 'preact'
 import {Icon, List, ListItem, Switch} from '@theatersoft/components'
-import {focus} from '@theatersoft/focus'
+import {focus, mixinFocusable} from '@theatersoft/focus'
 
 export const Lights = ({dispatchDeviceAction, devices = [], onClose, values}, {}) => {
     return (
@@ -34,7 +34,7 @@ const
         dispatchDeviceAction: action => dispatch(deviceAction(action))
     })
 export default connect(mapStateToProps, mapDispatchToProps)
-(class LightsContainer extends Component {
+(class LightsContainer extends mixinFocusable(Component) {
     render (props) {
         return <Lights {...props} onClose={() => focus.pop()}/>
     }

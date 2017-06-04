@@ -1,6 +1,6 @@
 import {h, Component} from 'preact'
 import {Icon, Row, Col, row, rows, cols} from '@theatersoft/components'
-import {focus} from '@theatersoft/focus'
+import {focus, mixinFocusable} from '@theatersoft/focus'
 import style from './stat.styl'
 
 export const Stat = ({value = {}, Time, onClose}) => {
@@ -49,7 +49,7 @@ import {connect} from '../../redux'
 
 const mapStateToProps = ({devices: {Hvac: {value} = {}}, Time}) => ({value, Time})
 
-export default connect(mapStateToProps)(class StatContainer extends Component {
+export default connect(mapStateToProps)(class StatContainer extends mixinFocusable(Component) {
     render (props) {
         return <Stat {...props} onClose={() => focus.pop()}/>
     }

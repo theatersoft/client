@@ -1,6 +1,6 @@
 import {h, Component} from 'preact'
 import {Icon, ListItem, Switch} from '@theatersoft/components'
-import {focus} from '@theatersoft/focus'
+import {focus, mixinFocusable} from '@theatersoft/focus'
 
 export const Projector = ({dispatchDeviceAction, value, id, onClose}) => {
     const click = () => dispatchDeviceAction(switchAction(value, id))
@@ -19,7 +19,7 @@ import {deviceAction, switchAction} from '../../actions'
 const mapStateToProps = state => state.devices.Projector
 const mapDispatchToProps = dispatch => ({dispatchDeviceAction: action => dispatch(deviceAction(action))})
 export default connect(mapStateToProps, mapDispatchToProps)
-(class ProjectorContainer extends Component {
+(class ProjectorContainer extends mixinFocusable(Component) {
     render (props) {
         return <Projector {...props} onClose={() => focus.pop()}/>
     }
