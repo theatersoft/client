@@ -182,7 +182,7 @@ export const Video = {
             var pos = (ev.gesture.center.pageX - document.body.getBoundingClientRect().left) / paneWidth
             if (pos >= 0 && pos < 0.33)
                 rotate(-1)
-            else if (pos > 0.66 && pos <= 1.0)
+            else if (pos > 0.66 && pos <= 1)
                 rotate(1)
             break
         case 'hold':
@@ -200,5 +200,12 @@ export const Video = {
             rotate(1)
             break
         }
+    },
+
+    testEvent (e) {
+        const x = e instanceof MouseEvent ? e.clientX : e instanceof MouseEvent ? e.touches[0].pageX : false
+        if (x === false) return false
+        const pos = (x - document.body.getBoundingClientRect().left) / paneWidth
+        return pos >= 0 && pos < 0.33 || pos > 0.66 && pos <= 1
     }
 }
