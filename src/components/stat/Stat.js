@@ -1,5 +1,5 @@
 import {h, Component} from 'preact'
-import {Icon, Row, Col, row, rows, cols} from '@theatersoft/components'
+import {Sheet, Icon, Row, Col, row, rows, cols} from '@theatersoft/components'
 import {focus, mixinFocusable} from '@theatersoft/focus'
 import style from './stat.styl'
 
@@ -11,7 +11,7 @@ export const Stat = ({value = {}, Time, onClose}) => {
         time = _time.toLocaleTimeString('en-US', {hour: "numeric", minute: "numeric"}).toLowerCase(),
         T = (t, a) => <div id={style[a]}>{t}</div>
     return (
-        <div class="container" id={style.stat}>
+        <Sheet class={style.stat} active>
             <Col class="col">
                 {T(date)}
                 {T(time, 'time')}
@@ -41,7 +41,7 @@ export const Stat = ({value = {}, Time, onClose}) => {
                     </div>
                 </Row>
             </Col>
-        </div>
+        </Sheet>
     )
 }
 
