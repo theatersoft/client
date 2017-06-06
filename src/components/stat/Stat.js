@@ -12,7 +12,7 @@ export default connect(mapStateToProps)(class Stat extends mixinFocusable(Compon
 
     onClose = () => {
         this.setState({active: false})
-        setTimeout(() => focus.pop(), 1000)
+        setTimeout(() => focus.pop(), 250)
     }
 
     componentDidMount () {
