@@ -1,25 +1,13 @@
 import {h, Component} from 'preact'
 import {Sheet, Icon, Row, Col, row, rows, cols} from '@theatersoft/components'
-import {focus, mixinFocusable} from '@theatersoft/focus'
+import {FocusableActivator} from '../FocusableActivator'
 import style from './stat.styl'
 
 import {connect} from '../../redux'
 
 const mapStateToProps = ({devices: {Hvac: {value} = {}}, Time}) => ({value, Time})
 
-export default connect(mapStateToProps)(class Stat extends mixinFocusable(Component) {
-    state = {active: false}
-
-    onClose = () => {
-        this.setState({active: false})
-        setTimeout(() => focus.pop(), 250)
-    }
-
-    componentDidMount () {
-        this.setState({active: true})
-        super.componentDidMount()
-    }
-
+export default connect(mapStateToProps)(class Stat extends FocusableActivator {
     render ({value = {}, Time}, {active}) {
         const
             {OAT = 0, MODE = '', HUMID = '', Z1FAN = '', Z1RT = 0, Z1RH = 0, Z1HTSP = 0, Z1CLSP = 0} = value,
