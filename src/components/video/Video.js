@@ -1,6 +1,6 @@
 import {h, Component} from 'preact'
 import {Ripple} from '@theatersoft/components'
-import {focus, mixinFocusable} from '@theatersoft/focus'
+import {focus, mixinFocusable, KeyCode} from '@theatersoft/focus'
 import {log} from '@theatersoft/bus'
 import './video.styl'
 
@@ -193,10 +193,10 @@ export const Video = {
     onKeydown (ev) {
         log(ev.keyCode)
         switch (ev.keyCode) {
-        case 37: // Left
+        case KeyCode.LEFT:
             rotate(-1)
             break
-        case 39: // Right
+        case KeyCode.RIGHT: // Right
             rotate(1)
             break
         }
