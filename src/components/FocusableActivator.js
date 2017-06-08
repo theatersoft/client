@@ -5,8 +5,10 @@ export class FocusableActivator extends mixinFocusable(Component) {
     state = {active: false}
 
     onClose = () => {
-        this.setState({active: false})
-        setTimeout(() => focus.pop(), 250)
+        if (this.state.active) {
+            this.setState({active: false})
+            setTimeout(() => focus.pop(), 250)
+        }
     }
 
     componentDidMount()
