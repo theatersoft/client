@@ -2,7 +2,7 @@ import {h, Component} from 'preact'
 import {focus, mixinFocusable} from '@theatersoft/focus'
 import {Sheet} from '@theatersoft/components'
 
-export const FocusableSheet = () => Content => class extends mixinFocusable(Component) {
+export const FocusableSheet = ({type}) => Content => class extends mixinFocusable(Component) {
     state = {active: false}
 
     onKeydown = e => {
@@ -25,7 +25,7 @@ export const FocusableSheet = () => Content => class extends mixinFocusable(Comp
     render ({...props}, {active}) {
         console.log(this.props)
         return (
-            <Sheet type="right" active={active} onClick={this.onClose}>
+            <Sheet type={type} active={active} onClick={this.onClose}>
                 <Content {...props}/>
             </Sheet>
         )

@@ -1,21 +1,19 @@
 import {h, Component} from 'preact'
-import {Sheet, ListItem, Switch} from '@theatersoft/components'
-import {FocusableActivator} from '../FocusableActivator'
+import {ListItem, Switch} from '@theatersoft/components'
 import {connect} from '../../redux'
 import {deviceAction, switchAction} from '../../actions'
 
-const mapStateToProps = state => state.devices.Projector
-const mapDispatchToProps = dispatch => ({dispatchDeviceAction: action => dispatch(deviceAction(action))})
+const
+    mapStateToProps = state => state.devices.Projector,
+    mapDispatchToProps = dispatch => ({dispatchDeviceAction: action => dispatch(deviceAction(action))})
 
-export default connect(mapStateToProps, mapDispatchToProps)(class extends FocusableActivator {
+export default connect(mapStateToProps, mapDispatchToProps)(class extends Component {
     render ({dispatchDeviceAction, value, id}, {active}) {
         const click = () => dispatchDeviceAction(switchAction(value, id))
         return (
-            <Sheet type="left" active={active} onClick={this.onClose}>
-                <ListItem label="Projector" onClick={click}>
-                    <Switch checked={value} onChange={click}/>
-                </ListItem>
-            </Sheet>
+            <ListItem label="Projector" onClick={click}>
+                <Switch checked={value} onChange={click}/>
+            </ListItem>
         )
     }
 })

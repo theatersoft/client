@@ -1,13 +1,11 @@
 import {h, Component} from 'preact'
-import {Sheet, Icon, Row, Col, row, rows, cols} from '@theatersoft/components'
-import {FocusableActivator} from '../FocusableActivator'
+import {Icon, Row, Col, row, rows, cols} from '@theatersoft/components'
 import style from './stat.styl'
-
 import {connect} from '../../redux'
 
 const mapStateToProps = ({devices: {Hvac: {value} = {}}, Time}) => ({value, Time})
 
-export default connect(mapStateToProps)(class Stat extends FocusableActivator {
+export default connect(mapStateToProps)(class extends Component {
     render ({value = {}, Time}, {active}) {
         const
             {OAT = 0, MODE = '', HUMID = '', Z1FAN = '', Z1RT = 0, Z1RH = 0, Z1HTSP = 0, Z1CLSP = 0} = value,
@@ -16,7 +14,7 @@ export default connect(mapStateToProps)(class Stat extends FocusableActivator {
             time = _time.toLocaleTimeString('en-US', {hour: "numeric", minute: "numeric"}).toLowerCase(),
             T = (t, a) => <div id={style[a]}>{t}</div>
         return (
-            <Sheet class={style.stat} active={active} onClick={this.onClose}>
+            <section>
                 <Col class="col">
                     {T(date)}
                     {T(time, 'time')}
@@ -45,7 +43,7 @@ export default connect(mapStateToProps)(class Stat extends FocusableActivator {
                         </div>
                     </Row>
                 </Col>
-            </Sheet>
+            </section>
         )
     }
 })

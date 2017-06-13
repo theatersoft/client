@@ -1,6 +1,5 @@
 import {h, Component} from 'preact'
-import {Sheet, List, ListItem, Switch} from '@theatersoft/components'
-import {FocusableActivator} from '../FocusableActivator'
+import {List, ListItem, Switch} from '@theatersoft/components'
 import {connect} from '../../redux'
 import {deviceAction, switchAction} from '../../actions'
 
@@ -14,21 +13,19 @@ const
         dispatchDeviceAction: action => dispatch(deviceAction(action))
     })
 
-export default connect(mapStateToProps, mapDispatchToProps)(class extends FocusableActivator {
-    render ({dispatchDeviceAction, devices = []}, {active}) {
+export default connect(mapStateToProps, mapDispatchToProps)(class extends Component {
+    render ({dispatchDeviceAction, devices = []}) {
         return (
-            <Sheet type="right" active={active} onClick={this.onClose}>
-                <List>
-                    {devices.map(({name, id, value}) => {
-                        const click = () => dispatchDeviceAction(switchAction(value, id))
-                        return (
-                            <ListItem label={name} onClick={click}>
-                                <Switch checked={value} onChange={click}/>
-                            </ListItem>
-                        )
-                    })}
-                </List>
-            </Sheet>
+            <List>
+                {devices.map(({name, id, value}) => {
+                    const click = () => dispatchDeviceAction(switchAction(value, id))
+                    return (
+                        <ListItem label={name} onClick={click}>
+                            <Switch checked={value} onChange={click}/>
+                        </ListItem>
+                    )
+                })}
+            </List>
         )
     }
 })
