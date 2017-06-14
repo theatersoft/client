@@ -1,5 +1,5 @@
 import {h, Component} from 'preact'
-import {Button, classes} from '@theatersoft/components'
+import {Row, Col, Button, classes} from '@theatersoft/components'
 import style from './stat.styl'
 import {connect} from '../../redux'
 
@@ -14,8 +14,8 @@ export default connect(mapStateToProps)(class extends Component {
             time = _time.toLocaleTimeString('en-US', {hour: "numeric", minute: "numeric"}).toLowerCase(),
             T = (t, a) => <p class={style[a]}>{t}</p>
         return (
-            <div class={classes(style.stat, style.row)}>
-                <div class={style.col1}>
+            <Row between class={style.stat}>
+                <div>
                     {T(date)}
                     {T(time, 'time')}
                     {T('OUTDOOR')}
@@ -23,27 +23,27 @@ export default connect(mapStateToProps)(class extends Component {
                     {T('STATUS')}
                     {T(MODE + ' / ' + Z1FAN)}
                 </div>
-                <div class={style.col2}>
+                <div>
                     {T(Z1RT + '°', 'rt')}
                     {T(`${Z1RH}% Humidity ${HUMID}`, 'hum')}
-                    <div class={style.row}>
-                        <div class={style.col}>
+                    <Row>
+                        <Col>
                             {T(Z1HTSP, 'htsp')}
-                            <div class={style.row}>
-                                <div class={style.col}><Button round inverse icon="arrow-down"/></div>
-                                <div class={style.col}><Button round inverse icon="arrow-up"/></div>
-                            </div>
-                        </div>
-                        <div class={style.col}>
+                            <Row>
+                                <Button round inverse icon="arrow-down"/>
+                                <Button round inverse icon="arrow-up"/>
+                            </Row>
+                        </Col>
+                        <Col>
                             {T(Z1CLSP, 'clsp')}
-                            <div class={style.row}>
-                                <div class={style.col}><Button round inverse icon="arrow-down"/></div>
-                                <div class={style.col}><Button round inverse icon="arrow-up"/></div>
-                            </div>
-                        </div>
-                    </div>
+                            <Row>
+                                <Button round inverse icon="arrow-down"/>
+                                <Button round inverse icon="arrow-up"/>
+                            </Row>
+                        </Col>
+                    </Row>
                 </div>
-            </div>
+            </Row>
         )
     }
 })
