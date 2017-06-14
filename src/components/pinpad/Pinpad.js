@@ -15,20 +15,8 @@ export default class Pinpad extends mixinFocusable(Component) {
 
     onClear = () => this.setState({pin: '0 0 0 0'})
 
-    onEnter = () => {
-        console.log('onenter')
-        rpc('Session.Login', [this.state.pin.replace(/\s/g, '')])
-            .then(r => {
-                console.log(r)
-                if (r) {
-                    window.location.reload()
-                }
-            })
-            .catch(e => {
-                console.log(e)
-            })
-    }
-
+    onEnter = () => rpc('Session.Login', [this.state.pin.replace(/\s/g, '')]).then(r => r && window.location.reload())
+    
     render ({}, {pin}) {
         const key = n =>
             <Button floating primary label={String(n)} onClick={() => this.onkey(n)}/>
