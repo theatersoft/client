@@ -1,31 +1,13 @@
 @import "@theatersoft/components"
 
-accent-color-hover = rgba(color-accent, .3)
-accent-color = color-accent
-neutral-color = color-white
-neutral-color-hover = rgba(palette-grey-600, .6)
+.text
+    height h(22)
+    width h(71)
+    font-size h(16)
+    color accent-color
+    border-radius h(2)
+    border h(1) solid neutral-color
 
-#pinpad
-    top h(8)
-    padding-left h(19)
-    text-align center
-    .text
-        height h(22)
-        width h(71)
-        font-size h(16)
-        color accent-color
-    .key, :global(.icon)
-        height h(18)
-        width h(21)
-        svg
-            height h(10)
-            width h(10)
-    .key, .text, :global(.icon)
-        border-radius h(2)
-        border h(1) solid neutral-color
-    .key
-        border h(1) solid accent-color
-    .key:hover, .key:focus, :global(.icon:hover), :global(.icon:focus)
-        color color-focus
-        background-color accent-color-hover
-
+.row
+    display flex
+    flex-direction row
