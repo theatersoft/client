@@ -11,11 +11,11 @@ export default class Pinpad extends mixinFocusable(Component) {
         this.state = {pin: '0 0 0 0'}
     }
 
-    onkey (key) {
-        this.setState({pin: `${this.state.pin.slice(2)} ${key}`})
-    }
+    onkey = key => this.setState({pin: `${this.state.pin.slice(2)} ${key}`})
 
-    onenter () {
+    onClear = () => this.setState({pin: '0 0 0 0'})
+
+    onEnter = () => {
         console.log('onenter')
         rpc('Session.Login', [this.state.pin.replace(/\s/g, '')])
             .then(r => {
@@ -34,15 +34,15 @@ export default class Pinpad extends mixinFocusable(Component) {
             <Button floating primary label={String(n)} onClick={() => this.onkey(n)}/>
         return (
             <div class={style.pinpad}>
-                    <div class={style.text}>{pin}</div>
-                    <div class={style.row}>
-                        {key(1)} {key(2)} {key(3)} <Button round accent icon="cross" onClick={() => focus.pop()}/>
-                    </div>
+                <div class={style.text}>{pin}</div>
+                <div class={style.row}>
+                    {key(1)} {key(2)} {key(3)} <Button round accent icon="cross" onClick={this.onClear}/>
+                </div>
                 <div class={style.row}>
                     {key(4)} {key(5)} {key(6)} {key(0)}
                 </div>
                 <div class={style.row}>
-                    {key(7)} {key(8)} {key(9)} <Button round accent icon="lock" onClick={() => this.onenter()}/>
+                    {key(7)} {key(8)} {key(9)} <Button round accent icon="lock" onClick={this.onEnter}/>
                 </div>
             </div>
         )
