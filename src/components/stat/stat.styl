@@ -1,44 +1,40 @@
 @import "@theatersoft/components"
 
-:global .col
-    padding 0 h(2)
-    width w(46)
-.col-1-2
-    float left
-    padding 0 h(2)
-    width w(23)
-.col-1-4
-    float left
-    padding 0 h(2)
-    width w(11)
-:global #icon-cross
-    position absolute
-    top 0
-    right 0
-#time
-    font-size h(16)
+.stat
+    padding 0 h(8)
+
+.row
+    display flex
+    justify-content space-between
+
+.col
+    display flex
+    flex-direction column
+
+.time
+    font-size font-size-x-large
     line-height 80%
     margin-bottom h(8)
-#ot
+.ot
     font-size h(16)
     color color-accent
     margin-top h(-4)
     margin-bottom h(8)
-#rt
-    font-size h(46)
+.rt
+    font-size font-size-xxx-large
     color color-accent
     line-height 84%
-    margin-top h(4)
     margin-left h(6)
     margin-bottom  h(2)
-#hum
-    margin-left h(-3)
+.hum
     margin-bottom  h(-4)
-#clsp
-    font-size h(16)
+.clsp
+    font-size font-size-x-large
+    margin-bottom  h(-2)
     text-align center
     color lightskyblue
-#htsp
-    font-size h(16)
+.htsp
+    font-size font-size-x-large
+    margin-bottom  h(-2)
     text-align center
     color indianred
