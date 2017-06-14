@@ -1,13 +1,24 @@
 @import "@theatersoft/components"
 
+.pinpad
+    display flex
+    flex-direction column
+    align-items center
+    margin-top 8rem
+
 .text
-    height h(22)
-    width h(71)
-    font-size h(16)
-    color accent-color
+    display flex
+    justify-content center
+    margin 2rem
+    width h(75)
+    height h(20)
+    font-size font-size-x-large
+    background color-primary
     border-radius h(2)
-    border h(1) solid neutral-color
+
 
 .row
     display flex
     flex-direction row
+    > *
+        margin 2rem

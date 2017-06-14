@@ -31,7 +31,7 @@ export default class Pinpad extends mixinFocusable(Component) {
 
     render ({}, {pin}) {
         const key = n =>
-            <Button round primary label={String(n)} onClick={() => this.onkey(n)}/>
+            <Button floating primary label={String(n)} onClick={() => this.onkey(n)}/>
         return (
             <div class={style.pinpad}>
                     <div class={style.text}>{pin}</div>
