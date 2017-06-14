@@ -93,6 +93,7 @@ const targets = {
                     plugins: [
                         postcssModules({
                             getJSON(id, exportTokens) {cssExportMap[id] = exportTokens},
+                            generateScopedName: '_[name]_[local]', // _[hash:2]
                             globalModulePaths: ['@theatersoft/components/components.css']
                         }),
                         postcssImport()
