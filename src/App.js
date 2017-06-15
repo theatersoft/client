@@ -1,19 +1,20 @@
 import {h, render} from 'preact'
 import {focus, Focuser} from '@theatersoft/focus'
-import {Menu, Pinpad, Stat, Projector, Lights, Snackbar, FocusableSheet} from './components'
+import {Menu, Status, Stat, Projector, Lights, Snackbar, FocusableSheet} from './components'
 
 const
     sheet = (Component, name, type) => h(FocusableSheet({type})(Component), {name}),
     items = [
         <Menu name="menu" items={{
-                spinner: () => window.location.reload(),
+                spinner: () => focus.push('status'),
                 logo: () => focus.push('lights'),
                 thermometer: () => focus.push('stat'),
                 list: () => focus.push('projector')
             }}/>,
-        sheet(Projector, 'projector', 'left'),
+        sheet(Status, 'status', 'top'),
+        sheet(Lights, 'lights', 'right'),
         sheet(Stat, 'stat', 'bottom'),
-        sheet(Lights, 'lights', 'right')
+        sheet(Projector, 'projector', 'left')
     ]
 
 export const App = () => {

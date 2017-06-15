@@ -1,6 +1,7 @@
 export {Menu} from './menu'
 export {Pinpad} from './pinpad'
 export {Stat} from './stat'
+export {Status} from './status'
 export {Projector} from './projector'
 export {Lights} from './lights'
 export {Snackbar} from './snackbar'
