@@ -8,6 +8,7 @@ const
     DIST = process.env.DIST === 'true',
     fs = require('fs'),
     path = require('path'),
+    writeJson = (file, json) => fs.writeFileSync(file, JSON.stringify(json, null, '  '), 'utf-8'),
     components = path.dirname(require.resolve('@theatersoft/components')),
     mustache = require('mustache'),
     babelCore = require('babel-core'),
@@ -158,14 +159,7 @@ const targets = {
 
     package () {
         console.log('target package')
-        const p = Object.assign({}, pkg, {
-            main: 'main.js',
-            private: !DIST,
-            devDependencies: undefined,
-            distScripts: undefined,
-            scripts: pkg.distScripts
-        })
-        fs.writeFileSync('dist/package.json', JSON.stringify(p, null, '  '), 'utf-8')
+        writeJson('dist/package.json', Object.assign({}, pkg, {private: !DIST, dist: undefined}, pkg.dist))
         exec('cp LICENSE COPYRIGHT README.md .npmignore dist')
         exec('cp -r manifest.json res dist')
         exec('touch dist/main.js')

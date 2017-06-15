@@ -24,10 +24,13 @@
     "build-watch": "node build.js watch",
     "publish": "node build.js publish"
   },
-  "distScripts": {
-    "link": "npm link"
+  "dist": {
+    "devDependencies": {},
+    "main": "main.js",
+    "scripts": {
+      "link": "npm link"
+    }
   },
-  "dependencies": {},
   "devDependencies": {
     "@theatersoft/bus": "~1",
     "@theatersoft/components": "~1",
