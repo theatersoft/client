@@ -7,15 +7,15 @@ import {video, Pinpad} from './components'
 import {App} from './App'
 import {Provider} from './redux'
 import store from './store'
-import {setConfig, setDevices} from './actions'
+import {setConfig, setDeviceState} from './actions'
 import './index.styl'
 
 const
     timeout = (p, ms) => Promise.race([p, new Promise((_, j) => setTimeout(j, ms))]),
-    dispatchSetDevices = state => store.dispatch(setDevices(state))
+    dispatchState = state => store.dispatch(setDeviceState(state))
 
 bus.start({parent: {auth}})
-bus.registerListener('Device.state', dispatchSetDevices)
+bus.registerListener('Device.state', dispatchState)
 timeout(bus.started(), 2000)
     .then(() =>
         proxy('Config').get()
@@ -23,7 +23,7 @@ timeout(bus.started(), 2000)
                 console.log('Config get', config)
                 store.dispatch(setConfig(config))
                 video.init(config.cameras)
-                proxy('Device').getState().then(dispatchSetDevices)
+                proxy('Device').getState().then(dispatchState)
                 focus.push('menu')
                 render(<Provider store={store}><App/></Provider>, document.body, document.getElementById('ui'))
             }))
