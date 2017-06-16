@@ -1,8 +1,14 @@
-export const SET_CONFIG = 'SET_CONFIG'
-export const setConfig = config => ({type: SET_CONFIG, config})
+export const
+    SET_CONFIG = 'SET_CONFIG',
+    setConfig = config => ({type: SET_CONFIG, config}),
 
-export const SET_DEVICES = 'SET_DEVICES'
-export const setDevices = state => ({type: SET_DEVICES, ...state})
+    SET_DEVICES = 'SET_DEVICES',
+    SET_TIME = 'SET_TIME',
+    setDevices = ({devices, Time}) => dispatch => {
+        dispatch({type: SET_DEVICES, devices})
+        const offset = new Date() - new Date(Time)
+        dispatch({type: SET_TIME, Time, offset})
+    }
 
 import {proxy} from '@theatersoft/bus'
 const Device = proxy('Device')
