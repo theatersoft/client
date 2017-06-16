@@ -2,18 +2,20 @@ import {h, Component} from 'preact'
 import {List, ListItem, Switch, Row, Button} from '@theatersoft/components'
 import {connect} from '../../redux'
 
-const
-    when = () => 'ago',
-    summary = ({name, status, id}) => (
-        <Row>
-            {name}, last {status} {when(id)}
-        </Row>
-    )
-
-const mapStateToProps = ({Time, devices}) => ({Time, devices})
+const mapStateToProps = ({devices, Time, offset}) => ({devices, Time, offset})
 
 export default connect(mapStateToProps)(class extends Component {
-    render ({Time, devices}) {
+    when = (time, offset) => {
+        const minutes = (Number(new Date()) - offset - time) / 60000
+        return minutes < 1 ? 'just now' : minutes < 2 ? '1 min ago' :`${Math.floor(minutes / 60)} minutes ago`
+    }
+
+    summary = ({name, status, time}, offset) =>
+        <Row>
+            {name} {status} {this.when(time, offset)}
+        </Row>
+
+    render ({Time, devices, offset}) {
         const {'Automation.feed': feed} = devices
         console.log(feed)
         const
@@ -29,7 +31,7 @@ export default connect(mapStateToProps)(class extends Component {
                 </Row>
                 <ListItem label="Alarm armed"><Switch checked={false}/></ListItem>
                 <ListItem label="Away mode"><Switch checked={false}/></ListItem>
-                { feed && summary(feed.value)}
+                {feed && this.summary(feed.value, offset)}
             </List>
         )
     }
