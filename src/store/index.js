@@ -1,20 +1,16 @@
-import {combineReducers, createStore} from 'redux'
-import {proxy} from '@theatersoft/bus'
+import {combineReducers, createStore, applyMiddleware, compose} from 'redux'
+import thunk from 'redux-thunk'
 import {
     SET_CONFIG,
-    SET_DEVICES,
-    DEVICE_ACTION
+    SET_DEVICES
 } from '../actions'
 
 const config = (state = false, action) =>
     action.type === SET_CONFIG ? action.config : state
 
-const Device = proxy('Device')
 const devices = (state = {}, action) => {
     if (action.type === SET_DEVICES)
         return action.devices
-    if (action.type === DEVICE_ACTION)
-        Device.dispatch(action.action)
     return state
 }
 
@@ -24,8 +20,11 @@ const Time = (state = '', action) => {
     return state
 }
 
-export default createStore(combineReducers({
+const reducer = combineReducers({
     config,
     devices,
     Time
-}), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+})
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+
+export default createStore(reducer, composeEnhancers(applyMiddleware(thunk)))
