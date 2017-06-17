@@ -7,7 +7,7 @@ const mapStateToProps = ({devices, Time, offset}) => ({devices, Time, offset})
 export default connect(mapStateToProps)(class extends Component {
     when = (time, offset) => {
         const minutes = (Number(new Date()) - offset - time) / 60000
-        return minutes < 1 ? 'just now' : minutes < 2 ? '1 min ago' :`${Math.floor(minutes / 60)} minutes ago`
+        return minutes < 1 ? 'just now' : minutes < 2 ? '1 min ago' :`${Math.floor(minutes)} minutes ago`
     }
 
     summary = ({name, status, time}, offset) =>
