@@ -17,11 +17,8 @@ const
         sheet(Settings, 'settings', 'left')
     ]
 
-export const App = () => {
-    return (
-        <div id="ui">
-            <Focuser focused="menu" items={items}/>
-            <Snackbar/>
-        </div>
-    )
-}
+export const App = () =>
+    <div id="ui">
+        <Focuser focused="menu" items={items}/>
+        <Snackbar/>
+    </div>
