@@ -13,7 +13,6 @@ const
 
 export default connect(mapStateToProps, mapDispatchToProps)(class extends Component {
     onClick = e => {
-        console.log(e.currentTarget.dataset.id)
         const
             id = e.currentTarget.dataset.id,
             value = this.props.devices[id].value
@@ -22,17 +21,26 @@ export default connect(mapStateToProps, mapDispatchToProps)(class extends Compon
 
     onChange = (value, e) => this.onClick(e)
 
-    render ({devices = []}) {
+    render ({devices}) {
+        const
+            devicesByType = Object.values(devices).reduce((o, v) => ((o[v.type] || (o[v.type] = [])).push(v), o), {}),
+            deviceItem = ({name, id, value}) =>
+                <ListItem label={name} data-id={id} onClick={this.onClick}>
+                    <Switch checked={value} data-id={id} onChange={this.onChange}/>
+                </ListItem>,
+            typeItem = type =>
+                <NestedList label={type === 'undefined' ? 'Other' : type}>
+                    {devicesByType[type].map(deviceItem)}
+                </NestedList>
         return (
             <List>
-                <NestedList label="Devices">
-                    {Object.values(devices).map(({name, id, value}) =>
-                        <ListItem label={name} data-id={id} onClick={this.onClick}>
-                            <Switch checked={value} data-id={id} onChange={this.onChange}/>
-                        </ListItem>
-                    )}
-                </NestedList>
+                    {Object.keys(devicesByType).map(typeItem)}
             </List>
         )
     }
 })
+
+// TODO
+//<NestedList label="Devices">
+//    {Object.keys(devicesByType).map(typeItem)}
+//</NestedList>
