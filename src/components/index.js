@@ -1,5 +1,6 @@
 export {Menu} from './menu'
 export {Pinpad} from './pinpad'
+export {Settings} from './settings'
 export {Stat} from './stat'
 export {Status} from './status'
 export {Projector} from './projector'
