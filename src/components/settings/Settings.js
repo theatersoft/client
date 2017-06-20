@@ -20,9 +20,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class extends Compon
         this.props.dispatchDeviceAction(switchAction(value, id))
     }
 
-    onChange = e => {
-        console.log(e.currentTarget.dataset.id)
-    }
+    onChange = (value, e) => this.onClick(e)
 
     render ({devices = []}) {
         return (
@@ -30,7 +28,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class extends Compon
                 <NestedList label="Devices">
                     {Object.values(devices).map(({name, id, value}) =>
                         <ListItem label={name} data-id={id} onClick={this.onClick}>
-                            <Switch checked={value} onChange={this.onChange}/>
+                            <Switch checked={value} data-id={id} onChange={this.onChange}/>
                         </ListItem>
                     )}
                 </NestedList>
