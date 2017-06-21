@@ -1,7 +1,8 @@
 import {h, Component} from 'preact'
-import {List, NestedList, ListItem, Switch} from '@theatersoft/components'
+import {List, NestedList, ListItem, Switch, Indicator} from '@theatersoft/components'
 import {connect} from '../../redux'
 import {deviceAction, switchAction} from '../../actions'
+import {Type, Interface, interfaceOfType} from '@theatersoft/device'
 
 const
     mapStateToProps = ({devices = {}, Time, offset}) => ({
@@ -23,10 +24,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(class extends Compon
 
     render ({devices}) {
         const
+            isSwitch = type => interfaceOfType(type) === Interface.SWITCH_BINARY || interfaceOfType(type) === Interface.SWITCH_MULTILEVEL,
+            isIndicator = type => interfaceOfType(type) === Interface.SENSOR_BINARY,
             devicesByType = Object.values(devices).reduce((o, v) => ((o[v.type] || (o[v.type] = [])).push(v), o), {}),
-            deviceItem = ({name, id, value}) =>
+            deviceItem = ({name, id, value, type}) =>
                 <ListItem label={name} data-id={id} onClick={this.onClick}>
-                    <Switch checked={value} data-id={id} onChange={this.onChange}/>
+                    {isSwitch(type) && <Switch checked={value} data-id={id} onChange={this.onChange}/>}
+                    {isIndicator(type) && <Indicator {...{normal: value === false, warning: value === true}} />}
                 </ListItem>,
             typeItem = type =>
                 <NestedList label={type === 'undefined' ? 'Other' : type}>
