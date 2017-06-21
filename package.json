@@ -15,7 +15,7 @@
   "repository": "theatersoft/client",
   "private": true,
   "scripts": {
-    "link": "npm link @theatersoft/bus @theatersoft/components @theatersoft/focus",
+    "link": "npm link @theatersoft/bus @theatersoft/components @theatersoft/focus @theatersoft/device",
     "build": "node build.js && ls -l dist",
     "build:dist": "DIST=true npm run build",
     "build-bundle": "node build.js bundle",
@@ -34,6 +34,7 @@
   "devDependencies": {
     "@theatersoft/bus": "~1",
     "@theatersoft/components": "~1",
+    "@theatersoft/device": "~1",
     "@theatersoft/focus": "~1",
     "babel-core": "^6.22.1",
     "babel-plugin-external-helpers": "^6.22.0",
