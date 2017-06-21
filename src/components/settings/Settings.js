@@ -26,19 +26,19 @@ export default connect(mapStateToProps, mapDispatchToProps)(class extends Compon
         const
             isSwitch = type => interfaceOfType(type) === Interface.SWITCH_BINARY || interfaceOfType(type) === Interface.SWITCH_MULTILEVEL,
             isIndicator = type => interfaceOfType(type) === Interface.SENSOR_BINARY,
-            devicesByType = Object.values(devices).reduce((o, v) => ((o[v.type] || (o[v.type] = [])).push(v), o), {}),
+            devicesByType = Object.values(devices).reduce((o, v) => (v.type && (o[v.type] || (o[v.type] = [])).push(v), o), {}),
             deviceItem = ({name, id, value, type}) =>
                 <ListItem label={name} data-id={id} onClick={this.onClick}>
                     {isSwitch(type) && <Switch checked={value} data-id={id} onChange={this.onChange}/>}
                     {isIndicator(type) && <Indicator {...{normal: value === false, warning: value === true}} />}
                 </ListItem>,
             typeItem = type =>
-                <NestedList label={type === 'undefined' ? 'Other' : type}>
+                <NestedList label={type}>
                     {devicesByType[type].map(deviceItem)}
                 </NestedList>
         return (
             <List>
-                    {Object.keys(devicesByType).map(typeItem)}
+                {Object.keys(devicesByType).map(typeItem)}
             </List>
         )
     }
