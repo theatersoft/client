@@ -36,6 +36,7 @@ export const register = config => {
             const endpoint = subscription.endpoint
 
             rpc('Session.Register', [{endpoint, key, authSecret}])
+                .catch(e => console.log(e))
         })
 
 }
