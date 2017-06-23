@@ -178,6 +178,7 @@ const targets = {
             .on('change', path => {
                 console.log(new Date().toLocaleTimeString(), path)
                 targets.bundle()
+                .then(targets.package)
             })
             .on('error', e => console.log(e))
     },

@@ -38,5 +38,4 @@ export const register = config => {
             rpc('Session.Register', [{endpoint, key, authSecret}])
                 .catch(e => console.log(e))
         })
-
 }
