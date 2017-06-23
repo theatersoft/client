@@ -17,7 +17,7 @@ function urlBase64ToUint8Array(base64String) {
     return outputArray;
 }
 
-export const register = config => {
+export const register = config =>
     navigator.serviceWorker.register('theatersoft-worker.js')
         .then(registration =>
             log(registration).pushManager.getSubscription()
@@ -28,14 +28,8 @@ export const register = config => {
                     })
                 )
         )
-        .then(subscription => {
-            const rawKey = subscription.getKey ? subscription.getKey('p256dh') : ''
-            const key = rawKey ? btoa(String.fromCharCode.apply(null, new Uint8Array(rawKey))) : ''
-            const rawAuthSecret = subscription.getKey ? subscription.getKey('auth') : ''
-            const authSecret = rawAuthSecret ? btoa(String.fromCharCode.apply(null, new Uint8Array(rawAuthSecret))) : ''
-            const endpoint = subscription.endpoint
-
-            rpc('Session.Register', [{endpoint, key, authSecret}])
+        .then(subscription =>
+            rpc('Session.Register', [subscription.toJSON()])
                 .catch(e => console.log(e))
-        })
-}
+        )
+
