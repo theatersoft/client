@@ -153,16 +153,17 @@ const targets = {
                 require("babel-plugin-transform-undefined-to-void")
             ]
         }).code)
-        if (DIST) exec('rm -r dist/dev')
+        //exec('cp src/worker/index.js dist/dev/theatersoft-worker.js')
         console.log('... target bundle')
     },
 
     package () {
         console.log('target package')
         writeJson('dist/package.json', Object.assign({}, pkg, {private: !DIST, dist: undefined}, pkg.dist))
-        exec('cp LICENSE COPYRIGHT README.md .npmignore dist')
-        exec('cp -r manifest.json res dist')
+        exec('cp -r res manifest.json LICENSE COPYRIGHT README.md .npmignore dist')
+        exec('sed "s|\"/\"|\"/dev/\"|" manifest.json > dist/dev/manifest.json')
         exec('touch dist/main.js')
+        if (DIST) exec('rm -r dist/dev')
     },
 
     publish () {
