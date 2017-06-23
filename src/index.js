@@ -9,6 +9,7 @@ import {Provider} from './redux'
 import store from './store'
 import {setConfig, setDeviceState} from './actions'
 import './index.styl'
+import {register} from './push'
 
 const
     timeout = (p, ms) => Promise.race([p, new Promise((_, j) => setTimeout(j, ms))]),
@@ -21,6 +22,7 @@ timeout(bus.started(), 2000)
         proxy('Config').get()
             .then(config => {
                 console.log('Config get', config)
+                config.webpush && register(config.webpush)
                 store.dispatch(setConfig(config))
                 video.init(config.cameras)
                 proxy('Device').getState().then(dispatchState)
