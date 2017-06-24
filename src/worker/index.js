@@ -3,7 +3,8 @@ self.addEventListener('push', event => {
 
     event.waitUntil(
         self.registration.showNotification('Theatersoft', {
-            body: message
+            body: message,
+            icon: '/res/theatersoft-logo-round-accent.png'
         })
     )
 })
