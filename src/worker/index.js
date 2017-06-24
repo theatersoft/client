@@ -1,10 +1,5 @@
 self.addEventListener('push', event => {
-    const message = event.data ? event.data.text() : 'no message'
-
     event.waitUntil(
-        self.registration.showNotification('Theatersoft', {
-            body: message,
-            icon: '/res/theatersoft-logo-round-accent.png'
-        })
+        self.registration.showNotification('Theatersoft', event.data.json())
     )
 })
