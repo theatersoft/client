@@ -162,6 +162,7 @@ const targets = {
         writeJson('dist/package.json', Object.assign({}, pkg, {private: !DIST, dist: undefined}, pkg.dist))
         exec('cp -r res manifest.json LICENSE COPYRIGHT README.md .npmignore dist')
         exec('sed "s|\"/\"|\"/dev/\"|" manifest.json > dist/dev/manifest.json')
+        exec('cp src/worker/index.js dist/theatersoft-worker.js')
         exec('cp src/worker/index.js dist/dev/theatersoft-worker.js')
         exec('touch dist/main.js')
         if (DIST) exec('rm -r dist/dev')
