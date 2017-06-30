@@ -45,7 +45,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class extends Compon
                 <Row between>
                     <span>{time}</span>
                     <span>{date}</span>
-                    <Button round inverse icon="spinner" onClick={() => window.location.reload()}/>
+                    <Button small round inverse icon="spinner" onClick={() => window.location.reload()}/>
                 </Row>
                 <ListItem label="Alarm armed">
                     <Switch checked={settings.armed} data-id="settings.armed" onChange={this.onChange}/>
