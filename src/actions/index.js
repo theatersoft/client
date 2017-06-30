@@ -15,6 +15,8 @@ export const
 import {proxy} from '@theatersoft/bus'
 const Device = proxy('Device')
 export const deviceAction = action => () => Device.dispatch(action)
+const Settings = proxy('Settings')
+export const settingsAction = state => () => Settings.setState(state)
 
 const ON = 'ON', OFF = 'OFF'
 export const switchAction = (value, id) => ({type: value ? OFF: ON, id})

@@ -1,6 +1,7 @@
 import {h, Component} from 'preact'
 import {List, ListItem, Switch, Row, Button} from '@theatersoft/components'
 import {connect} from '../../redux'
+import {settingsAction} from '../../actions'
 
 const
     when = (time, offset) => {
@@ -14,10 +15,21 @@ const
             {name} {status} {when(time, offset)}
         </Row>
 
-const mapStateToProps = ({devices, Time, offset}) => ({devices, Time, offset})
+const
+    mapStateToProps = ({devices, Time, offset, settings}) => ({devices, Time, offset, settings}),
+    mapDispatchToProps = dispatch => ({dispatchSettingsAction: state => dispatch(settingsAction(state))})
 
-export default connect(mapStateToProps)(class extends Component {
-    render ({Time, devices, offset}) {
+export default connect(mapStateToProps, mapDispatchToProps)(class extends Component {
+    onClick = e => {
+        const
+            id = e.currentTarget.dataset.id,
+            value = this.props.settings[id]
+        this.props.dispatchSettingsAction({[id]: !value})
+    }
+
+    onChange = (value, e) => this.onClick(e)
+
+    render ({Time, devices, offset, settings}) {
         const
             {'Automation.feed': feed} = devices,
             _time = new Date(Time),
@@ -30,8 +42,8 @@ export default connect(mapStateToProps)(class extends Component {
                     <span>{date}</span>
                     <Button round inverse icon="spinner" onClick={() => window.location.reload()}/>
                 </Row>
-                <ListItem label="Alarm armed"><Switch checked={false}/></ListItem>
-                <ListItem label="Away mode"><Switch checked={false}/></ListItem>
+                <ListItem label="Alarm armed"><Switch checked={settings.armed} data-id="armed" onChange={this.onChange}/></ListItem>
+                <ListItem label="Away mode"><Switch checked={settings.away} data-id="away" onChange={this.onChange}/></ListItem>
                 {feed && summary(feed.value, offset)}
             </List>
         )

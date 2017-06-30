@@ -5,11 +5,7 @@ import {deviceAction, switchAction} from '../../actions'
 import {Type, Interface, interfaceOfType} from '@theatersoft/device'
 
 const
-    mapStateToProps = ({devices = {}, Time, offset}) => ({
-        devices,
-        Time,
-        offset
-    }),
+    mapStateToProps = ({devices = {}, Time, offset}) => ({devices, Time, offset}),
     mapDispatchToProps = dispatch => ({dispatchDeviceAction: action => dispatch(deviceAction(action))})
 
 export default connect(mapStateToProps, mapDispatchToProps)(class extends Component {
