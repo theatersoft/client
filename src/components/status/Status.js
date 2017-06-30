@@ -1,14 +1,14 @@
 import {h, Component} from 'preact'
 import {List, ListItem, Switch, Row, Button} from '@theatersoft/components'
 import {connect} from '../../redux'
-import {settingsAction} from '../../actions'
+import {settingsAction, localsAction} from '../../actions'
 
 const
     when = (time, offset) => {
         const
             minutes = Math.floor((Number(new Date()) - offset - time) / 60000),
             hours = Math.floor(minutes / 60)
-        return minutes < 1 ? 'now' : minutes < 60 ? `${minutes} min ago`: `${hours} hr ${minutes % 60} min ago`
+        return minutes < 1 ? 'now' : minutes < 60 ? `${minutes} min ago` : `${hours} hr ${minutes % 60} min ago`
     },
     summary = ({name, status, time}, offset) =>
         <Row>
@@ -16,20 +16,25 @@ const
         </Row>
 
 const
-    mapStateToProps = ({devices, Time, offset, settings}) => ({devices, Time, offset, settings}),
-    mapDispatchToProps = dispatch => ({dispatchSettingsAction: state => dispatch(settingsAction(state))})
+    mapStateToProps = p => p,
+    mapDispatchToProps = dispatch => ({
+        dispatch: {
+            settings: state => dispatch(settingsAction(state)),
+            locals: state => dispatch(localsAction(state))
+        }
+    })
 
 export default connect(mapStateToProps, mapDispatchToProps)(class extends Component {
     onClick = e => {
         const
-            id = e.currentTarget.dataset.id,
-            value = this.props.settings[id]
-        this.props.dispatchSettingsAction({[id]: !value})
+            [, service, id] = /^(\w+)\.(\w+)$/.exec(e.currentTarget.dataset.id),
+            value = this.props[service][id]
+        this.props.dispatch[service]({[id]: !value})
     }
 
     onChange = (value, e) => this.onClick(e)
 
-    render ({Time, devices, offset, settings}) {
+    render ({Time, devices, offset, settings, locals}) {
         const
             {'Automation.feed': feed} = devices,
             _time = new Date(Time),
@@ -42,8 +47,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(class extends Compon
                     <span>{date}</span>
                     <Button round inverse icon="spinner" onClick={() => window.location.reload()}/>
                 </Row>
-                <ListItem label="Alarm armed"><Switch checked={settings.armed} data-id="armed" onChange={this.onChange}/></ListItem>
-                <ListItem label="Away mode"><Switch checked={settings.away} data-id="away" onChange={this.onChange}/></ListItem>
+                <ListItem label="Alarm armed">
+                    <Switch checked={settings.armed} data-id="settings.armed" onChange={this.onChange}/>
+                </ListItem>
+                <ListItem label="Away mode">
+                    <Switch checked={locals.away} data-id="locals.away" onChange={this.onChange}/>
+                </ListItem>
                 {feed && summary(feed.value, offset)}
             </List>
         )

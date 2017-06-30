@@ -1,3 +1,5 @@
+import {proxy} from '@theatersoft/bus'
+
 export const
     SET_CONFIG = 'SET_CONFIG',
     setConfig = config => ({type: SET_CONFIG, config}),
@@ -9,13 +11,22 @@ export const
         if (Time && Time !== getState().Time) dispatch(setTime(Time))
     },
     SET_SETTINGS = 'SET_SETTINGS',
-    setSettings = settings => ({type: SET_SETTINGS, settings})
+    setSettings = settings => ({type: SET_SETTINGS, settings}),
+    SET_LOCALS = 'SET_LOCALS',
+    setLocals = locals => ({type: SET_LOCALS, locals})
 
-import {proxy} from '@theatersoft/bus'
 const Device = proxy('Device')
 export const deviceAction = action => () => Device.dispatch(action)
+
 const Settings = proxy('Settings')
 export const settingsAction = state => () => Settings.setState(state)
 
+export const
+    objectify = object => Object.entries(object).reduce((o, [k, v]) => (o[k] = v && JSON.parse(v), o), {}),
+    localsAction = state => dispatch => {
+        for (const [k,v] of Object.entries(state)) window.localStorage.setItem(k, JSON.stringify(v))
+        dispatch(setLocals(objectify(window.localStorage)))
+    }
+
 const ON = 'ON', OFF = 'OFF'
-export const switchAction = (value, id) => ({type: value ? OFF: ON, id})
+export const switchAction = (value, id) => ({type: value ? OFF : ON, id})
