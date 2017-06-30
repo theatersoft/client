@@ -4,9 +4,8 @@ export const
     SET_TIME = 'SET_TIME',
     setTime = Time => ({type: SET_TIME, Time, offset: new Date() - new Date(Time)}),
     SET_DEVICES = 'SET_DEVICES',
-    setDevices = devices => ({type: SET_DEVICES, devices}),
-    setDeviceState = ({devices, Time}) => (dispatch, getState) => {
-        dispatch(setDevices(devices))
+    setDevices = ({devices, Time}) => (dispatch, getState) => {
+        dispatch({type: SET_DEVICES, devices})
         if (Time && Time !== getState().Time) dispatch(setTime(Time))
     },
     SET_SETTINGS = 'SET_SETTINGS',
