@@ -8,7 +8,9 @@ export const
     setDeviceState = ({devices, Time}) => (dispatch, getState) => {
         dispatch(setDevices(devices))
         if (Time && Time !== getState().Time) dispatch(setTime(Time))
-    }
+    },
+    SET_SETTINGS = 'SET_SETTINGS',
+    setSettings = settings => ({type: SET_SETTINGS, settings})
 
 import {proxy} from '@theatersoft/bus'
 const Device = proxy('Device')
