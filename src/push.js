@@ -18,24 +18,16 @@ export const register = config => navigator.serviceWorker.register('theatersoft-
     .then(subscription => Session.registerSubscription(log(document.cookie.slice(4)), subscription.toJSON()))
 
 export const
-    notificationsAction = state => (dispatch, getState) => {
-        navigator.serviceWorker.getRegistration()
-            .then(registration => {
-                registration.pushManager.getSubscription()
-                    .then(subscription => {
-                        if (state === undefined)
-                            dispatch(setNotifications(!!subscription))
-                        else if (state && !subscription) {
-                            registration.pushManager.subscribe({
-                                    userVisibleOnly: true,
-                                    applicationServerKey: Uint8ArrayOfUrlBase64(getState().config.publicKey)
-                                })
-                                .then(subscription => Session.registerSubscription(document.cookie.slice(4), subscription.toJSON()))
-                        } else if (!state && subscription) {
-                            subscription.unsubscribe()
-                                .then(subscription => Session.unregisterSubscription(document.cookie.slice(4)))
-                        }
-                    })
-            })
-        dispatch(setNotifications(state))
+    notificationsAction = state => async (dispatch, getState) => {
+        const registration = await navigator.serviceWorker.getRegistration()
+        let subscription = await registration.pushManager.getSubscription()
+        if (state === true && !subscription) {
+            const subscription = await registration.pushManager.subscribe({userVisibleOnly: true, applicationServerKey: Uint8ArrayOfUrlBase64(getState().config.publicKey)})
+            await Session.registerSubscription(document.cookie.slice(4), subscription.toJSON())
+        } else if (!state && subscription) {
+            await subscription.unsubscribe()
+            await Session.unregisterSubscription(document.cookie.slice(4))
+            subscription = null
+        }
+        dispatch(setNotifications(!!subscription))
     }
