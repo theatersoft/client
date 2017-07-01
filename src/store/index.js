@@ -16,7 +16,8 @@ const
         Time,
         offset,
         settings,
-        locals
+        locals,
+        notifications
     }),
     composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 

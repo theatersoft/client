@@ -24,7 +24,7 @@ export const
         if (state === true && !subscription) {
             const subscription = await registration.pushManager.subscribe({userVisibleOnly: true, applicationServerKey: Uint8ArrayOfUrlBase64(getState().config.publicKey)})
             await Session.registerSubscription(document.cookie.slice(4), subscription.toJSON())
-        } else if (!state && subscription) {
+        } else if (state === false && subscription) {
             await subscription.unsubscribe()
             await Session.unregisterSubscription(document.cookie.slice(4))
             subscription = null
