@@ -1,4 +1,5 @@
 import {bus, proxy} from '@theatersoft/bus'
+import {setNotifications} from './actions'
 
 const log = (...args) => (console.log(...args), args[0])
 
@@ -16,3 +17,25 @@ export const register = config => navigator.serviceWorker.register('theatersoft-
     )
     .then(subscription => Session.registerSubscription(log(document.cookie.slice(4)), subscription.toJSON()))
 
+export const
+    notificationsAction = state => (dispatch, getState) => {
+        navigator.serviceWorker.getRegistration()
+            .then(registration => {
+                registration.pushManager.getSubscription()
+                    .then(subscription => {
+                        if (state === undefined)
+                            dispatch(setNotifications(!!subscription))
+                        else if (state && !subscription) {
+                            registration.pushManager.subscribe({
+                                    userVisibleOnly: true,
+                                    applicationServerKey: Uint8ArrayOfUrlBase64(getState().config.publicKey)
+                                })
+                                .then(subscription => Session.registerSubscription(document.cookie.slice(4), subscription.toJSON()))
+                        } else if (!state && subscription) {
+                            subscription.unsubscribe()
+                                .then(subscription => Session.unregisterSubscription(document.cookie.slice(4)))
+                        }
+                    })
+            })
+        dispatch(setNotifications(state))
+    }
