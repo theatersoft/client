@@ -2,6 +2,7 @@ import {h, Component} from 'preact'
 import {List, ListItem, Switch, Row, Button} from '@theatersoft/components'
 import {connect} from '../../redux'
 import {settingsAction, localsAction} from '../../actions'
+import {notificationsAction} from '../../push'
 
 const
     when = (time, offset) => {
@@ -20,7 +21,8 @@ const
     mapDispatchToProps = dispatch => ({
         dispatch: {
             settings: state => dispatch(settingsAction(state)),
-            locals: state => dispatch(localsAction(state))
+            locals: state => dispatch(localsAction(state)),
+            notifications: state => dispatch(notificationsAction(state))
         }
     })
 
@@ -34,7 +36,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class extends Compon
 
     onChange = (value, e) => this.onClick(e)
 
-    render ({Time, devices, offset, settings, locals}) {
+    render ({Time, devices, offset, settings, locals, notifications}) {
         const
             {'Automation.feed': feed} = devices,
             _time = new Date(Time),
@@ -52,6 +54,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(class extends Compon
                 </ListItem>
                 <ListItem label="Away mode">
                     <Switch checked={locals.away} data-id="locals.away" onChange={this.onChange}/>
+                </ListItem>
+                <ListItem label="Enable notifications">
+                    <Switch checked={notifications.enabled} data-id="notifications.enabled" onChange={this.onChange}/>
                 </ListItem>
                 {feed && summary(feed.value, offset)}
             </List>
