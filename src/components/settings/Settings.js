@@ -1,8 +1,8 @@
 import {h, Component} from 'preact'
 import {List, NestedList, ListItem, Switch, Indicator} from '@theatersoft/components'
 import {connect} from '../../redux'
-import {deviceAction, switchAction} from '../../actions'
-import {Type, Interface, interfaceOfType} from '@theatersoft/device'
+import {deviceAction} from '../../actions'
+import {Type, Interface, interfaceOfType, toggle} from '@theatersoft/device'
 
 const
     mapStateToProps = ({devices = {}, Time, offset}) => ({devices, Time, offset}),
@@ -13,7 +13,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class extends Compon
         const
             id = e.currentTarget.dataset.id,
             value = this.props.devices[id].value
-        this.props.dispatchDeviceAction(switchAction(value, id))
+        this.props.dispatchDeviceAction(toggle(value, id))
     }
 
     onChange = (value, e) => this.onClick(e)

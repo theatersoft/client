@@ -1,7 +1,8 @@
 import {h, Component} from 'preact'
 import {List, ListItem, Switch} from '@theatersoft/components'
 import {connect} from '../../redux'
-import {deviceAction, switchAction} from '../../actions'
+import {deviceAction} from '../../actions'
+import {toggle} from '@theatersoft/device'
 
 const
     mapStateToProps = ({devices = {}}) => ({
@@ -10,7 +11,7 @@ const
             .map(([k, v]) => v)
     }),
     mapDispatchToProps = dispatch => ({
-        dispatchDeviceAction: action => dispatch(deviceAction(action))
+        dispatchDeviceAction: action => dispatch(toggle(action))
     })
 
 export default connect(mapStateToProps, mapDispatchToProps)(class extends Component {

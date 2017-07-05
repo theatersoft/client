@@ -29,6 +29,3 @@ export const
         for (const [k,v] of Object.entries(state)) window.localStorage.setItem(k, JSON.stringify(v))
         dispatch(setLocals(objectify(window.localStorage)))
     }
-
-const ON = 'ON', OFF = 'OFF'
-export const switchAction = (value, id) => ({type: value ? OFF : ON, id})
