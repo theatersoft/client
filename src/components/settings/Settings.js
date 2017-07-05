@@ -25,7 +25,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class extends Compon
             devicesByType = Object.values(devices).reduce((o, v) => (v.type && (o[v.type] || (o[v.type] = [])).push(v), o), {}),
             deviceItem = ({name, id, value, type}) =>
                 <ListItem label={name} data-id={id} onClick={this.onClick}>
-                    {isSwitch(type) && <Switch checked={value} data-id={id} onChange={this.onChange}/>}
+                    {isSwitch(type) && type !== Type.Siren && <Switch checked={value} data-id={id} onChange={this.onChange}/>}
                     {isIndicator(type) && <Indicator {...{normal: value === false, warning: value === true}} />}
                 </ListItem>,
             typeItem = type =>
