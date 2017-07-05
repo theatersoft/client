@@ -6,7 +6,7 @@ import {deviceAction, switchAction} from '../../actions'
 const
     mapStateToProps = ({devices = {}}) => ({
         devices: Object.entries(devices)
-            .filter(([k, v]) => ['Switch', 'Dimmer'].includes(v.type))
+            .filter(([k, v]) => ['LightSwitch', 'Switch', 'Dimmer'].includes(v.type))
             .map(([k, v]) => v)
     }),
     mapDispatchToProps = dispatch => ({
