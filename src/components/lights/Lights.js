@@ -10,16 +10,15 @@ const
             .filter(([k, v]) => ['LightSwitch', 'Switch', 'Dimmer'].includes(v.type))
             .map(([k, v]) => v)
     }),
-    mapDispatchToProps = dispatch => ({
-        dispatchDeviceAction: action => dispatch(toggle(action))
-    })
+    mapDispatchToProps = dispatch => ({dispatchDeviceAction: action => dispatch(deviceAction(action))})
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(class extends Component {
     render ({dispatchDeviceAction, devices = []}) {
         return (
             <List>
                 {devices.map(({name, id, value}) => {
-                    const click = () => dispatchDeviceAction(switchAction(value, id))
+                    const click = () => dispatchDeviceAction(toggle(value, id))
                     return (
                         <ListItem label={name} onClick={click}>
                             <Switch checked={value} onChange={click}/>
