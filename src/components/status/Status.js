@@ -41,7 +41,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(class extends Compon
             {'Automation.feed': feed} = devices,
             _time = new Date(Time),
             date = _time.toLocaleDateString('en-US', {weekday: "short", month: "short", day: "numeric"}),
-            time = _time.toLocaleTimeString('en-US', {hour: "numeric", minute: "numeric"}).toLowerCase()
+            time = _time.toLocaleTimeString('en-US', {hour: "numeric", minute: "numeric"}).toLowerCase(),
+            item = (label, value, id) =>
+                <ListItem label={label}><Switch checked={value} data-id={id} onChange={this.onChange}/></ListItem>
         return (
             <List>
                 <Row between>
@@ -49,15 +51,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(class extends Compon
                     <span>{date}</span>
                     <Button small round inverse icon="spinner" onClick={() => window.location.reload()}/>
                 </Row>
-                <ListItem label="Alarm armed">
-                    <Switch checked={settings.armed} data-id="settings.armed" onChange={this.onChange}/>
-                </ListItem>
-                <ListItem label="Away mode">
-                    <Switch checked={locals.away} data-id="locals.away" onChange={this.onChange}/>
-                </ListItem>
-                <ListItem label="Enable notifications">
-                    <Switch checked={notifications.enabled} data-id="notifications.enabled" onChange={this.onChange}/>
-                </ListItem>
+                {item('Alarm armed', settings.armed, 'settings.armed')}
+                {item('Away mode', locals.away, 'locals.away')}
+                {item('Enable notifications', notifications.enabled, 'notifications.enabled')}
                 {feed && summary(feed.value, offset)}
             </List>
         )
