@@ -5,18 +5,6 @@ import {settingsAction, localsAction} from '../../actions'
 import {notificationsAction} from '../../push'
 
 const
-    when = (time, offset) => {
-        const
-            minutes = Math.floor((Number(new Date()) - offset - time) / 60000),
-            hours = Math.floor(minutes / 60)
-        return minutes < 1 ? 'now' : minutes < 60 ? `${minutes} min ago` : `${hours} hr ${minutes % 60} min ago`
-    },
-    summary = ({name, status, time}, offset) =>
-        <Row>
-            {name} {status} {when(time, offset)}
-        </Row>
-
-const
     mapStateToProps = p => p,
     mapDispatchToProps = dispatch => ({
         dispatch: {
@@ -42,21 +30,37 @@ export default connect(mapStateToProps, mapDispatchToProps)(class extends Compon
             _time = new Date(Time),
             date = _time.toLocaleDateString('en-US', {weekday: "short", month: "short", day: "numeric"}),
             time = _time.toLocaleTimeString('en-US', {hour: "numeric", minute: "numeric"}).toLowerCase(),
+            when = (time, offset) => {
+                const
+                    minutes = Math.floor((Number(new Date()) - offset - time) / 60000),
+                    hours = Math.floor(minutes / 60)
+                return minutes < 1 ? 'now' : minutes < 60 ? `${minutes} min ago` : `${hours} hr ${minutes % 60} min ago`
+            },
+            summary = ({name, status, time}, offset) =>
+                <Row>
+                    {`${name} ${status} ${when(time, offset)}`}
+                </Row>,
             item = (label, value, id) =>
-                <ListItem label={label}><Switch checked={value} data-id={id} onChange={this.onChange}/></ListItem>
+                <ListItem label={label}>
+                    <Switch checked={value} data-id={id} onChange={this.onChange}/>
+                </ListItem>
         return (
-            <List>
+            <div style={{height: '100%', display: 'flex', 'flex-direction': 'column'}}>
                 <Row between>
                     <span>{time}</span>
                     <span>{date}</span>
                     <Button small round inverse icon="spinner" onClick={() => window.location.reload()}/>
                 </Row>
-                {item('Alarm armed', settings.armed, 'settings.armed')}
-                {item('Away mode', locals.away, 'locals.away')}
-                {item('Enable notifications', notifications.enabled, 'notifications.enabled')}
-                {item('Enable pairing', settings.pairing, 'settings.pairing')}
-                {feed && summary(feed.value, offset)}
-            </List>
+                <div style={{flex: 1, 'overflow-y': 'auto'}}>
+                    <List>
+                        {feed && summary(feed.value, offset)}
+                        {item('Alarm armed', settings.armed, 'settings.armed')}
+                        {item('Away mode', locals.away, 'locals.away')}
+                        {item('Enable notifications', notifications.enabled, 'notifications.enabled')}
+                        {item('Enable pairing', settings.pairing, 'settings.pairing')}
+                    </List>
+                </div>
+            </div>
         )
     }
 })
