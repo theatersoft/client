@@ -2,7 +2,7 @@ import {h, Component} from 'preact'
 import {List, NestedList, ListItem, Switch, Indicator} from '@theatersoft/components'
 import {connect} from '../../redux'
 import {deviceAction} from '../../actions'
-import {Type, Interface, interfaceOfType, toggle} from '@theatersoft/device'
+import {Type, Interface, interfaceOfType, switchActions} from '@theatersoft/device'
 
 const
     isSwitch = type => interfaceOfType(type) === Interface.SWITCH_BINARY || interfaceOfType(type) === Interface.SWITCH_MULTILEVEL,
@@ -18,7 +18,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class extends Compon
         const
             id = e.currentTarget.dataset.id,
             {value, type} = this.props.devices[id]
-        if (switchable(type)) this.props.dispatchDeviceAction(toggle(value, id))
+        if (switchable(type)) this.props.dispatchDeviceAction(switchActions.toggle(value, id))
     }
 
     onChange = (value, e) => this.onClick(e)
