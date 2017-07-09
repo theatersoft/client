@@ -95,7 +95,10 @@ const targets = {
                         postcssModules({
                             getJSON(id, exportTokens) {cssExportMap[id] = exportTokens},
                             generateScopedName: '_[name]_[local]', // _[hash:2]
-                            globalModulePaths: ['@theatersoft/components/components.css']
+                            globalModulePaths: [
+                                '@theatersoft/components/components.css',
+                                '@theatersoft/zwave/zwave.css'
+                            ]
                         }),
                         postcssImport()
                     ],

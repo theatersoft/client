@@ -3,6 +3,7 @@ import {List, ListItem, Switch, Row, Button} from '@theatersoft/components'
 import {connect} from '../../redux'
 import {settingsAction, localsAction} from '../../actions'
 import {notificationsAction} from '../../push'
+import {AddDevice} from '@theatersoft/zwave'
 
 const
     mapStateToProps = p => p,
@@ -58,6 +59,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(class extends Compon
                         {item('Away mode', locals.away, 'locals.away')}
                         {item('Enable notifications', notifications.enabled, 'notifications.enabled')}
                         {item('Enable pairing', settings.pairing, 'settings.pairing')}
+                        <AddDevice/>
                     </List>
                 </div>
             </div>
