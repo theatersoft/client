@@ -106,9 +106,7 @@ const targets = {
                 }),
                 nodeResolve({
                     jsnext: true,
-                    module: true,
-                    //browser: true, // https://github.com/rollup/rollup-plugin-node-resolve/issues/55
-                    main: true,
+                    module: true
                 }),
                 replace({
                     'process.env.NODE_ENV': JSON.stringify('production')
