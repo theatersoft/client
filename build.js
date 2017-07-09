@@ -22,7 +22,8 @@ const
     stylus = require('stylus'),
     postcssModules = require('postcss-modules'),
     cssExportMap = {},
-    postcssImport = require("postcss-import")
+    postcssImport = require("postcss-import"),
+    includePaths = require('rollup-plugin-includepaths')
 
 const targets = {
     clean () {
@@ -104,9 +105,15 @@ const targets = {
                     ],
                     getExport: id => cssExportMap[id]
                 }),
+                includePaths({
+                    include: {
+                        '@theatersoft/bus': 'node_modules/@theatersoft/bus/bus.browser.es.js'
+                    }
+                }),
                 nodeResolve({
                     jsnext: true,
-                    module: true
+                    module: true,
+                    //skip: ['@theatersoft/bus']
                 }),
                 replace({
                     'process.env.NODE_ENV': JSON.stringify('production')
@@ -180,7 +187,7 @@ const targets = {
             .on('change', path => {
                 console.log(new Date().toLocaleTimeString(), path)
                 targets.bundle()
-                .then(targets.package)
+                    .then(targets.package)
             })
             .on('error', e => console.log(e))
     },
