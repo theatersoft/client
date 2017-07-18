@@ -1,6 +1,6 @@
 import {h, Component} from 'preact'
 import {Snackbar} from '@theatersoft/components'
-import {connect} from '../../redux'
+import {connect} from '../redux'
 
 const mapStateToProps = ({devices}) => {
     const
@@ -14,4 +14,5 @@ const mapStateToProps = ({devices}) => {
     } : {active: false}
 }
 
-export default connect(mapStateToProps)(props => <Snackbar {...props}/>)
+const _Snackbar = connect(mapStateToProps)(props => <Snackbar {...props}/>)
+export {_Snackbar as Snackbar}
