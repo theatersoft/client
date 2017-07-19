@@ -1,12 +1,20 @@
 import {h, Component} from 'preact'
-import {List} from '@theatersoft/components'
-import {Devices} from './'
+import {List, NestedList} from '@theatersoft/components'
 
 export class Settings extends Component {
     render () {
-        return h(
-            Devices(List) // TODO Devices(NestedList, {label: "Devices"})
+        const typeItems = (type, items) =>
+            <NestedList label={type}>
+                {items}
+            </NestedList>
+        return (
+            <List>
+                {
+                    typeItems('Devices', [])  // TODO Devices(NestedList, {label: "Devices"})
+                }
+                {typeItems('Services', [])}
+                {typeItems('Sessions', [])}
+            </List>
         )
     }
 }
-
