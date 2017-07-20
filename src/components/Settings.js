@@ -1,5 +1,6 @@
 import {h, Component} from 'preact'
 import {List, NestedList} from '@theatersoft/components'
+import  {Services} from './'
 
 export class Settings extends Component {
     render () {
@@ -12,7 +13,7 @@ export class Settings extends Component {
                 {
                     typeItems('Devices', [])  // TODO Devices(NestedList, {label: "Devices"})
                 }
-                {typeItems('Services', [])}
+                {h(Services(NestedList, {label: 'Services'}))}
                 {typeItems('Sessions', [])}
             </List>
         )
