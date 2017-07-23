@@ -3,11 +3,10 @@ import {List, ListItem, Switch, Row, Button} from '@theatersoft/components'
 import {connect} from '../../redux'
 import {settingsAction, localsAction} from '../../actions'
 import {notificationsAction} from '../../push'
-import {AddDevice} from '@theatersoft/zwave'
 
 const
-    mapStateToProps = p => p,
-    mapDispatchToProps = dispatch => ({
+    mapState = p => p,
+    mapDispatch = dispatch => ({
         dispatch: {
             settings: state => dispatch(settingsAction(state)),
             locals: state => dispatch(localsAction(state)),
@@ -15,7 +14,7 @@ const
         }
     })
 
-export default connect(mapStateToProps, mapDispatchToProps)(class extends Component {
+export default connect(mapState, mapDispatch)(class extends Component {
     onClick = e => {
         const
             [, service, id] = /^(\w+)\.(\w+)$/.exec(e.currentTarget.dataset.id),
@@ -57,7 +56,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(class extends Compon
                         {feed && summary(feed.value, offset)}
                         {item('Enable notifications', notifications.enabled, 'notifications.enabled')}
                         {item('Enable pairing', settings.pairing, 'settings.pairing')}
-                        <AddDevice/>
                     </List>
                 </div>
             </div>
