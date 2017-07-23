@@ -183,7 +183,11 @@ const targets = {
 
     async watch () {
         await targets.all()
-        require('chokidar').watch(['src', `${components}/*.js`])
+        require('chokidar').watch([
+            'src',
+            `${components}/*.js`,
+            `${path.dirname(require.resolve('@theatersoft/automation'))}/*.es.js`
+        ])
             .on('change', path => {
                 console.log(new Date().toLocaleTimeString(), path)
                 targets.bundle()
