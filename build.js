@@ -184,10 +184,11 @@ const targets = {
     async watch () {
         await targets.all()
         require('chokidar').watch([
-            'src',
-            `${components}/*.js`,
-            `${path.dirname(require.resolve('@theatersoft/automation'))}/*.es.js`
-        ])
+                'src',
+                `${components}/*.js`,
+                `${path.dirname(require.resolve('@theatersoft/automation'))}/*.es.js`,
+                `${path.dirname(require.resolve('@theatersoft/zwave'))}/*.es.js`
+            ])
             .on('change', path => {
                 console.log(new Date().toLocaleTimeString(), path)
                 targets.bundle()
