@@ -55,8 +55,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(class extends Compon
                 <div style={{flex: 1, 'overflow-y': 'auto'}}>
                     <List>
                         {feed && summary(feed.value, offset)}
-                        {item('Alarm armed', settings.armed, 'settings.armed')}
-                        {item('Away mode', locals.away, 'locals.away')}
                         {item('Enable notifications', notifications.enabled, 'notifications.enabled')}
                         {item('Enable pairing', settings.pairing, 'settings.pairing')}
                         <AddDevice/>
