@@ -4,23 +4,23 @@ import {proxy} from '@theatersoft/bus'
 import {connect} from '../redux'
 
 const Settings = proxy('Settings')
-export const settingsAction = state => () => Settings.setState(state)
 
 const
     mapState = p => p,
-    mapDispatch = dispatch => ({
-        dispatch: {
-            settings: state => dispatch(settingsAction(state))
-        }
-    })
+    mapDispatch = dispatch => ({setSettingsState: state => Settings.setState(state)})
 
 export const DeviceSettings = (ComposedComponent, props) => connect(mapState, mapDispatch)(class DeviceSettings extends Component {
+    onChange = value => {
+        this.props.setSettingsState({[`${this.props.id}.disabled`]: value})
+    }
+
     render ({id, devices, settings}) {
         if (!id) return null
         const
             [, service, _id] = /^([^\.]+)\.([^]+)$/.exec(id) || [, id, ''],
             device = devices[id],
-            {name, value, type} = device
+            {name, value, type} = device,
+            item = (label, value, id) => <ListItem label={label}><Switch checked={value} onChange={this.onChange}/></ListItem>
         return (
             <ComposedComponent {...props}>
                 <Subheader label="Service"/>
@@ -33,6 +33,7 @@ export const DeviceSettings = (ComposedComponent, props) => connect(mapState, ma
                 <ListItem label={name}/>
                 <Subheader label="Value"/>
                 <ListItem label={String(typeof value === 'object' ? JSON.stringify(value) : value)}/>
+                {item('Disabled', settings[`${id}.disabled`])}
             </ComposedComponent>
         )
     }
