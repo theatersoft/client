@@ -26,7 +26,6 @@ export const FocusableSheet = ({type}) => Content => class extends mixinFocusabl
     }
 
     render ({children, ...props}, {active}) {
-        console.log('FocusableSheet', Content, children)
         return (
             <Sheet type={type} active={active} onClick={this.onClick} {...props}>
                 {Content ? <Content/> : children}
