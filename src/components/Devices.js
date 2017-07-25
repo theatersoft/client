@@ -3,6 +3,7 @@ import {List, NestedList, ListItem, Switch, Indicator} from '@theatersoft/compon
 import {connect} from '../redux'
 import {deviceAction} from '../actions'
 import {Type, Interface, interfaceOfType, switchActions} from '@theatersoft/device'
+import {DeviceSettings as Device} from './DeviceSettings'
 import {DeviceSettings as X10} from '@theatersoft/x10'
 import {DeviceSettings as ZWave} from '@theatersoft/zwave'
 
@@ -14,7 +15,8 @@ const
     deviceSettings = id => {
         const
             [, service] = /^([^\.]+)\.([^]+)$/.exec(id) || [],
-            settings = {X10, ZWave}[service]
+            //settings = {X10, ZWave}[service]
+            settings = Device
         return settings || false
     }
 
