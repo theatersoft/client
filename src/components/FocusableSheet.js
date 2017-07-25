@@ -9,10 +9,13 @@ export const FocusableSheet = ({type}) => Content => class extends mixinFocusabl
         if (e.key === 'Escape') this.onClose()
     }
 
-    onClose = () => {
+    onClick = e => {
         if (this.state.active) {
-            this.setState({active: false})
-            setTimeout(() => focus.pop(), 250)
+            if (this.props.onBack) this.props.onBack(e)
+            if (!e.defaultPrevented) {
+                this.setState({active: false})
+                setTimeout(() => focus.pop(), 250)
+            }
         }
     }
 
@@ -25,7 +28,7 @@ export const FocusableSheet = ({type}) => Content => class extends mixinFocusabl
     render ({children, ...props}, {active}) {
         console.log('FocusableSheet', Content, children)
         return (
-            <Sheet type={type} active={active} onClick={this.onClose} {...props}>
+            <Sheet type={type} active={active} onClick={this.onClick} {...props}>
                 {Content ? <Content/> : children}
             </Sheet>
         )

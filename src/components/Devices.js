@@ -38,6 +38,13 @@ export const Devices = (ComposedComponent, props) => connect(mapStateToProps, ma
         if (switchable(type)) this.props.dispatchDeviceAction(switchActions.toggle(value, id))
     }
 
+    onBack = e => {
+        if (this.state.index) {
+            e.preventDefault()
+            this.setState({index: 0})
+        }
+    }
+
     render ({devices}, {index, id}) {
         const
             devicesByType = Object.values(devices).reduce((o, v) => (v.type && (o[v.type] || (o[v.type] = [])).push(v), o), {}),
@@ -52,7 +59,7 @@ export const Devices = (ComposedComponent, props) => connect(mapStateToProps, ma
                 </NestedList>,
             settings = id && deviceSettings(id)
         return (
-            <ComposedComponent index={index}>
+            <ComposedComponent index={index} onBack={this.onBack}>
                 <subsection>
                     {Object.keys(devicesByType).map(typeItem)}
                 </subsection>
