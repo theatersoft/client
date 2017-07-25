@@ -22,13 +22,24 @@ const
     mapStateToProps = ({devices = {}, Time, offset}) => ({devices, Time, offset}),
     mapDispatchToProps = dispatch => ({dispatchDeviceAction: action => dispatch(deviceAction(action))})
 
-export const Devices = (ComposedComponent, props) => connect(mapStateToProps, mapDispatchToProps)(class extends Component {
+export const Devices = ComposedComponent => connect(mapStateToProps, mapDispatchToProps)(class extends Component {
     state = {index: 0}
+
+    push = state => this.setState({index: 1, ...state})
+
+    pop = () => this.setState({index: 0})
+
+    onBack = e => {
+        if (this.state.index) {
+            e.preventDefault()
+            this.pop()
+        }
+    }
 
     onClick = e => {
         const
             id = e.currentTarget.dataset.id
-        if (deviceSettings(id)) this.setState({index: 1, id})
+        if (deviceSettings(id)) this.push({id})
     }
 
     onSwitch = (_, e) => {
@@ -36,13 +47,6 @@ export const Devices = (ComposedComponent, props) => connect(mapStateToProps, ma
             id = e.currentTarget.dataset.id,
             {value, type} = this.props.devices[id]
         if (switchable(type)) this.props.dispatchDeviceAction(switchActions.toggle(value, id))
-    }
-
-    onBack = e => {
-        if (this.state.index) {
-            e.preventDefault()
-            this.setState({index: 0})
-        }
     }
 
     render ({devices}, {index, id}) {
