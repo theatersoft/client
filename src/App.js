@@ -1,6 +1,6 @@
 import {h, render} from 'preact'
 import {focus, Focuser} from '@theatersoft/focus'
-import {Menu, Settings, Status, Stat, Favorites, Snackbar, FocusableSheet} from './components'
+import {Menu, Settings, Status, Stat, Favorites, Snackbar, FocusableSheet, Devices} from './components'
 
 const
     sheet = (Component, name, type) => h(FocusableSheet({type})(Component), {name}),
@@ -12,7 +12,8 @@ const
                 list: () => focus.push('settings')
             }}/>,
         sheet(Status, 'status', 'top'),
-        sheet(Favorites, 'favorites', 'right'),
+        //sheet(Favorites, 'favorites', 'right'),
+        h(Devices(FocusableSheet({type: 'right'})()), {name: 'favorites'}),
         sheet(Stat, 'stat', 'bottom'),
         sheet(Settings, 'settings', 'left')
     ]
