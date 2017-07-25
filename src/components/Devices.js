@@ -67,7 +67,7 @@ export const Devices = ComposedComponent => connect(mapStateToProps, mapDispatch
                 <subsection>
                     {Object.keys(devicesByType).map(typeItem)}
                 </subsection>
-                {settings && h(settings('subsection'))}
+                {settings && h(settings('subsection'), {id})}
             </ComposedComponent>
         )
     }
