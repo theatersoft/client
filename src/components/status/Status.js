@@ -32,7 +32,7 @@ export default connect(mapState, mapDispatch)(class extends Component {
             time = _time.toLocaleTimeString('en-US', {hour: "numeric", minute: "numeric"}).toLowerCase(),
             when = (time, offset) => {
                 const
-                    minutes = Math.floor((Number(new Date()) - offset - time) / 60000),
+                    minutes = Math.floor((Number(new Date()) + offset - time) / 60000),
                     hours = Math.floor(minutes / 60)
                 return minutes < 1 ? 'now' : minutes < 60 ? `${minutes} min ago` : `${hours} hr ${minutes % 60} min ago`
             },
