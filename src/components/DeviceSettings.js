@@ -18,7 +18,7 @@ export const DeviceSettings = (ComposedComponent, props) => connect(mapState, ma
         if (!id) return null
         const
             [, service, _id] = /^([^\.]+)\.([^]+)$/.exec(id) || [, id, ''],
-            device = devices[id],
+            device = devices[id] || {},
             {name, value, type} = device,
             item = (label, value, id) => <ListItem label={label}><Switch checked={value} onChange={this.onChange}/></ListItem>
         return (
