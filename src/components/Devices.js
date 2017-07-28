@@ -27,21 +27,21 @@ const
 export const Devices = ComposedComponent => connect(mapStateToProps, mapDispatchToProps)(class extends Component {
     state = {index: 0}
 
-    push = state => this.setState({index: 1, ...state})
+    next = state => this.setState({index: 1, ...state})
 
-    pop = () => this.setState({index: 0})
+    prev = () => this.setState({index: 0})
 
     onBack = e => {
         if (this.state.index) {
             e.preventDefault()
-            this.pop()
+            this.prev()
         }
     }
 
     onClick = e => {
         const
             id = e.currentTarget.dataset.id
-        if (deviceSettings(id)) this.push({id})
+        if (deviceSettings(id)) this.next({id})
     }
 
     onSwitch = (_, e) => {

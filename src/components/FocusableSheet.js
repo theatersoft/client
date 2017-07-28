@@ -6,7 +6,7 @@ export const FocusableSheet = ({type}) => Content => class extends mixinFocusabl
     state = {active: false}
 
     onKeydown = e => {
-        if (e.key === 'Escape') this.onClose()
+        if (e.key === 'Escape') this.onClick(e)
     }
 
     onClick = e => {
