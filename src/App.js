@@ -4,6 +4,7 @@ import {Menu, Settings, Status, Stat, Favorites, Snackbar, FocusableSheet, Devic
 
 const
     sheet = (Component, name, type) => h(FocusableSheet({type})(Component), {name}),
+    _sheet = (Component, name, type) => h(Component(FocusableSheet({type})()), {name}),
     items = [
         <Menu name="menu" items={{
                 spinner: () => focus.push('status'),
@@ -12,8 +13,7 @@ const
                 list: () => focus.push('settings')
             }}/>,
         sheet(Status, 'status', 'top'),
-        //sheet(Favorites, 'favorites', 'right'),
-        h(Devices(FocusableSheet({type: 'right'})()), {name: 'favorites'}),
+        _sheet(Devices, 'favorites', 'right'),
         sheet(Stat, 'stat', 'bottom'),
         sheet(Settings, 'settings', 'left')
     ]
