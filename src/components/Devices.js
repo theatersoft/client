@@ -15,7 +15,7 @@ const
     deviceSettings = id => {
         const
             [, service] = /^([^\.]+)\.([^]+)$/.exec(id) || [],
-            //settings = {X10, ZWave}[service]
+        //settings = {X10, ZWave}[service]
             settings = Device
         return settings || false
     }
@@ -24,24 +24,12 @@ const
     mapStateToProps = ({devices = {}, Time, offset}) => ({devices, Time, offset}),
     mapDispatchToProps = dispatch => ({dispatchDeviceAction: action => dispatch(deviceAction(action))})
 
-export const Devices = ComposedComponent => connect(mapStateToProps, mapDispatchToProps)(class extends Component {
-    state = {index: 0}
-
-    next = state => this.setState({index: 1, ...state})
-
-    prev = () => this.setState({index: 0})
-
-    onBack = e => {
-        if (this.state.index) {
-            e.preventDefault()
-            this.prev()
-        }
-    }
-
+const DevicesSection = connect(mapStateToProps, mapDispatchToProps)(class extends Component {
     onClick = e => {
         const
-            id = e.currentTarget.dataset.id
-        if (deviceSettings(id)) this.next({id})
+            id = e.currentTarget.dataset.id,
+            settings = id && deviceSettings(id)
+        if (settings) this.props.next(props => h(settings('subsection'), {id, ...props}))
     }
 
     onSwitch = (_, e) => {
@@ -62,16 +50,14 @@ export const Devices = ComposedComponent => connect(mapStateToProps, mapDispatch
             typeItem = type =>
                 <NestedList label={type}>
                     {devicesByType[type].map(deviceItem)}
-                </NestedList>,
-            settings = id && deviceSettings(id)
+                </NestedList>
         return (
-            <ComposedComponent index={index} onBack={this.onBack}>
-                <subsection>
-                    {Object.keys(devicesByType).map(typeItem)}
-                </subsection>
-                {settings && h(settings('subsection'), {id})}
-            </ComposedComponent>
+            <subsection>
+                {Object.keys(devicesByType).map(typeItem)}
+            </subsection>
         )
     }
 })
 
+import {ComposeSheets} from './ComposeSheets'
+export const Devices = ComposeSheets(DevicesSection)
