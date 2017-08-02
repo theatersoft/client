@@ -25,7 +25,7 @@ const
     mapStateToProps = ({devices = {}, Time, offset}) => ({devices, Time, offset}),
     mapDispatchToProps = dispatch => ({dispatchDeviceAction: action => dispatch(deviceAction(action))})
 
-const DevicesSection = connect(mapStateToProps, mapDispatchToProps)(class extends Component {
+const DevicesSheet = connect(mapStateToProps, mapDispatchToProps)(class extends Component {
     onClick = e => {
         const
             id = e.currentTarget.dataset.id,
@@ -60,4 +60,4 @@ const DevicesSection = connect(mapStateToProps, mapDispatchToProps)(class extend
     }
 })
 
-export const Devices = ComposeSheets(DevicesSection)
+export const Devices = ComposeSheets(DevicesSheet)

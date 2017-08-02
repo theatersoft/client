@@ -15,7 +15,7 @@ const
         sheet(Status, 'status', 'top'),
         _sheet(Devices, 'favorites', 'right'),
         sheet(Stat, 'stat', 'bottom'),
-        sheet(Settings, 'settings', 'left')
+        _sheet(Settings, 'settings', 'left')
     ]
 
 export const App = () =>
