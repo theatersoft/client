@@ -11,9 +11,9 @@ export const Services = (ComposedComponent, props) => connect(mapState)(class ex
     render ({hosts}) {
         const
             services = hosts.reduce((a, h) => (h.services && h.services.forEach(s => a.push(s)), a), []),
-            serviceItem = ({name}) => {
-                const item = {Automation, ZWave}[name]
-                return item ? h(item(NestedList, {label: name})) : <ListItem label={name}/>
+            serviceItem = ({name, export: _e}) => {
+                const item = {Automation, ZWave}[_e]
+                return item ? h(item(NestedList, {label: name, name})) : <ListItem label={name}/>
             }
         return (
             <ComposedComponent {...props}>
