@@ -8,13 +8,18 @@ const
     mapState = ({config: {hosts}}) => ({hosts})
 
 export const Services = (ComposedComponent, props) => connect(mapState)(class extends Component {
+    onClick = e => {
+        const
+            {id, ex} = e.currentTarget.dataset,
+            settings = {Automation, ZWave}[ex]
+        if (settings) props.next(props => h(settings('subsection'), {id, ...props}))
+    }
+
     render ({hosts}) {
         const
             services = hosts.reduce((a, h) => (h.services && h.services.forEach(s => a.push(s)), a), []),
-            serviceItem = ({name, export: _e}) => {
-                const item = {Automation, ZWave}[_e]
-                return item ? h(item(NestedList, {label: name, name})) : <ListItem label={name}/>
-            }
+            serviceItem = ({name: id, export: ex}) =>
+                <ListItem label={id} data-id={id} data-ex={ex} onClick={this.onClick}/>
         return (
             <ComposedComponent {...props}>
                 {services.map(serviceItem)}

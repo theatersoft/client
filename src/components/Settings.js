@@ -14,7 +14,7 @@ class SettingsSheet extends Component {
                 {
                     typeItems('Devices', [])  // TODO Devices(NestedList, {label: "Devices"})
                 }
-                {h(Services(NestedList, {label: 'Services'}))}
+                {h(Services(NestedList, {label: 'Services', ...this.props}))}
                 {typeItems('Sessions', [])}
             </subsection>
         )
