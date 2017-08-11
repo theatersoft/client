@@ -7,12 +7,12 @@ import {ServiceSettings as ZWave} from '@theatersoft/zwave'
 const
     mapState = ({config: {hosts}}) => ({hosts})
 
-export const Services = (ComposedComponent, props) => connect(mapState)(class extends Component {
+export const Services = (ComposedComponent, {label, next}) => connect(mapState)(class extends Component {
     onClick = e => {
         const
             {id, ex} = e.currentTarget.dataset,
             settings = {Automation, ZWave}[ex]
-        if (settings) props.next(props => h(settings('subsection'), {id, ...props}))
+        if (settings) next(props => h(settings('subsection'), {id, ...props}))
     }
 
     render ({hosts}) {
@@ -21,10 +21,9 @@ export const Services = (ComposedComponent, props) => connect(mapState)(class ex
             serviceItem = ({name: id, export: ex}) =>
                 <ListItem label={id} data-id={id} data-ex={ex} onClick={this.onClick}/>
         return (
-            <ComposedComponent {...props}>
+            <ComposedComponent label={label}>
                 {services.map(serviceItem)}
             </ComposedComponent>
         )
     }
 })
-
