@@ -23,16 +23,17 @@ export const DeviceSettings = (Composed, props) => connect(mapState, mapDispatch
             item = (label, value, id) => <ListItem label={label}><Switch checked={value} onChange={this.onChange}/></ListItem>
         return (
             <Composed {...props}>
-                <Subheader label="Service"/>
-                <ListItem label={service}/>
-                <Subheader label="Type"/>
-                <ListItem label={type}/>
-                <Subheader label="ID"/>
-                <ListItem label={_id}/>
+                <Subheader label="DEVICE SETTINGS"/>
                 <Subheader label="Name"/>
                 <ListItem label={name}/>
                 <Subheader label="Value"/>
                 <ListItem label={String(typeof value === 'object' ? JSON.stringify(value) : value)}/>
+                <Subheader label="Type"/>
+                <ListItem label={type}/>
+                <Subheader label="Service"/>
+                <ListItem label={service}/>
+                <Subheader label="ID"/>
+                <ListItem label={_id}/>
                 {item('Disabled', settings[`${id}.disabled`])}
             </Composed>
         )
