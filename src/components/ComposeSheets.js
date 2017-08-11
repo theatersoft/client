@@ -1,6 +1,6 @@
 import {h, Component} from 'preact'
 
-export const ComposeSheets = Sheet => ComposedComponent => class extends Component {
+export const ComposeSheets = Sheet => Composed => class extends Component {
     state = {index: 0, sheets: []}
 
     next = sheet => this.setState({
@@ -23,11 +23,11 @@ export const ComposeSheets = Sheet => ComposedComponent => class extends Compone
     render ({}, {index, sheets}) {
         const props = {next: this.next, prev: this.prev}
         return (
-            <ComposedComponent index={index} onBack={this.onBack}>
+            <Composed index={index} onBack={this.onBack}>
                 {h(Sheet, props)}
                 {sheets.map(sheet => sheet(props))}
                 <subsection/>
-            </ComposedComponent>
+            </Composed>
         )
     }
 }

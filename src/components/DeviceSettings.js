@@ -9,7 +9,7 @@ const
     mapState = p => p,
     mapDispatch = dispatch => ({setSettingsState: state => Settings.setState(state)})
 
-export const DeviceSettings = (ComposedComponent, props) => connect(mapState, mapDispatch)(class DeviceSettings extends Component {
+export const DeviceSettings = (Composed, props) => connect(mapState, mapDispatch)(class DeviceSettings extends Component {
     onChange = value => {
         this.props.setSettingsState({[`${this.props.id}.disabled`]: value})
     }
@@ -22,7 +22,7 @@ export const DeviceSettings = (ComposedComponent, props) => connect(mapState, ma
             {name, value, type} = device,
             item = (label, value, id) => <ListItem label={label}><Switch checked={value} onChange={this.onChange}/></ListItem>
         return (
-            <ComposedComponent {...props}>
+            <Composed {...props}>
                 <Subheader label="Service"/>
                 <ListItem label={service}/>
                 <Subheader label="Type"/>
@@ -34,7 +34,7 @@ export const DeviceSettings = (ComposedComponent, props) => connect(mapState, ma
                 <Subheader label="Value"/>
                 <ListItem label={String(typeof value === 'object' ? JSON.stringify(value) : value)}/>
                 {item('Disabled', settings[`${id}.disabled`])}
-            </ComposedComponent>
+            </Composed>
         )
     }
 })
