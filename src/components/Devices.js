@@ -3,7 +3,7 @@ import {List, NestedList, ListItem, Switch, Indicator} from '@theatersoft/compon
 import {connect} from '../redux'
 import {deviceAction} from '../actions'
 import {Type, Interface, interfaceOfType, switchActions} from '@theatersoft/device'
-import {ComposeSheets} from './ComposeSheets'
+import {ComposeSheets} from './'
 import {DeviceSettings as Device} from './DeviceSettings'
 import {DeviceSettings as X10} from '@theatersoft/x10'
 import {DeviceSettings as ZWave} from '@theatersoft/zwave'
