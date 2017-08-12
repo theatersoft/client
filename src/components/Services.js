@@ -8,7 +8,7 @@ const
     mapState = ({config: {hosts}}) => ({hosts})
 
 export const Services = (Composed, {label, next}) => connect(mapState)(class extends Component {
-    services = this.props.hosts.reduce((a, h) => (h.services && h.services.forEach(s => a.push(s)), a), [])
+    services = this.props.hosts.reduce((a, h) => (h.services && h.services.forEach(s => a.push({host: h.name, ...s})), a), [])
 
     onClick = e => {
         const
