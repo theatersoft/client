@@ -14,7 +14,7 @@ export const Services = (Composed, {label, next}) => connect(mapState)(class ext
         const
             service = this.services[e.currentTarget.dataset.index],
             settings = {Automation, ZWave}[service.export]
-        if (settings) next(props => h(settings('subsection', {service}), {id: service.export, ...props}))
+        if (settings) next(props => h(settings('subsection', {service}), props))
     }
 
     render ({hosts}) {
