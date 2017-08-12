@@ -8,21 +8,20 @@ const
     mapState = ({config: {hosts}}) => ({hosts})
 
 export const Services = (Composed, {label, next}) => connect(mapState)(class extends Component {
+    services = this.props.hosts.reduce((a, h) => (h.services && h.services.forEach(s => a.push(s)), a), [])
+
     onClick = e => {
         const
-            {id, ex} = e.currentTarget.dataset,
-            settings = {Automation, ZWave}[ex]
-        if (settings) next(props => h(settings('subsection'), {id, ...props}))
+            service = this.services[e.currentTarget.dataset.index],
+            settings = {Automation, ZWave}[service.export]
+        if (settings) next(props => h(settings('subsection', {service}), {id: service.export, ...props}))
     }
 
     render ({hosts}) {
-        const
-            services = hosts.reduce((a, h) => (h.services && h.services.forEach(s => a.push(s)), a), []),
-            serviceItem = ({name: id, export: ex}) =>
-                <ListItem label={id} data-id={id} data-ex={ex} onClick={this.onClick}/>
         return (
             <Composed label={label}>
-                {services.map(serviceItem)}
+                {this.services.map((service, index) =>
+                    <ListItem label={service.name} data-index={index} onClick={this.onClick}/>)}
             </Composed>
         )
     }
