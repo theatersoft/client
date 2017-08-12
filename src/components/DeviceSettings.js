@@ -23,7 +23,7 @@ export const DeviceSettings = (Composed, props) => connect(mapState, mapDispatch
             item = (label, value, id) => <ListItem label={label}><Switch checked={value} onChange={this.onChange}/></ListItem>
         return (
             <Composed {...props}>
-                <Subheader label="DEVICE SETTINGS"/>
+                <Subheader label="Device Settings"/>
                 <Subheader label="Name"/>
                 <ListItem label={name}/>
                 <Subheader label="Value"/>
