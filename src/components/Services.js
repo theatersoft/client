@@ -1,5 +1,5 @@
 import {h, Component} from 'preact'
-import {List, NestedList, ListItem, Subheader} from '@theatersoft/components'
+import {List, NestedList, ListItem, Switch, Subheader} from '@theatersoft/components'
 import {connect} from '../redux'
 import {ServiceSettings as Automation} from '@theatersoft/automation'
 import {ServiceSettings as ZWave} from '@theatersoft/zwave'
@@ -29,9 +29,23 @@ export const Services = (Composed, {label, next}) => connect(mapState)(class ext
 
 const ServiceSettings = (Composed, {service}) => connect(p => p)(class ServiceSettings extends Component {
     render ({settings}) {
+        const
+            item = (label, value) => <ListItem label={label}><Switch checked={value}/></ListItem>,
+            {name, enabled = true, host, module, export: _export, config} = service
         return (
             <Composed>
-                <Subheader label={`${service.name} Service Settings`}/>
+                <Subheader label={`${name} Settings`}/>
+                {item('Enabled', enabled)}
+                <NestedList label="Service" active>
+                    <Subheader label="Host"/>
+                    <ListItem label={host}/>
+                    <Subheader label="Module"/>
+                    <ListItem label={module}/>
+                    <Subheader label="Export"/>
+                    <ListItem label={_export}/>
+                    <Subheader label="Config"/>
+                    <ListItem label={JSON.stringify(config)}/>
+                </NestedList>
             </Composed>
         )
     }
