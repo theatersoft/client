@@ -19,7 +19,7 @@ export const Services = (Composed, {label, next}) => connect(mapState)(class ext
 
     render ({hosts}) {
         return (
-            <Composed label={label}>
+            <Composed label={`${label} (${this.services.length})`}>
                 {this.services.map((service, index) =>
                     <ListItem label={service.name} data-index={index} onClick={this.onClick}/>)}
             </Composed>
