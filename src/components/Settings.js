@@ -1,10 +1,11 @@
 import {h, Component} from 'preact'
 import {List, NestedList, Subheader} from '@theatersoft/components'
-import {Services, Hosts, ComposeSheets} from './'
+import {Services, Hosts, Sessions, ComposeSheets} from './'
 
 export const Settings = ComposeSheets(class SettingsSheet extends Component {
     Services = Services(NestedList, {label: 'Services', ...this.props})
     Hosts = Hosts(NestedList, {label: 'Hosts', ...this.props})
+    Sessions = Sessions(NestedList, {label: 'Sessions', ...this.props})
 
     render () {
         return (
@@ -13,7 +14,7 @@ export const Settings = ComposeSheets(class SettingsSheet extends Component {
                 <NestedList label="Devices"/>
                 <this.Services/>
                 <this.Hosts/>
-                <NestedList label="Sessions"/>
+                <this.Sessions/>
             </subsection>
         )
     }
