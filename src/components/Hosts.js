@@ -27,7 +27,6 @@ export const Hosts = (Composed, {label, next}) => connect(mapState)(class extend
 const HostSettings = (Composed, {host}) => connect(p => p)(class HostSettings extends Component {
     render ({settings}) {
         const
-            item = (label, value) => <ListItem label={label}><Switch checked={value}/></ListItem>,
             {name} = host
         return (
             <Composed>
