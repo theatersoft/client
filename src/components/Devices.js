@@ -14,7 +14,7 @@ const
     mapStateToProps = ({devices = {}, Time, offset}) => ({devices, Time, offset}),
     mapDispatchToProps = dispatch => ({dispatchDeviceAction: action => dispatch(deviceAction(action))})
 
-export const DevicesSheet = (Composed, {label, ...props}) => ({next}) => connect(mapStateToProps, mapDispatchToProps)(class extends Component {
+export const DevicesSheet = (Composed, {label}) => ({next}) => connect(mapStateToProps, mapDispatchToProps)(class extends Component {
     onClick = e => {
         const device = this.props.devices[e.currentTarget.dataset.id]
         next(props => h(DeviceSettings('subsection', {device}), {props}))
@@ -40,7 +40,7 @@ export const DevicesSheet = (Composed, {label, ...props}) => ({next}) => connect
                     {devicesByType[type].map(deviceItem)}
                 </NestedList>
         return (
-            <Composed {...props} label={`${label} (${Object.values(devices).length})`}>
+            <Composed label={`${label} (${Object.values(devices).length})`}>
                 {Object.keys(devicesByType).map(typeItem)}
             </Composed>
         )
