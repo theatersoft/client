@@ -8,15 +8,15 @@ import {DeviceSettings as ZWave} from '@theatersoft/zwave'
 const Settings = proxy('Settings')
 
 const
-    mapState = ({id}) => ({devices: {[id]: device}, settings}) => ({device, settings}),
+    mapState = id => ({devices: {[id]: device}, settings}) => ({device, settings}),
     mapDispatch = dispatch => ({setSettingsState: state => Settings.setState(state)})
 
-export const DeviceSettings = (Composed, {device, ...props}) => connect(mapState(device), mapDispatch)(class extends Component {
-    onChange = value => this.props.setSettingsState({[`${device.id}.disabled`]: value})
+export const DeviceSettings = (Composed, {device: {id}, ...props}) => connect(mapState(id), mapDispatch)(class extends Component {
+    onChange = value => this.props.setSettingsState({[`${id}.disabled`]: value})
 
     render ({device, settings}) {
         const
-            {name, value, type, id} = device,
+            {name, value, type} = device,
             [, service, _id] = /^([^\.]+)\.([^]+)$/.exec(id) || [, id, ''],
             item = (label, value, id) =>
                 <ListItem label={label}><Switch checked={value} onChange={this.onChange}/></ListItem>
