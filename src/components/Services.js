@@ -6,7 +6,7 @@ import {ServiceSettings} from './'
 const
     mapState = ({config: {hosts}}) => ({hosts})
 
-export const Services = (Composed, {label, next}) => connect(mapState)(class extends Component {
+export const Services = (Composed, {label}) => ({next}) => connect(mapState)(class extends Component {
     services = this.props.hosts.reduce((a, h) => (h.services && h.services.forEach(s => a.push({host: h.name, ...s})), a), [])
 
     onClick = e => {

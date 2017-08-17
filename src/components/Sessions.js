@@ -2,7 +2,7 @@ import {h, Component} from 'preact'
 import {List, NestedList, ListItem, Switch, Subheader} from '@theatersoft/components'
 import {proxy} from '@theatersoft/bus'
 
-export const Sessions = (Composed, {label, next}) => (class extends Component {
+export const Sessions = (Composed, {label}) => ({next}) => (class extends Component {
     state = {sessions: []}
 
     componentDidMount () {

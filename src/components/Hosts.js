@@ -5,7 +5,7 @@ import {connect} from '../redux'
 const
     mapState = ({config: {hosts}}) => ({hosts})
 
-export const Hosts = (Composed, {label, next}) => connect(mapState)(class extends Component {
+export const Hosts = (Composed, {label}) => ({next}) => connect(mapState)(class extends Component {
     hosts = this.props.hosts
 
     onClick = e => {

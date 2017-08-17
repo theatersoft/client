@@ -4,9 +4,9 @@ import {Services, Hosts, Sessions, DevicesSheet as Devices, ComposeSheets} from 
 
 export const Settings = ComposeSheets(props => class SettingsSheet extends Component {
     Devices = Devices(NestedList, {label: 'Devices'})(props)
-    Services = Services(NestedList, {label: 'Services', ...props})
-    Hosts = Hosts(NestedList, {label: 'Hosts', ...props})
-    Sessions = Sessions(NestedList, {label: 'Sessions', ...props})
+    Services = Services(NestedList, {label: 'Services'})(props)
+    Hosts = Hosts(NestedList, {label: 'Hosts'})(props)
+    Sessions = Sessions(NestedList, {label: 'Sessions'})(props)
 
     render () {
         return (
