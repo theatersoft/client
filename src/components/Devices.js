@@ -14,12 +14,9 @@ const
     mapStateToProps = ({devices = {}, Time, offset}) => ({devices, Time, offset}),
     mapDispatchToProps = dispatch => ({dispatchDeviceAction: action => dispatch(deviceAction(action))})
 
-export const DevicesSheet = (Composed, {label, next, ...props}) => connect(mapStateToProps, mapDispatchToProps)(class extends Component {
+export const DevicesSheet = (Composed, {label, ...props}) => ({next}) => connect(mapStateToProps, mapDispatchToProps)(class extends Component {
     onClick = e => {
-        const
-            props = this.props, // TODO
-            next = this.props.next, // TODO
-            device = this.props.devices[e.currentTarget.dataset.id]
+        const device = this.props.devices[e.currentTarget.dataset.id]
         next(props => h(DeviceSettings('subsection', {device}), {props}))
     }
 

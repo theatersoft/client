@@ -24,8 +24,8 @@ export const ComposeSheets = Sheet => Composed => class extends Component {
         const props = {next: this.next, prev: this.prev}
         return (
             <Composed index={index} onBack={this.onBack}>
-                {h(Sheet, props)}
-                {sheets.map(sheet => sheet(props))}
+                {h(Sheet(props))}
+                {sheets.map(Sheet => Sheet(props))}
                 <subsection/>
             </Composed>
         )
