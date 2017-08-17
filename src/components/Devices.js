@@ -3,34 +3,24 @@ import {List, NestedList, ListItem, Switch, Indicator} from '@theatersoft/compon
 import {connect} from '../redux'
 import {deviceAction} from '../actions'
 import {Type, Interface, interfaceOfType, switchActions} from '@theatersoft/device'
-import {ComposeSheets} from './'
-import {DeviceSettings as Device} from './DeviceSettings'
-import {DeviceSettings as X10} from '@theatersoft/x10'
-import {DeviceSettings as ZWave} from '@theatersoft/zwave'
+import {ComposeSheets, DeviceSettings} from './'
 
 const
     isSwitch = type => interfaceOfType(type) === Interface.SWITCH_BINARY || interfaceOfType(type) === Interface.SWITCH_MULTILEVEL,
     isIndicator = type => interfaceOfType(type) === Interface.SENSOR_BINARY,
-    switchable = type => isSwitch(type) && type !== Type.Siren,
-
-    deviceSettings = id => {
-        const
-            [, service] = /^([^\.]+)\.([^]+)$/.exec(id) || [],
-        //settings = {X10, ZWave}[service]
-            settings = Device
-        return settings || false
-    }
+    switchable = type => isSwitch(type) && type !== Type.Siren
 
 const
     mapStateToProps = ({devices = {}, Time, offset}) => ({devices, Time, offset}),
     mapDispatchToProps = dispatch => ({dispatchDeviceAction: action => dispatch(deviceAction(action))})
 
-export const DevicesSheet = (Composed, {label, ...props}) => connect(mapStateToProps, mapDispatchToProps)(class extends Component {
+export const DevicesSheet = (Composed, {label, next, ...props}) => connect(mapStateToProps, mapDispatchToProps)(class extends Component {
     onClick = e => {
         const
-            id = e.currentTarget.dataset.id,
-            settings = id && deviceSettings(id)
-        if (settings) this.props.next(props => h(settings('subsection'), {id, ...props}))
+            props = this.props, // TODO
+            next = this.props.next, // TODO
+            device = this.props.devices[e.currentTarget.dataset.id]
+        next(props => h(DeviceSettings('subsection', {device}), {props}))
     }
 
     onSwitch = (_, e) => {

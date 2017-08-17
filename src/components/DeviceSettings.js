@@ -2,25 +2,24 @@ import {h, Component} from 'preact'
 import {ListItem, Switch, Subheader} from '@theatersoft/components'
 import {proxy} from '@theatersoft/bus'
 import {connect} from '../redux'
+import {DeviceSettings as X10} from '@theatersoft/x10'
+import {DeviceSettings as ZWave} from '@theatersoft/zwave'
 
 const Settings = proxy('Settings')
 
 const
-    mapState = p => p,
+    mapState = ({id}) => ({devices: {[id]: device}, settings}) => ({device, settings}),
     mapDispatch = dispatch => ({setSettingsState: state => Settings.setState(state)})
 
-export const DeviceSettings = (Composed, props) => connect(mapState, mapDispatch)(class DeviceSettings extends Component {
-    onChange = value => {
-        this.props.setSettingsState({[`${this.props.id}.disabled`]: value})
-    }
+export const DeviceSettings = (Composed, {device, ...props}) => connect(mapState(device), mapDispatch)(class extends Component {
+    onChange = value => this.props.setSettingsState({[`${device.id}.disabled`]: value})
 
-    render ({id, devices, settings}) {
-        if (!id) return null
+    render ({device, settings}) {
         const
+            {name, value, type, id} = device,
             [, service, _id] = /^([^\.]+)\.([^]+)$/.exec(id) || [, id, ''],
-            device = devices[id] || {},
-            {name, value, type} = device,
-            item = (label, value, id) => <ListItem label={label}><Switch checked={value} onChange={this.onChange}/></ListItem>
+            item = (label, value, id) =>
+                <ListItem label={label}><Switch checked={value} onChange={this.onChange}/></ListItem>
         return (
             <Composed {...props}>
                 <Subheader label="Device Settings"/>
