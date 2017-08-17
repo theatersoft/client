@@ -11,7 +11,7 @@ export const Services = (Composed, {label}) => ({next}) => connect(mapState)(cla
 
     onClick = e => {
         const service = this.services[e.currentTarget.dataset.index]
-        next(props => h(ServiceSettings('subsection', {service}), props))
+        next(props => h(ServiceSettings('subsection', {service})))
     }
 
     render () {

@@ -12,7 +12,7 @@ export const Sessions = (Composed, {label}) => ({next}) => (class extends Compon
     onClick = e => {
         const
             session = this.state.sessions[e.currentTarget.dataset.index]
-        next(props => h(SessionSettings('subsection', {session}), props))
+        next(props => h(SessionSettings('subsection', {session})))
     }
 
     render ({}, {sessions}) {
@@ -26,7 +26,7 @@ export const Sessions = (Composed, {label}) => ({next}) => (class extends Compon
     }
 })
 
-const SessionSettings = (Composed, {session}) => (class SessionSettings extends Component {
+const SessionSettings = (Composed, {session}) => (class extends Component {
     render () {
         const
             {id, name, ip, ua, time} = session

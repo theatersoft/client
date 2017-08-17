@@ -11,10 +11,10 @@ export const Hosts = (Composed, {label}) => ({next}) => connect(mapState)(class 
     onClick = e => {
         const
             host = this.hosts[e.currentTarget.dataset.index]
-        next(props => h(HostSettings('subsection', {host}), props))
+        next(props => h(HostSettings('subsection', {host})))
     }
 
-    render ({hosts}) {
+    render () {
         return (
             <Composed label={`${label} (${this.hosts.length})`}>
                 {this.hosts.map((host, index) =>
@@ -24,8 +24,8 @@ export const Hosts = (Composed, {label}) => ({next}) => connect(mapState)(class 
     }
 })
 
-const HostSettings = (Composed, {host}) => connect(p => p)(class HostSettings extends Component {
-    render ({settings}) {
+const HostSettings = (Composed, {host}) => class extends Component {
+    render () {
         const
             {name} = host
         return (
@@ -34,4 +34,4 @@ const HostSettings = (Composed, {host}) => connect(p => p)(class HostSettings ex
             </Composed>
         )
     }
-})
+}

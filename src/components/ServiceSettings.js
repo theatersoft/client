@@ -7,7 +7,7 @@ import {ServiceSettings as ZWave} from '@theatersoft/zwave'
 const
     settingsMap = {Automation, ZWave}
 
-export const ServiceSettings = (Composed, {service, ...props}) => class extends Component {
+export const ServiceSettings = (Composed, {service}) => class extends Component {
     Settings = settingsMap[service.export] && settingsMap[service.export](NestedList, {service, ...this.props})
 
     render () {

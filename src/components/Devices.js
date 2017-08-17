@@ -17,7 +17,7 @@ const
 export const DevicesSheet = (Composed, {label}) => ({next}) => connect(mapStateToProps, mapDispatchToProps)(class extends Component {
     onClick = e => {
         const device = this.props.devices[e.currentTarget.dataset.id]
-        next(props => h(DeviceSettings('subsection', {device}), {props}))
+        next(props => h(DeviceSettings('subsection', {device})))
     }
 
     onSwitch = (_, e) => {
