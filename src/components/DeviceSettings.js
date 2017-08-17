@@ -2,6 +2,7 @@ import {h, Component} from 'preact'
 import {ListItem, Switch, Subheader} from '@theatersoft/components'
 import {proxy} from '@theatersoft/bus'
 import {connect} from '../redux'
+import {dateTimeString} from '../util'
 import {DeviceSettings as X10} from '@theatersoft/x10'
 import {DeviceSettings as ZWave} from '@theatersoft/zwave'
 
@@ -17,9 +18,6 @@ export const DeviceSettings = (Composed, {device: {id}}) => connect(mapState(id)
     render ({device, settings}) {
         const
             {name, value, time, type} = device,
-            date = time && new Date(time),
-            _date = date && date.toLocaleDateString('en-US', {weekday: "short", month: "short", day: "numeric"}),
-            _time = date && date.toLocaleTimeString('en-US', {hour: 'numeric', minute: 'numeric', second: 'numeric'}),
             [, service, _id] = /^([^\.]+)\.([^]+)$/.exec(id) || [, id, ''],
             item = (label, value, id) =>
                 <ListItem label={label}><Switch checked={value} onChange={this.onChange}/></ListItem>
@@ -31,7 +29,7 @@ export const DeviceSettings = (Composed, {device: {id}}) => connect(mapState(id)
                 <Subheader label="Value"/>
                 <ListItem label={String(typeof value === 'object' ? JSON.stringify(value) : value)}/>
                 {time && <Subheader label="Time"/>}
-                {time && <ListItem label={`${_date} ${_time}`}/>}
+                {time && <ListItem label={dateTimeString(time)}/>}
                 <Subheader label="Type"/>
                 <ListItem label={type}/>
                 <Subheader label="Service"/>

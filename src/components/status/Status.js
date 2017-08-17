@@ -3,6 +3,7 @@ import {List, ListItem, Switch, Row, Button} from '@theatersoft/components'
 import {connect} from '../../redux'
 import {settingsAction, localsAction} from '../../actions'
 import {notificationsAction} from '../../push'
+import {dateString, timeString, agoString} from '../../util'
 
 const
     mapState = p => p,
@@ -27,18 +28,9 @@ export default connect(mapState, mapDispatch)(class extends Component {
     render ({Time, devices, offset, settings, locals, notifications}) {
         const
             {'Automation.feed': feed} = devices,
-            _time = new Date(Time),
-            date = _time.toLocaleDateString('en-US', {weekday: "short", month: "short", day: "numeric"}),
-            time = _time.toLocaleTimeString('en-US', {hour: "numeric", minute: "numeric"}).toLowerCase(),
-            when = (time, offset) => {
-                const
-                    minutes = Math.floor((Number(new Date()) + offset - time) / 60000),
-                    hours = Math.floor(minutes / 60)
-                return minutes < 1 ? 'now' : minutes < 60 ? `${minutes} min ago` : `${hours} hr ${minutes % 60} min ago`
-            },
             summary = ({name, status, time}, offset) =>
                 <Row>
-                    {`${name} ${status} ${when(time, offset)}`}
+                    {`${name} ${status} ${agoString(time, offset)}`}
                 </Row>,
             item = (label, value, id) =>
                 <ListItem label={label}>
@@ -47,8 +39,8 @@ export default connect(mapState, mapDispatch)(class extends Component {
         return (
             <div style={{height: '100%', display: 'flex', 'flex-direction': 'column'}}>
                 <Row between>
-                    <span>{time}</span>
-                    <span>{date}</span>
+                    <span>{timeString(Time)}</span>
+                    <span>{dateString(Time)}</span>
                     <Button small round inverse icon="spinner" onClick={() => window.location.reload()}/>
                 </Row>
                 <div style={{flex: 1, 'overflow-y': 'auto'}}>
