@@ -16,7 +16,7 @@ export const DeviceSettings = (Composed, {device: {id}}) => connect(mapState(id)
 
     render ({device, settings}) {
         const
-            {name, value, type} = device,
+            {name, value, time, type} = device,
             [, service, _id] = /^([^\.]+)\.([^]+)$/.exec(id) || [, id, ''],
             item = (label, value, id) =>
                 <ListItem label={label}><Switch checked={value} onChange={this.onChange}/></ListItem>
@@ -27,6 +27,8 @@ export const DeviceSettings = (Composed, {device: {id}}) => connect(mapState(id)
                 <ListItem label={name}/>
                 <Subheader label="Value"/>
                 <ListItem label={String(typeof value === 'object' ? JSON.stringify(value) : value)}/>
+                {time && <Subheader label="Time"/>}
+                {time && <ListItem label={time}/>}
                 <Subheader label="Type"/>
                 <ListItem label={type}/>
                 <Subheader label="Service"/>
