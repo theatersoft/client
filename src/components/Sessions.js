@@ -1,6 +1,7 @@
 import {h, Component} from 'preact'
 import {List, NestedList, ListItem, Switch, Subheader} from '@theatersoft/components'
 import {proxy} from '@theatersoft/bus'
+import {dateTimeString} from '../util'
 
 export const Sessions = (Composed, {label}) => ({next}) => (class extends Component {
     state = {sessions: []}
@@ -42,7 +43,7 @@ const SessionSettings = (Composed, {session}) => (class extends Component {
                 <Subheader label="UA"/>
                 <ListItem label={ua}/>
                 <Subheader label="Created"/>
-                <ListItem label={time}/>
+                <ListItem label={dateTimeString(time)}/>
             </Composed>
         )
     }
