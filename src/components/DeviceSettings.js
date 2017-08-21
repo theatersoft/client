@@ -18,8 +18,11 @@ const
 export const DeviceSettings = (Composed, {device: {id}}) => connect(mapState(id), mapDispatch)(class extends Component {
     constructor (props, context) {
         super(props, context)
-        const comp = settingsMap[serviceId(id)[0]]
-        this.Settings = comp && comp(NestedList, {id, ...this.props})
+        const
+            {device} = props,
+            [service, id] = serviceId(device.id),
+            comp = settingsMap[service]
+        this.Settings = comp && comp(NestedList, {service, id, device})
     }
 
     onChange = value => this.props.setSettingsState({[`${id}.disabled`]: value})
