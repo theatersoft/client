@@ -35,7 +35,7 @@ export const DeviceSettings = (Composed, {device: {id}}) => connect(mapState(id)
                 <ListItem label={label}><Switch checked={value} onChange={this.onChange}/></ListItem>
         return (
             <Composed>
-                <NestedList label={`Device Settings`} active>
+                <NestedList label="Device Settings" active>
                     <Subheader label="Name"/>
                     <ListItem label={name}/>
                     <Subheader label="Value"/>
@@ -50,7 +50,7 @@ export const DeviceSettings = (Composed, {device: {id}}) => connect(mapState(id)
                     <ListItem label={_id}/>
                     {item('Disabled', settings[`${id}.disabled`])}
                 </NestedList>
-                {this.Settings && <this.Settings label={`${service} Device Settings`} active/>}
+                {this.Settings && <this.Settings label={`${service} Settings`} active/>}
             </Composed>
         )
     }
