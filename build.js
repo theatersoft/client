@@ -186,6 +186,7 @@ const targets = {
                 'src',
                 `${components}/*.js`,
                 `${path.dirname(require.resolve('@theatersoft/automation'))}/*.es.js`,
+                `${path.dirname(require.resolve('@theatersoft/focus'))}/*.es.js`,
                 `${path.dirname(require.resolve('@theatersoft/x10'))}/*.es.js`,
                 `${path.dirname(require.resolve('@theatersoft/zwave'))}/*.es.js`
             ])
