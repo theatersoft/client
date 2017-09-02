@@ -19,6 +19,7 @@
     "build": "node build.js && ls -l dist",
     "build:dist": "DIST=true npm run build",
     "build-bundle": "node build.js bundle",
+    "build-clean": "node build.js clean",
     "build-html": "node build.js html",
     "build-svg": "node build.js svg",
     "build-watch": "node build.js watch",
