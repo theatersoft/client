@@ -157,6 +157,7 @@ export const Video = {
     onGesture (ev) {
         //log(ev.type, ev)
         //ev.gesture.preventDefault()
+        if (!sources.length) return
         switch (ev.type) {
         case 'dragright':
         case 'dragleft':
@@ -192,6 +193,7 @@ export const Video = {
 
     onKeydown (e) {
         log(e.key)
+        if (!sources.length) return
         e.key === 'ArrowLeft' ? rotate(-1) : e.key === 'ArrowRight' && rotate(1)
     },
 
