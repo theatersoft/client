@@ -7,10 +7,10 @@ const
     _sheet = (Component, name, type) => h(Component(FocusableSheet({type})()), {name}),
     items = [
         <Menu name="menu" items={{
-                spinner: () => focus.push('status'),
-                logo: () => focus.push('favorites'),
-                thermometer: () => focus.push('stat'),
-                list: () => focus.push('settings')
+                notification: () => focus.push('status'),
+                switch: () => focus.push('favorites'),
+                apps: () => focus.push('stat'),
+                logo: () => focus.push('settings')
             }}/>,
         sheet(Status, 'status', 'top'),
         _sheet(Devices, 'favorites', 'right'),
