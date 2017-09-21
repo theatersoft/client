@@ -89,7 +89,7 @@ const targets = {
                         )
                     }),
                     extensions: ['.css', '.styl'],
-                    sourceMap: 'inline', // true, "inline" or false
+                    sourceMap: !DIST, // true, "inline" or false
                     extract: 'dist/theatersoft.css',
                     plugins: [
                         postcssModules({
