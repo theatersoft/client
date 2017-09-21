@@ -47,6 +47,7 @@
     "babel-plugin-transform-react-remove-prop-types": "^0.2.11",
     "babel-preset-babili": "0.0.8",
     "chokidar": "^1.6.1",
+    "cssnano": "^3.10.0",
     "hammerjs": "~1.0.11",
     "livereload": "^0.6.0",
     "mustache": "^2.1.3",

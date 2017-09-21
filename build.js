@@ -22,6 +22,7 @@ const
     postcssModules = require('postcss-modules'),
     cssExportMap = {},
     postcssImport = require("postcss-import"),
+    cssnano = require('cssnano'),
     includePaths = require('rollup-plugin-includepaths')
 
 const targets = {
@@ -94,13 +95,14 @@ const targets = {
                     plugins: [
                         postcssModules({
                             getJSON(id, exportTokens) {cssExportMap[id] = exportTokens},
-                            generateScopedName: '_[name]_[local]', // _[hash:2]
+                            generateScopedName: DIST ? '[hash:4]' : '_[name]_[local]',
                             globalModulePaths: [
                                 '@theatersoft/components/components.css',
                                 '@theatersoft/zwave/zwave.css'
                             ]
                         }),
-                        postcssImport()
+                        postcssImport(),
+                        ...(DIST ? [cssnano()] : [])
                     ],
                     getExport: id => cssExportMap[id]
                 }),
