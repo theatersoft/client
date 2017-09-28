@@ -10,9 +10,9 @@ import store from './store'
 import {setConfig, setDevices, setSettings, setLocals, objectify} from './actions'
 import './index.styl'
 import {register, notificationsAction} from './push'
+import {timeout} from './util'
 
 const
-    timeout = (p, ms) => Promise.race([p, new Promise((_, j) => setTimeout(j, ms))]),
     dispatchDevices = state => store.dispatch(setDevices(state)),
     dispatchSettings = state => store.dispatch(setSettings(state)),
     dispatchLocals = () => store.dispatch(setLocals(objectify(window.localStorage)))

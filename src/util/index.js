@@ -11,3 +11,6 @@ export const
             hours = Math.floor(minutes / 60)
         return minutes < 1 ? 'now' : minutes < 60 ? `${minutes} min ago` : `${hours} hr ${minutes % 60} min ago`
     }
+
+export const
+    timeout = (p, ms) => Promise.race([p, new Promise((_, j) => setTimeout(j, ms))])
