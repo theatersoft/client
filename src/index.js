@@ -1,7 +1,7 @@
 import {bus, proxy, mixinEventEmitter, EventEmitter, log} from '@theatersoft/bus'
 import {auth} from './auth'
 import './resize'
-import {h, render} from 'preact'
+import {h, Component, render} from 'preact'
 import {focus, Focuser} from '@theatersoft/focus'
 import {video, Pinpad} from './components'
 import {App} from './App'
@@ -11,6 +11,7 @@ import {setConfig, setDevices, setSettings, setLocals, objectify} from './action
 import './index.styl'
 import {register, notificationsAction} from './push'
 import {timeout} from './util'
+import 'preact/devtools'
 
 const
     dispatchDevices = state => store.dispatch(setDevices(state)),

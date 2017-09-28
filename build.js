@@ -13,6 +13,7 @@ const
     mustache = require('mustache'),
     babelCore = require('babel-core'),
     {rollup} = require('rollup'),
+    commonjs = require('rollup-plugin-commonjs'),
     nodeResolve = require('rollup-plugin-node-resolve'),
     babel = require('rollup-plugin-babel'),
     replace = require('rollup-plugin-replace'),
@@ -110,6 +111,11 @@ const targets = {
                     include: {
                         '@theatersoft/bus': 'node_modules/@theatersoft/bus/bus.browser.es.js'
                     }
+                }),
+                commonjs({
+                    include: [
+                        'node_modules/**'
+                    ]
                 }),
                 nodeResolve({
                     jsnext: true,
