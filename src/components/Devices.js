@@ -20,11 +20,14 @@ export const DevicesSheet = (Composed, {label}) => ({next}) => connect(mapStateT
         next(props => h(DeviceSettings('subsection', {device})))
     }
 
-    onSwitch = (_, e) => {
-        const
-            id = e.currentTarget.dataset.id,
-            {value, type} = this.props.devices[id]
+    onSwitch = (_value, {currentTarget: {dataset: {id}}}) => {
+        const {value} = this.props.devices[id]
         this.props.dispatchDeviceAction(switchActions.toggle(value, id))
+    }
+
+    onDimmer = (_value, id) => {
+        const {value} = this.props.devices[id]
+        this.props.dispatchDeviceAction(switchActions.toggle(!!value, id))
     }
 
     render ({devices}, {index, id}) {
@@ -33,7 +36,7 @@ export const DevicesSheet = (Composed, {label}) => ({next}) => connect(mapStateT
             deviceItem = ({name, id, value, type}) =>
                 <ListItem label={name} data-id={id} onClick={this.onClick}>{
                     isSwitch(type) ? <Switch checked={value} data-id={id} onChange={this.onSwitch}/>
-                        : isDimmer(type) ? <Slider value={value} data-id={id} onChange={this.onSwitch}/>
+                        : isDimmer(type) ? <Slider value={value} onChange={v => this.onDimmer(v, id)}/>
                         : isIndicator(type) ? <Indicator {...{normal: value === false, warning: value === true}} />
                         : null
                 }</ListItem>,
