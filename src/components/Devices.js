@@ -20,15 +20,10 @@ export const DevicesSheet = (Composed, {label}) => ({next}) => connect(mapStateT
         next(props => h(DeviceSettings('subsection', {device})))
     }
 
-    onSwitch = (_value, {currentTarget: {dataset: {id}}}) => {
-        const {value} = this.props.devices[id]
-        this.props.dispatchDeviceAction(switchActions.toggle(value, id))
-    }
+    onSwitch = (value, {currentTarget: {dataset: {id}}}) => this.props.dispatchDeviceAction(switchActions.toggle(!value, id))
 
-    onDimmer = (value, id) => {
-        this.props.dispatchDeviceAction(dimmerActions.set(value, id))
-    }
-
+    onDimmer = (value, id) => this.props.dispatchDeviceAction(dimmerActions.set(value, id))
+    
     render ({devices}, {index, id}) {
         const
             devicesByType = Object.values(devices).reduce((o, v) => (v.type && (o[v.type] || (o[v.type] = [])).push(v), o), {}),
