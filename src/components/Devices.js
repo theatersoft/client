@@ -2,7 +2,7 @@ import {h, Component} from 'preact'
 import {List, NestedList, ListItem, Switch, Slider, Indicator} from '@theatersoft/components'
 import {connect} from '../redux'
 import {deviceAction} from '../actions'
-import {Type, Interface, interfaceOfType, switchActions} from '@theatersoft/device'
+import {Type, Interface, interfaceOfType, switchActions, dimmerActions} from '@theatersoft/device'
 import {ComposeSheets, DeviceSettings} from './'
 
 const
@@ -25,9 +25,8 @@ export const DevicesSheet = (Composed, {label}) => ({next}) => connect(mapStateT
         this.props.dispatchDeviceAction(switchActions.toggle(value, id))
     }
 
-    onDimmer = (_value, id) => {
-        const {value} = this.props.devices[id]
-        this.props.dispatchDeviceAction(switchActions.toggle(!!value, id))
+    onDimmer = (value, id) => {
+        this.props.dispatchDeviceAction(dimmerActions.set(value, id))
     }
 
     render ({devices}, {index, id}) {
@@ -36,7 +35,7 @@ export const DevicesSheet = (Composed, {label}) => ({next}) => connect(mapStateT
             deviceItem = ({name, id, value, type}) =>
                 <ListItem label={name} data-id={id} onClick={this.onClick}>{
                     isSwitch(type) ? <Switch checked={value} data-id={id} onChange={this.onSwitch}/>
-                        : isDimmer(type) ? <Slider value={value} onChange={v => this.onDimmer(v, id)}/>
+                        : isDimmer(type) ? <Slider value={value} max={99} onChange={v => this.onDimmer(v, id)}/>
                         : isIndicator(type) ? <Indicator {...{normal: value === false, warning: value === true}} />
                         : null
                 }</ListItem>,
