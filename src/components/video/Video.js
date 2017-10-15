@@ -1,5 +1,4 @@
 import {h, Component} from 'preact'
-import {Ripple} from '@theatersoft/components'
 import {focus, mixinFocusable} from '@theatersoft/focus'
 import {log} from '@theatersoft/bus'
 import './video.styl'
