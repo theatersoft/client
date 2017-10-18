@@ -3,7 +3,7 @@ import {List, NestedList, ListItem, Switch, Slider, Indicator} from '@theatersof
 import {connect} from '../redux'
 import {deviceAction} from '../actions'
 import {Type, Interface, interfaceOfType, switchActions, dimmerActions} from '@theatersoft/device'
-import {ComposeSheets, DeviceSettings} from './'
+import {ComposeSheets, DeviceSettings, mixinFocusableListener} from './'
 
 const
     isSwitch = type => interfaceOfType(type) === Interface.SWITCH_BINARY && type !== Type.Siren,
@@ -11,13 +11,22 @@ const
     isIndicator = type => interfaceOfType(type) === Interface.SENSOR_BINARY
 
 const
-    mapStateToProps = ({devices = {}, Time, offset}) => ({devices, Time, offset}),
-    mapDispatchToProps = dispatch => ({dispatchDeviceAction: action => dispatch(deviceAction(action))})
+    mapState = ({devices = {}, Time, offset}) => ({devices, Time, offset}),
+    mapDispatch = dispatch => ({dispatchDeviceAction: action => dispatch(deviceAction(action))})
 
-export const DevicesSheet = (Composed, {label}) => ({next}) => connect(mapStateToProps, mapDispatchToProps)(class extends Component {
+export const DevicesSheet = (Composed, {label}) => ({next}) => connect(mapState, mapDispatch)(mixinFocusableListener(class extends Component {
+    settings = device => next(props => h(DeviceSettings('subsection', {device})))
+
+    onGesture ({id}, {type}) {
+        if (id && type === 'hold') this.settings(this.props.devices[id])
+    }
+
     onClick = e => {
-        const device = this.props.devices[e.currentTarget.dataset.id]
-        next(props => h(DeviceSettings('subsection', {device})))
+        const
+            {currentTarget: {dataset: {id}}} = e,
+            {value, type} = this.props.devices[id]
+        if (isSwitch(type)) this.onSwitch(!value, e)
+        else if (isDimmer(type)) this.onDimmer(value ? 0 : 255, id)
     }
 
     onSwitch = (value, {currentTarget: {dataset: {id}}}) => this.props.dispatchDeviceAction(switchActions.toggle(!value, id))
@@ -44,6 +53,6 @@ export const DevicesSheet = (Composed, {label}) => ({next}) => connect(mapStateT
             </Composed>
         )
     }
-})
+}))
 
 export const Devices = ComposeSheets(DevicesSheet('subsection', {}))
