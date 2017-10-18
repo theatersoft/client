@@ -1,13 +1,16 @@
 import {h, Component} from 'preact'
 import {focus, mixinFocusable} from '@theatersoft/focus'
 import {Sheet} from '@theatersoft/components'
+import {mixinEventEmitter} from '@theatersoft/bus'
 
-export const FocusableSheet = ({type}) => Content => class extends mixinFocusable(Component) {
+export const FocusableSheet = ({type}) => Content => class extends mixinFocusable(mixinEventEmitter(Component)) {
     state = {active: false}
 
-    onKeydown = e => {
-        if (e.key === 'Escape') this.onClick(e)
-    }
+    getChildContext () {return {focus: this}}
+
+    onKeydown = e => {if (e.key === 'Escape') this.onClick(e)}
+
+    onGesture = e => this.emit('gesture', e)
 
     onClick = e => {
         if (this.state.active) {

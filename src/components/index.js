@@ -1,5 +1,6 @@
 export {FocusableActivator} from './FocusableActivator'
 export {FocusableSheet} from './FocusableSheet'
+export {mixinFocusableListener} from './FocusableListener'
 export {ComposeSheets} from './ComposeSheets'
 export {Menu} from './Menu'
 export {Pinpad} from './pinpad'
