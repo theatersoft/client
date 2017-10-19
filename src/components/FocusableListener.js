@@ -10,7 +10,7 @@ export const mixinFocusableListener = Base => class Mixin extends Base {
                     if (node === this.base) return
                 }
             },
-            dataset = pathDataset(e)
+            dataset = pathDataset(e.srcEvent)
         if (dataset) super.onGesture(dataset, e)
     }
 

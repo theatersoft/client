@@ -176,7 +176,7 @@ export const Video = {
         case 'swiperight':
         case 'swipeleft':
             rotate(ev.type == 'swipeleft' ? 1 : -1)
-            ev.gesture.stopDetect()
+            //ev.gesture.stopDetect()
             break
         case 'tap':
             var pos = (ev.gesture.center.pageX - document.body.getBoundingClientRect().left) / paneWidth
