@@ -21,5 +21,4 @@ export const mixinFocusableListener = Base => class Mixin extends Base {
     componentWillUnmount () {
         if (this.onGesture) this.context.focus.off('gesture', this.onGesture)
     }
-
 }

@@ -12,7 +12,10 @@ const
 
 const
     mapState = ({devices = {}, Time, offset}) => ({devices, Time, offset}),
-    mapDispatch = dispatch => ({dispatchDeviceAction: action => dispatch(deviceAction(action))})
+    mapDispatch = dispatch => ({
+        switchToggle: (value, id) => dispatch(deviceAction(switchActions.toggle(value, id))),
+        dimmerSet: (value, id) => dispatch(deviceAction(dimmerActions.set(value, id)))
+    })
 
 export const DevicesSheet = (Composed, {label}) => ({next}) => connect(mapState, mapDispatch)(mixinFocusableListener(class extends Component {
     settings = device => next(props => h(DeviceSettings('subsection', {device})))
@@ -21,25 +24,20 @@ export const DevicesSheet = (Composed, {label}) => ({next}) => connect(mapState,
         if (id && type === 'hold') this.settings(this.props.devices[id])
     }
 
-    onClick = e => {
-        const
-            {currentTarget: {dataset: {id}}} = e,
-            {value, type} = this.props.devices[id]
-        if (isSwitch(type)) this.onSwitch(!value, e)
-        else if (isDimmer(type)) this.onDimmer(value ? 0 : 255, id)
+    onClick = ({currentTarget: {dataset: {id}}}) => {
+        const {value, type} = this.props.devices[id]
+        if (isSwitch(type) || isDimmer(type)) this.props.switchToggle(value, id)
     }
 
-    onSwitch = (value, {currentTarget: {dataset: {id}}}) => this.props.dispatchDeviceAction(switchActions.toggle(!value, id))
+    onSwitch = (value, {currentTarget: {dataset: {id}}}) => this.props.switchToggle(!value, id)
 
-    onDimmer = (value, id) => this.props.dispatchDeviceAction(dimmerActions.set(value, id))
-    
     render ({devices}, {index, id}) {
         const
             devicesByType = Object.values(devices).reduce((o, v) => (v.type && (o[v.type] || (o[v.type] = [])).push(v), o), {}),
             deviceItem = ({name, id, value, type}) =>
                 <ListItem label={name} data-id={id} onClick={this.onClick}>{
                     isSwitch(type) ? <Switch checked={value} data-id={id} onChange={this.onSwitch}/>
-                        : isDimmer(type) ? <Slider value={value} max={99} onChange={v => this.onDimmer(v, id)}/>
+                        : isDimmer(type) ? <Slider value={value} max={99} onChange={v => this.props.dimmerSet(v, id)}/>
                         : isIndicator(type) ? <Indicator {...{normal: value === false, warning: value === true}} />
                         : null
                 }</ListItem>,
