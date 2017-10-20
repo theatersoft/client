@@ -6,11 +6,10 @@ export const auth = e.promise
 
 export function refresh () {
     const
-        cookie = document.cookie,
-        sid = cookie && cookie.startsWith('sid=') && cookie.slice(4) || true
+        {cookie} = document,
+        sid = cookie && cookie.split('; ').find(s=>s.startsWith('sid=')).slice(4)
     console.log('auth.refresh', sid)
     e.resolve(sid)
 }
 
 refresh()
-
