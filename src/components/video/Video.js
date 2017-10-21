@@ -153,19 +153,20 @@ const video = new class {
 export default video
 
 export const Video = {
-    onGesture (ev) {
+    onGesture (e) {
         //log(ev.type, ev)
         //ev.gesture.preventDefault()
         if (!sources.length) return
-        switch (ev.type) {
+        switch (e.type) {
         case 'dragright':
         case 'dragleft':
-            setOffset(ev.gesture.deltaX)
-            sources[ev.type == 'dragright' ? prevIndex : nextIndex].play(1)
+            log('drag')
+            setOffset(e.gesture.deltaX)
+            sources[e.type == 'dragright' ? prevIndex : nextIndex].play(1)
             break
         case 'dragend':
-            if (Math.abs(ev.gesture.deltaX) > paneWidth / 2)
-                rotate(ev.gesture.direction == 'left' ? 1 : -1)
+            if (Math.abs(e.gesture.deltaX) > paneWidth / 2)
+                rotate(e.gesture.direction == 'left' ? 1 : -1)
             else {
                 setOffset(0, function () {
                     sources[prevIndex].play(0)
@@ -175,17 +176,18 @@ export const Video = {
             break
         case 'swiperight':
         case 'swipeleft':
-            rotate(ev.type == 'swipeleft' ? 1 : -1)
+            rotate(e.type == 'swipeleft' ? 1 : -1)
             //ev.gesture.stopDetect()
             break
         case 'tap':
-            var pos = (ev.gesture.center.pageX - document.body.getBoundingClientRect().left) / paneWidth
+            var pos = (e.center.x - document.body.getBoundingClientRect().left) / paneWidth
             if (pos >= 0 && pos < 0.33)
                 rotate(-1)
             else if (pos > 0.66 && pos <= 1)
                 rotate(1)
             break
         case 'hold':
+            log('hold')
             break
         }
     },
