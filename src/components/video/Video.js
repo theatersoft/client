@@ -17,24 +17,21 @@ const
         for (let pane of $panes) pane.style.width = `${paneWidth}px`
         $container.style.width = `${paneWidth * 3}px`
     },
-    setOffset = (delta, anim) => {
+    setOffset = (delta, cb) => {
         $container.classList.remove('animate')
-        if (anim) $container.classList.add('animate')
         $container.style.transform = `translateX(${delta}px)`
-        if (typeof anim === 'function') {
-            $container.addEventListener('transitionend', function onend () {
-                $container.removeEventListener('transitionend', onend)
-                anim()
-            }, {once: true}) // TODO chrome 55 once?
+        if (cb) {
+            $container.classList.add('animate')
+            $container.addEventListener('transitionend', cb, {once: true})
         }
     },
     changeSource = delta => {
         localStorage.sourceIndex = currIndex = (currIndex + delta + sources.length) % sources.length
         prevIndex = (currIndex - 1 + sources.length) % sources.length
         nextIndex = (currIndex + 1 + sources.length) % sources.length
-        sources[prevIndex].host($left).play(0)
-        sources[currIndex].host($middle).play(1)
-        sources[nextIndex].host($right).play(0)
+        sources[prevIndex].host($left).play(false)
+        sources[currIndex].host($middle).play(true)
+        sources[nextIndex].host($right).play(false)
         //log(sources.map(s => s.playing))
     },
     rotate = dir => setOffset(-dir * paneWidth, () => {
@@ -111,6 +108,7 @@ class Source {
     }
 
     play (b) {
+        log('play', sources.map(s => s.playing))
         if (b && !this.playing)
             this.refresh()
         this.playing = b
@@ -167,7 +165,7 @@ export const Video = {
             if (Math.abs(e.deltaX) > paneWidth / 2)
                 rotate(e.direction == 2 ? 1 : -1)
             else {
-                setOffset(0, function () {
+                setOffset(0, () => {
                     sources[prevIndex].play(0)
                     sources[nextIndex].play(0)
                 })
