@@ -192,11 +192,9 @@ const targets = {
         await targets.all()
         require('chokidar').watch([
                 'src',
-                `${components}/*.js`,
-                `${path.dirname(require.resolve('@theatersoft/automation'))}/*.es.js`,
-                `${path.dirname(require.resolve('@theatersoft/focus'))}/*.es.js`,
-                `${path.dirname(require.resolve('@theatersoft/x10'))}/*.es.js`,
-                `${path.dirname(require.resolve('@theatersoft/zwave'))}/*.es.js`
+                ...Object.keys(pkg.devDependencies)
+                    .filter(n => n.startsWith('@theatersoft'))
+                    .map(n => `${path.dirname(require.resolve(n))}/*.es.js`)
             ])
             .on('change', path => {
                 console.log(new Date().toLocaleTimeString(), path)
