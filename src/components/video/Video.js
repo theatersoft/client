@@ -160,7 +160,7 @@ export const Video = {
         case 'panleft':
             if (e.srcEvent.defaultPrevented) break
             setOffset(e.deltaX)
-            sources[e.type == 'dragright' ? prevIndex : nextIndex].play(1)
+            sources[e.type == 'panright' ? prevIndex : nextIndex].play(1)
             break
         case 'panend':
             if (e.srcEvent.defaultPrevented) break
