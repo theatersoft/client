@@ -2,14 +2,19 @@ import {h, Component} from 'preact'
 import {Button, TapMenu, mousePosition, touchPosition} from '@theatersoft/components'
 import {Video} from './'
 import {focus, mixinFocusable} from '@theatersoft/focus'
+import {log, mixinEventEmitter} from '@theatersoft/bus'
 
-export class Menu extends mixinFocusable(Component) {
+export class Menu extends mixinFocusable(mixinEventEmitter(Component)){
     state = {active: false}
+
+    getChildContext () {return {focus: this}}
 
     onActive = active => this.setState({active})
 
     onGesture = e => {
+        //log(e.type, e)
         if (!this.state.active) Video.onGesture(e)
+        if (!e.srcEvent.defaultPrevented) this.emit('gesture', e)
     }
 
     onKeydown = e => {
@@ -19,13 +24,9 @@ export class Menu extends mixinFocusable(Component) {
             Video.onKeydown(e)
     }
 
-    onMousedownCapture = e => {
-        if (Video.testEvent(e)) e.preventDefault()
-    }
-
     render ({items, ...props}) {
         return (
-            <div onMousedownCapture={this.onMousedownCapture}>
+            <div>
                 <TapMenu
                     actions={Object.entries(items).map(([icon, onClick]) => ({icon, onClick}))}
                     onActive={this.onActive}

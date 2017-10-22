@@ -35,7 +35,6 @@ const
         //log(sources.map(s => s.playing))
     },
     rotate = dir => setOffset(-dir * paneWidth, () => {
-        log('transitionend rotate')
         setOffset(0);
         changeSource(dir)
     }),
@@ -177,9 +176,9 @@ export const Video = {
                 rotate(-1)
             else if (pos > 0.66 && pos <= 1)
                 rotate(1)
-            break
-        case 'hold':
-            log('hold')
+            else
+                break
+            e.preventDefault()
             break
         }
     },
@@ -188,12 +187,5 @@ export const Video = {
         //log(e.key)
         if (!sources.length) return
         e.key === 'ArrowLeft' ? rotate(-1) : e.key === 'ArrowRight' && rotate(1)
-    },
-
-    testEvent (e) {
-        const x = e instanceof MouseEvent ? e.clientX : e instanceof MouseEvent ? e.touches[0].pageX : false
-        if (x === false) return false
-        const pos = (x - document.body.getBoundingClientRect().left) / paneWidth
-        return pos >= 0 && pos < 0.33 || pos > 0.66 && pos <= 1
     }
 }
