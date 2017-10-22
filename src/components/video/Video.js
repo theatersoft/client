@@ -192,7 +192,7 @@ export const Video = {
     },
 
     onKeydown (e) {
-        log(e.key)
+        //log(e.key)
         if (!sources.length) return
         e.key === 'ArrowLeft' ? rotate(-1) : e.key === 'ArrowRight' && rotate(1)
     },
