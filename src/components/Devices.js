@@ -21,7 +21,7 @@ export const DevicesSheet = (Composed, {label}) => ({next}) => connect(mapState,
     settings = device => next(props => h(DeviceSettings('subsection', {device})))
 
     onGesture ({id}, {type}) {
-        if (id && type === 'hold') this.settings(this.props.devices[id])
+        if (id && type === 'press') this.settings(this.props.devices[id])
     }
 
     onClick = ({currentTarget: {dataset: {id}}}) => {
