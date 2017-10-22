@@ -75,26 +75,22 @@ class Source {
     }
 
     refresh () {
-        var
+        const
             self = this,
             img = new Image()
-
         img.onload = function imageLoad () {
             self.retries = 0
             self.img && delete self.img.src
             self.img = this
             delete this.onload
             delete this.onerror
-
             if (self.parent) {
                 self.parent.firstChild
                     ? self.parent.replaceChild(this, self.parent.firstChild)
                     : self.parent.appendChild(this)
             }
             if (self.playing)
-                setTimeout(function () {
-                    self.refresh()
-                }, rate)
+                setTimeout(() => self.refresh(), rate)
         }
         img.onerror = function onError () {
             if (self.playing && self.retries++ < 5)
@@ -104,16 +100,15 @@ class Source {
             else
                 imageError() // TODO
         }
-        img.src = url + self.name + '?f=' + frame++
+        img.src = `${url}${self.name}?f=${frame++}`
     }
 
     play (b) {
-        log('play', sources.map(s => s.playing))
+        //log('play', sources.map(s => s.playing))
         if (b && !this.playing)
             this.refresh()
         this.playing = b
         this.retries = 0
-        return this
     }
 
     host ($host) {
@@ -158,7 +153,7 @@ export const Video = {
         case 'panleft':
             if (e.srcEvent.defaultPrevented) break
             setOffset(e.deltaX)
-            sources[e.type == 'panright' ? prevIndex : nextIndex].play(1)
+            sources[e.type == 'panright' ? prevIndex : nextIndex].play(true)
             break
         case 'panend':
             if (e.srcEvent.defaultPrevented) break
@@ -166,8 +161,8 @@ export const Video = {
                 rotate(e.direction == 2 ? 1 : -1)
             else {
                 setOffset(0, () => {
-                    sources[prevIndex].play(0)
-                    sources[nextIndex].play(0)
+                    sources[prevIndex].play(false)
+                    sources[nextIndex].play(false)
                 })
             }
             break
