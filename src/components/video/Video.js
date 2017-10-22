@@ -154,19 +154,18 @@ export default video
 
 export const Video = {
     onGesture (e) {
-        //log(ev.type, ev)
-        //ev.gesture.preventDefault()
         if (!sources.length) return
         switch (e.type) {
-        case 'dragright':
-        case 'dragleft':
-            log('drag')
-            setOffset(e.gesture.deltaX)
+        case 'panright':
+        case 'panleft':
+            if (e.srcEvent.defaultPrevented) break
+            setOffset(e.deltaX)
             sources[e.type == 'dragright' ? prevIndex : nextIndex].play(1)
             break
-        case 'dragend':
-            if (Math.abs(e.gesture.deltaX) > paneWidth / 2)
-                rotate(e.gesture.direction == 'left' ? 1 : -1)
+        case 'panend':
+            if (e.srcEvent.defaultPrevented) break
+            if (Math.abs(e.deltaX) > paneWidth / 2)
+                rotate(e.direction == 2 ? 1 : -1)
             else {
                 setOffset(0, function () {
                     sources[prevIndex].play(0)
@@ -177,7 +176,7 @@ export const Video = {
         case 'swiperight':
         case 'swipeleft':
             rotate(e.type == 'swipeleft' ? 1 : -1)
-            //ev.gesture.stopDetect()
+            e.preventDefault()
             break
         case 'tap':
             var pos = (e.center.x - document.body.getBoundingClientRect().left) / paneWidth
