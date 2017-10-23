@@ -12,9 +12,10 @@ export class Menu extends mixinFocusable(mixinEventEmitter(Component)){
     onActive = active => this.setState({active})
 
     onGesture = e => {
-        //log(e.type, e)
-        if (!this.state.active) Video.onGesture(e)
-        if (!e.srcEvent.defaultPrevented) this.emit('gesture', e)
+        if (!e.srcEvent.defaultPrevented) {
+            if (!this.state.active) Video.onGesture(e)
+            this.emit('gesture', e)
+        }
     }
 
     onKeydown = e => {
