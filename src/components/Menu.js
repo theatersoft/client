@@ -14,7 +14,7 @@ export class Menu extends mixinFocusable(mixinEventEmitter(Component)){
     onGesture = e => {
         if (!e.srcEvent.defaultPrevented) {
             if (!this.state.active) Video.onGesture(e)
-            if (!e.srcEvent.defaultPrevented) this.emit('gesture', e)
+            this.emit('gesture', e)
         }
     }
 
