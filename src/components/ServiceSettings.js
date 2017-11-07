@@ -12,7 +12,6 @@ export const ServiceSettings = (Composed, {service}) => class extends Component 
 
     render () {
         const
-            item = (label, value) => <ListItem label={label}><Switch checked={value}/></ListItem>,
             {name, enabled = true, host, module, export: _export, config} = service
         return (
             <Composed>
@@ -25,7 +24,7 @@ export const ServiceSettings = (Composed, {service}) => class extends Component 
                     <ListItem label={_export}/>
                     <Subheader label="Config"/>
                     <ListItem label={JSON.stringify(config)}/>
-                    {item('Enabled', enabled)}
+                    <ListItem label="Enabled"><Switch checked={enabled}/></ListItem>
                 </NestedList>
                 {this.Settings && <this.Settings label={`${name} Settings`} active/>}
             </Composed>
