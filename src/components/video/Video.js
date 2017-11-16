@@ -82,12 +82,15 @@ class Source {
             self.img && delete self.img.src
             self.img = this
             delete this.onload
-            delete this.onerror
-            if (self.parent) {
-                self.parent.firstChild
-                    ? self.parent.replaceChild(this, self.parent.firstChild)
-                    : self.parent.appendChild(this)
-            }
+            delete this.onerror;
+            (this.decode ? this.decode() : Promise.resolve())
+                .then(() => {
+                    if (self.parent) {
+                        self.parent.firstChild
+                            ? self.parent.replaceChild(this, self.parent.firstChild)
+                            : self.parent.appendChild(this)
+                    }
+                })
             if (self.playing)
                 setTimeout(() => self.refresh(), rate)
         }
