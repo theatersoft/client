@@ -3,6 +3,7 @@ import {List, NestedList, ListItem, Switch, Subheader} from '@theatersoft/compon
 import {connect} from '../redux'
 import {ServiceSettings as Automation} from '@theatersoft/automation'
 import {ServiceSettings as ZWave} from '@theatersoft/zwave'
+import {proxy} from '@theatersoft/bus'
 
 const
     settingsMap = {Automation, ZWave}
@@ -10,7 +11,12 @@ const
 export const ServiceSettings = (Composed, {service}) => class extends Component {
     Settings = settingsMap[service.export] && settingsMap[service.export](NestedList, {service, ...this.props})
 
-    render () {
+    componentDidMount () {
+    }
+
+    onRunning = value => {}
+
+    render (_, {running = false}) {
         const
             {name, enabled = true, host, module, export: _export, config} = service
         return (
@@ -24,7 +30,12 @@ export const ServiceSettings = (Composed, {service}) => class extends Component 
                     <ListItem label={_export}/>
                     <Subheader label="Config"/>
                     <ListItem label={JSON.stringify(config)}/>
-                    <ListItem label="Enabled"><Switch checked={enabled}/></ListItem>
+                    <ListItem label="Running">
+                        <Switch checked={running} onChange={this.onRunning}/>
+                    </ListItem>
+                    <ListItem label="Enabled">
+                        <Switch checked={enabled}/>
+                    </ListItem>
                 </NestedList>
                 {this.Settings && <this.Settings label={`${name} Settings`} active/>}
             </Composed>
