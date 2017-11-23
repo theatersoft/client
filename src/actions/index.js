@@ -15,7 +15,9 @@ export const
     SET_LOCALS = 'SET_LOCALS',
     setLocals = locals => ({type: SET_LOCALS, locals}),
     SET_NOTIFICATIONS = 'SET_NOTIFICATIONS',
-    setNotifications = notifications => ({type: SET_NOTIFICATIONS, notifications})
+    setNotifications = notifications => ({type: SET_NOTIFICATIONS, notifications}),
+    SET_SERVICES = 'SET_SERVICES',
+    setServices = state => ({type: SET_SERVICES, ...state})
 
 const Device = proxy('Device')
 export const deviceAction = action => () => Device.dispatch(action)
