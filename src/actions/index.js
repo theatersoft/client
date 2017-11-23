@@ -31,3 +31,6 @@ export const
         for (const [k,v] of Object.entries(state)) window.localStorage.setItem(k, JSON.stringify(v))
         dispatch(setLocals(objectify(window.localStorage)))
     }
+
+const Service = proxy('Service')
+export const serviceAction = action => () => Service.dispatch(action)
