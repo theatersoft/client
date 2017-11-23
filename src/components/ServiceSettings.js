@@ -18,7 +18,7 @@ export const ServiceSettings = (Composed, {service}) => class extends Component 
 
     render (_, {running = false}) {
         const
-            {name, enabled = true, host, module, export: _export, config} = service
+            {id, enabled = true, host, module, export: _export, config} = service
         return (
             <Composed>
                 <NestedList label="Service Settings" active>
@@ -37,7 +37,7 @@ export const ServiceSettings = (Composed, {service}) => class extends Component 
                         <Switch checked={enabled}/>
                     </ListItem>
                 </NestedList>
-                {this.Settings && <this.Settings label={`${name} Settings`} active/>}
+                {this.Settings && <this.Settings label={`${id} Settings`} active/>}
             </Composed>
         )
     }
