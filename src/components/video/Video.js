@@ -1,6 +1,6 @@
 import {h, Component} from 'preact'
 import {focus, mixinFocusable} from '@theatersoft/focus'
-import {log} from '@theatersoft/bus'
+import {log, bus} from '@theatersoft/bus'
 import './video.styl'
 
 let
@@ -45,6 +45,7 @@ const
     },
     imageError = () => {
         log("image error")
+        play(false)
     },
     play = b => {
         sources.length && sources[currIndex].play(b)
@@ -95,7 +96,7 @@ class Source {
                 setTimeout(() => self.refresh(), rate)
         }
         img.onerror = function onError () {
-            if (self.playing && self.retries++ < 5)
+            if (self.playing && self.retries++ < 100)
                 setTimeout(function () {
                     self.refresh()
                 }, rate)
@@ -142,6 +143,14 @@ const video = new class {
         setDimensions()
         setSources(cameras)
         play(true)
+        bus.on('disconnect', () => {
+            log('bus disconnect')
+            play(false)
+        })
+        bus.on('reconnect', () => {
+            log('bus reconnect')
+            play(true)
+        })
     }
 }
 
