@@ -1,5 +1,3 @@
-import store from '../store'
-
 export const
     dateString = time => new Date(time).toLocaleDateString('en-US', {weekday: 'short', month: 'short', day: 'numeric'}),
     timeString = time => new Date(time).toLocaleTimeString('en-US', {hour: 'numeric', minute: 'numeric'}).toLowerCase(),
