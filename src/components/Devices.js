@@ -4,6 +4,7 @@ import {connect} from '../redux'
 import {deviceAction} from '../actions'
 import {Type, Interface, interfaceOfType, switchActions, dimmerActions} from '@theatersoft/device'
 import {ComposeSheets, DeviceSettings, mixinFocusableListener} from './'
+import {sortKeys} from '../util'
 
 const
     isSwitch = type => interfaceOfType(type) === Interface.SWITCH_BINARY && type !== Type.Siren,
@@ -33,7 +34,10 @@ export const DevicesSheet = (Composed, {label}) => ({next}) => connect(mapState,
 
     render ({devices}, {index, id}) {
         const
-            devicesByType = Object.values(devices).reduce((o, v) => (v.type && (o[v.type] || (o[v.type] = [])).push(v), o), {}),
+            devicesByType = sortKeys(Object.values(devices)
+                .reduce((o, v) =>
+                    (v.type && (o[v.type] || (o[v.type] = [])).push(v), o), {})
+            ),
             deviceItem = ({name, id, value, type}) =>
                 <ListItem label={name} data-id={id} onClick={this.onClick}>{
                     isSwitch(type) ? <Switch checked={value} data-id={id} onChange={this.onSwitch}/>

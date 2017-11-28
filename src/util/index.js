@@ -8,7 +8,8 @@ export const
             minutes = Math.floor((Number(new Date()) + offset - time) / 60000),
             hours = Math.floor(minutes / 60)
         return minutes < 1 ? 'now' : minutes < 60 ? `${minutes} min ago` : `${hours} hr ${minutes % 60} min ago`
-    }
+    },
 
-export const
-    timeout = (p, ms) => Promise.race([p, new Promise((_, j) => setTimeout(j, ms))])
+    timeout = (p, ms) => Promise.race([p, new Promise((_, j) => setTimeout(j, ms))]),
+
+    sortKeys = o => Object.keys(o).sort().reduce((a, k) => (a[k] = o[k], a), {})
