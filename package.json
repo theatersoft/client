@@ -15,7 +15,7 @@
   "repository": "theatersoft/client",
   "private": true,
   "scripts": {
-    "link": "npm link @theatersoft/bus @theatersoft/components @theatersoft/focus @theatersoft/device @theatersoft/zwave @theatersoft/automation @theatersoft/x10",
+    "link": "npm link --no-package-lock @theatersoft/bus @theatersoft/components @theatersoft/focus @theatersoft/device @theatersoft/zwave @theatersoft/automation @theatersoft/x10",
     "build": "node build.js && ls -l dist",
     "build:dist": "DIST=true npm run build",
     "build-bundle": "node build.js bundle",
@@ -29,7 +29,7 @@
     "devDependencies": {},
     "main": "main.js",
     "scripts": {
-      "link": "npm link"
+      "link": "npm link --no-package-lock"
     }
   },
   "devDependencies": {
