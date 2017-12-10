@@ -1,6 +1,6 @@
 import {h, Component} from 'preact'
 import {focus, mixinFocusable} from '@theatersoft/focus'
-import {log, bus} from '@theatersoft/bus'
+import {log, debug, bus} from '@theatersoft/bus'
 import './video.styl'
 
 let
@@ -130,7 +130,7 @@ const video = new class {
     }
 
     init (cameras) {
-        log('video.init')
+        debug('video.init')
         $host = document.getElementById('video')
         $host.innerHTML = `<ul><li class="video-left"></li><li class="video-middle"></li><li class="video-right"></li></ul>`
         $container = $host.children[0]

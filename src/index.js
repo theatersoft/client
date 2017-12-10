@@ -28,7 +28,6 @@ timeout(bus.started(), 2000)
     .then(() =>
         proxy('Config').get()
             .then(config => {
-                console.log('Config get', config)
                 config.webpush && register(config.webpush).then(() => store.dispatch(notificationsAction()))
                 store.dispatch(setConfig(config))
                 video.init(config.cameras)
