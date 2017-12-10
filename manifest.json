@@ -3,7 +3,12 @@
   "name": "Theatersoft Home",
   "icons": [
     {
-      "src": "/res/theatersoft-logo-round-accent.png",
+      "src": "/res/theatersoft-logo-round-accent-144.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "/res/theatersoft-logo-round-accent-192.png",
       "type": "image/png",
       "sizes": "192x192"
     }

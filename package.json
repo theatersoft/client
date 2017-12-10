@@ -21,6 +21,7 @@
     "build-bundle": "node build.js bundle",
     "build-clean": "node build.js clean",
     "build-html": "node build.js html",
+    "build-package": "node build.js package",
     "build-svg": "node build.js svg",
     "build-watch": "node build.js watch",
     "publish": "node build.js publish"
