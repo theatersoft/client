@@ -64,11 +64,11 @@ const targets = {
     html () {
         console.log('target html')
         exec('mkdir -p dist/dev')
-        var
-            model = {svg: fs.readFileSync('_icons.svg', 'utf8'), js: 'theatersoft-client.min.js'},
+        const
+            model = {svg: fs.readFileSync('_icons.svg', 'utf8'), path: '/'},
             template = fs.readFileSync('index.template.html', 'utf8')
         fs.writeFileSync('dist/index.html', mustache.render(template, model))
-        model.js = 'theatersoft-client.js'
+        model.path = '/dev/'
         fs.writeFileSync('dist/dev/index.html', mustache.render(template, model))
     },
 
@@ -145,7 +145,7 @@ const targets = {
             moduleName: 'client',
             sourceMap: 'inline'
         })
-        fs.writeFileSync('dist/theatersoft-client.min.js', babelCore.transformFileSync('dist/dev/theatersoft-client.js', {
+        fs.writeFileSync('dist/theatersoft-client.js', babelCore.transformFileSync('dist/dev/theatersoft-client.js', {
             babelrc: false,
             //exclude: 'node_modules/**',
             comments: false,
