@@ -8,20 +8,23 @@ import {DeviceSettings as ZWave} from '@theatersoft/zwave'
 
 const
     Settings = proxy('Settings'),
-    settingsMap = {X10, ZWave},
+    getSettings = ({module, export: _export}) => ({
+        '@theatersoft/x10.X10': X10,
+        '@theatersoft/zwave.ZWave': ZWave
+    }[`${module}.${_export}`]),
     serviceId = id => (/^([^\.]+)\.([^]+)$/.exec(id) || [, id, '']).slice(1)
 
 const
-    mapState = id => ({devices: {[id]: device}, settings}) => ({device, settings}),
+    mapState = id => ({devices: {[id]: device}, settings, services}) => ({device, settings, services}),
     mapDispatch = dispatch => ({setSettingsState: state => Settings.setState(state)})
 
 export const DeviceSettings = (Composed, {device: {id}}) => connect(mapState(id), mapDispatch)(class extends Component {
     constructor (props, context) {
         super(props, context)
         const
-            {device} = props,
+            {device, services} = props,
             [service, id] = serviceId(device.id),
-            comp = settingsMap[service]
+            comp = getSettings(services[service])
         this.Settings = comp && comp(NestedList, {service, id, device})
     }
 
