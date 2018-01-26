@@ -86,22 +86,23 @@ class Source {
             delete this.onerror;
             (this.decode ? this.decode() : Promise.resolve())
                 .then(() => {
-                    if (self.parent) {
-                        self.parent.firstChild
-                            ? self.parent.replaceChild(this, self.parent.firstChild)
-                            : self.parent.appendChild(this)
-                    }
-                })
+                        if (self.parent) {
+                            self.parent.firstChild
+                                ? self.parent.replaceChild(this, self.parent.firstChild)
+                                : self.parent.appendChild(this)
+                        }
+                    },
+                    () => {log('decode rejected', this.src)}
+                )
             if (self.playing)
                 setTimeout(() => self.refresh(), rate)
         }
         img.onerror = function onError () {
+            log('img.onerror', this.src)
             if (self.playing && self.retries++ < 100)
-                setTimeout(function () {
-                    self.refresh()
-                }, rate)
+                setTimeout(() => self.refresh(), rate)
             else
-                imageError() // TODO
+                imageError()
         }
         img.src = `${url}${self.name}?f=${frame++}`
     }
