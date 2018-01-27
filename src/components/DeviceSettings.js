@@ -1,6 +1,7 @@
 import {h, Component} from 'preact'
 import {ListItem, NestedList, Switch, Subheader} from '@theatersoft/components'
 import {proxy} from '@theatersoft/bus'
+import {serviceId} from '@theatersoft/device'
 import {connect} from '../redux'
 import {dateTimeString} from '../util'
 import {DeviceSettings as X10} from '@theatersoft/x10'
@@ -11,8 +12,7 @@ const
     getSettings = ({module, export: _export}) => ({
         '@theatersoft/x10.X10': X10,
         '@theatersoft/zwave.ZWave': ZWave
-    }[`${module}.${_export}`]),
-    serviceId = id => (/^([^\.]+)\.([^]+)$/.exec(id) || [, id, '']).slice(1)
+    }[`${module}.${_export}`])
 
 const
     mapState = id => ({devices: {[id]: device}, settings, services}) => ({device, settings, services}),

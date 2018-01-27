@@ -1,5 +1,6 @@
 import {h, Component} from 'preact'
 import {List, ListItem, Switch, Row, Button} from '@theatersoft/components'
+import {serviceId} from '@theatersoft/device'
 import {connect} from '../../redux'
 import {settingsAction, localsAction} from '../../actions'
 import {notificationsAction} from '../../push'
@@ -18,7 +19,7 @@ const
 export default connect(mapState, mapDispatch)(class extends Component {
     onClick = e => {
         const
-            [, service, id] = /^(\w+)\.(\w+)$/.exec(e.currentTarget.dataset.id),
+            [service, id] = serviceId(e.currentTarget.dataset.id),
             value = this.props[service][id]
         this.props.dispatch[service]({[id]: !value})
     }
