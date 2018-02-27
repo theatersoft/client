@@ -49,13 +49,15 @@ const
     },
     play = b => {
         sources.length && sources[currIndex].play(b)
-        if (b) {
+        if (b && sources.length) {
             $host.classList.remove('video-missing')
         }
         else {
             let i = $host.querySelector('.video-middle img')
-            i.removeAttribute('src')
-            i.style.display = 'none' // hide img border in chrome
+            if (i) {
+                i.removeAttribute('src')
+                i.style.display = 'none' // hide img border in chrome
+            }
             $host.classList.add('video-missing')
         }
     },
