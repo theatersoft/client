@@ -30,7 +30,8 @@ timeout(bus.started(), 2000)
             .then(config => {
                 config.webpush && register(config.webpush).then(() => store.dispatch(notificationsAction()))
                 store.dispatch(setConfig(config))
-                video.init(config.cameras)
+                const {capture: {cameras = []} = {}} = config.configs
+                video.init(cameras)
                 proxy('Device').getState().then(dispatchDevices)
                 proxy('Settings').getState().then(dispatchSettings)
                 proxy('Service').getState().then(dispatchServices)
