@@ -12,3 +12,6 @@ self.addEventListener('notificationclick', event => {
         })
     )
 })
+
+self.addEventListener('fetch', event => {
+})
