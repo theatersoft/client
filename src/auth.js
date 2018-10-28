@@ -7,7 +7,8 @@ export const auth = e.promise
 export function refresh () {
     const
         {cookie} = document,
-        sid = cookie && cookie.split('; ').find(s=>s.startsWith('sid=')).slice(4)
+        match = cookie && cookie.split('; ').find(s=>s.startsWith('sid=')),
+        sid = match && match.slice(4)
     debug('auth.refresh', sid)
     e.resolve(sid)
 }
